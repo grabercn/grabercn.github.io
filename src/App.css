@@ -33,3 +33,55 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Change the background color of the selected item */
+.ant-menu-item-selected {
+  background-color: rgb(193, 117, 255) !important;  /* Background color of the selected item */
+  color: #fff !important;  /* Ensure the text color remains white */
+}
+
+/* Set the background color for buttons */
+.ant-btn {
+  background-color: rgb(193, 117, 255) !important;
+  border-color: rgb(240, 221, 255) !important;
+}
+
+/* Set the color for Menu items */
+.ant-menu-item {
+  color: rgb(220, 176, 255) !important;
+}
+
+/* Set the background color for selected Menu items */
+.ant-menu-item-selected {
+  background-color: rgb(106, 38, 122) !important;
+  color: #fff !important;
+}
+
+/* Set the color for links inside Ant Design components */
+.ant-link {
+  color: rgb(37, 0, 68) !important;
+}
+
+/* Set the color for progress bars */
+.ant-progress-circle {
+  color: rgb(193, 117, 255) !important;
+}
+
+/* Set the background color for cards */
+.ant-card {
+  background-color: rgb(255, 255, 255) !important;
+}
+
+/* Make the header sticky */
+.ant-layout-header {
+  position: sticky;
+  top: 0;
+  z-index: 9999; /* Ensure it stays on top */
+  background-color: #3A0268;
+}
+
+/* Highlight active menu items */
+.ant-menu-item-active {
+  background-color: #d850e1 !important; /* Highlight active menu with same purple color */
+  color: #fff !important;
+}
