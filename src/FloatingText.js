@@ -27,11 +27,6 @@ const FloatingText = ({ children, className, context }) => {
   const xMovement = Math.sin(scrollPosition / (200 * speedMultiplier)) * range;
   const yMovement = Math.cos(scrollPosition / (200 * speedMultiplier)) * range;
 
-  // Conditional styles based on context
-  const customStyles = context === 'card'
-    ? { position: 'absolute', top: '10%', left: '10%', pointerEvents: 'none' } // Floating text inside card
-    : { position: 'relative', display: 'inline-block' };  // General floating text
-
   return (
     <motion.div
       className={className}

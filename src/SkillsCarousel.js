@@ -58,18 +58,17 @@ const SkillsCarousel = () => {
         onClick={handleCarouselClick} // Handle click event for carousel
       >
         {skills.concat(skills).map((skill, index) => (
-          <div key={index} style={{ textAlign: 'center', flex: '0 0 auto', width: '10%', boxSizing: 'border-box' }}>
+          <div key={index} style={{ textAlign: 'center', flex: '0 0 auto', width: '15%', boxSizing: 'border-box' }}>
             <img
               src={skill.icon}
               alt={skill.name}
               style={{ width: '50px', height: '50px', marginBottom: '10px' }}
             />
             <p>{skill.name}</p>
-            {/* add the selected outline, icon, and name */}
+            {/* add the select outline, icon, and name */}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <SelectOutlined style={{ color: 'purple', fontSize: '10px' }} />
+              <SelectOutlined style={{ color: 'purple', fontSize: '12px' }} />
             </div>
-            {/* Remove proficiency from infinite scroll */}
           </div>
         ))}
       </div>
@@ -138,6 +137,21 @@ const SkillsCarousel = () => {
           }
           100% {
             transform: translateX(-100%);
+          }
+        }
+
+        @media (max-width: 600px) {
+          .skills-carousel-item {
+            width: 25% !important; /* Make the item width smaller on mobile */
+          }
+
+          .skills-carousel-item img {
+            width: 40px; /* Adjust image size */
+            height: 40px;
+          }
+
+          .skills-carousel-item p {
+            font-size: 12px; /* Adjust text size */
           }
         }
       `}</style>
