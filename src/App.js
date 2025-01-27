@@ -27,7 +27,7 @@ function App() {
         <Image
           width="100%"
           height={400}
-          src=""
+          src="public/images/bg.jpg"
           preview={false}
           style={{ objectFit: 'cover', borderRadius: '8px' }}
         />
@@ -59,7 +59,7 @@ function App() {
           <div id="home">
             <Title>Welcome to My Portfolio</Title>
             <Paragraph>
-              Hi, I'm [Your Name], a [Your Profession]. This is a snapshot of my journey, skills, and accomplishments. Feel free to explore!
+              Hi, I'm Christian Graber, a Student and Software Engineer. This is a snapshot of my journey, skills, and accomplishments. Feel free to explore!
             </Paragraph>
           </div>
 
