@@ -51,7 +51,7 @@ const ParticlesBackground = () => {
         type: "circle", // Particle shape (circle to mimic bubbles)
       },
       opacity: {
-        value: 0.6, // Slightly lower opacity for a softer look
+        value: 1.0, // Slightly lower opacity for a softer look
         random: true, // Random opacity for a more natural bubble effect
         animation: {
           enable: true,
@@ -63,7 +63,7 @@ const ParticlesBackground = () => {
         value: "#D3D3D3", // Light grey color for the particles
       },
       size: {
-        value: 3, // Smaller particles to resemble bubbles
+        value: 1.5, // Smaller particles to resemble bubbles
         random: true, // Random sizes for varied bubble sizes
         animation: {
           enable: true,

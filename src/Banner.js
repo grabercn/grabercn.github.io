@@ -21,7 +21,7 @@ const Banner = () => {
 
   // Set interval to update glow effect
   useEffect(() => {
-    const interval = setInterval(generateRandomGlow, 2000); // Change every 2 seconds
+    const interval = setInterval(generateRandomGlow, 1500); // Change every 1 seconds
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
 
@@ -46,7 +46,7 @@ const Banner = () => {
           height: '100%',
           zIndex: 1,
           transform: 'translateZ(0)', // Ensures proper stacking context
-          transition: 'filter 2s ease-in-out', // Smooth transition for filter properties
+          transition: 'filter 1.5s ease-in-out', // Smooth transition for filter properties
           filter: `brightness(${glowSettings.brightness}) blur(${glowSettings.blur}px)`, // Apply the random glow settings
         }}
       >

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Typography, Row, Col, Card, Carousel } from 'antd';
+import { Layout, Menu, Typography, Row, Col, Card } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
-import { MailOutlined, UserOutlined, CodeOutlined, RocketOutlined, LinkedinOutlined, CarOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { UserOutlined, CodeOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined } from '@ant-design/icons';
 import Banner from './Banner';
 import FloatingText from './FloatingText'; // Import the FloatingText Component
 import ParticlesBackground from './ParticlesBackground'; // Import the ParticlesBackground Component
@@ -219,6 +219,28 @@ const sections = [
       </motion.div>
     ),
     cardTitle: "Testimonials"
+  },
+  {
+    id: 'contact',
+    title: "Contact",
+    content: (
+      <>
+        <Paragraph>Feel free to reach out to me through the following methods:</Paragraph>
+          <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+            <li>
+              <MailOutlined style={{ marginRight: '8px' }} />
+              <a href="mailto:grabercn@mail.uc.edu">grabercn@mail.uc.edu</a>
+            </li>
+            <li>
+              <LinkedinOutlined style={{ marginRight: '8px' }} />
+              <a href="https://www.linkedin.com/in/christian-graber" target="_blank" rel="noopener noreferrer">
+                christian-graber
+              </a>
+            </li>
+        </ul>
+      </>
+    ),
+    cardTitle: "Contact"
   }
 ];
 
