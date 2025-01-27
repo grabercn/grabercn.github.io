@@ -27,7 +27,7 @@ function App() {
         <Image
           width="100%"
           height={400}
-          src="public/images/bg.jpg"
+          src="images/bg.jpg"
           preview={false}
           style={{ objectFit: 'cover', borderRadius: '8px' }}
         />
