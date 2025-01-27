@@ -1,12 +1,12 @@
 import React from 'react';
-import { Layout, Menu, Typography, Row, Col, Card, Tabs, Progress, Carousel } from 'antd';
+import { Layout, Menu, Typography, Row, Col, Card, Tabs, Carousel } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
 import { MailOutlined, UserOutlined, CodeOutlined, RocketOutlined, LinkedinOutlined, CarOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import Banner from './Banner';
 import FloatingText from './FloatingText'; // Import the FloatingText Component
 import { useState, useEffect } from 'react';
-
+import SkillsCarousel from './SkillsCarousel'; // Import the SkillsCarousel Component
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
@@ -214,26 +214,17 @@ function App() {
 
 
           {/* Skills Tab */}
+          <div className="site-layout-content" style={{ padding: '24px 0' }}>
+          {/* Skills Tab */}
           <div id="skills">
             <Tabs defaultActiveKey="1">
               <TabPane tab="Skills" key="1">
-                <Card title="Skills" hoverable>
-                  <FloatingText className="text-animation">
-                  <Row gutter={16}>
-                    <Col span={8}>
-                      <Progress type="circle" percent={90} format={() => 'React'} />
-                    </Col>
-                    <Col span={8}>
-                      <Progress type="circle" percent={75} format={() => 'Node.js'} />
-                    </Col>
-                    <Col span={8}>
-                      <Progress type="circle" percent={80} format={() => 'CSS'} />
-                    </Col>
-                  </Row>
-                  </FloatingText> 
+                <Card title="Skills" hoverable style={{ width: '100%' }}>
+                  <SkillsCarousel /> {/* Skills Carousel stays inside this card */}
                 </Card>
               </TabPane>
             </Tabs>
+          </div>
           </div>
 
           {/* Testimonials Tab */}
