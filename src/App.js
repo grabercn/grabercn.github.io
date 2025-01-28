@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Typography, Row, Col, Card } from 'antd';
+import { Layout, Menu, Typography, Row, Col, Card, Avatar } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
 import { UserOutlined, CodeOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined } from '@ant-design/icons';
 import Banner from './Banner';
 import FloatingText from './FloatingText'; // Import the FloatingText Component
+import FloatingCard from "./FloatingCard"
 import ParticlesBackground from './ParticlesBackground'; // Import the ParticlesBackground Component
 import SkillsCarousel from './SkillsCarousel'; // Import the SkillsCarousel Component
-import FloatingCard from './FloatingCard'; // Import the new FloatingCard Component
 
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
@@ -106,6 +106,134 @@ const sections = [
     cardTitle: "About Me"
   },
   {
+    id: 'experience',
+    title: "Experience",
+    content: (
+      <>
+        <Row gutter={[16, 16]} style={{ paddingTop: '20px', paddingBottom: '40px' }}>
+          <Col span={24}>
+            <Title level={3}>
+              <CodeOutlined style={{ marginRight: '8px' }} /> My Professional Experience
+            </Title>
+            <Paragraph>
+              Here are some highlights from my internships and co-op roles, where I’ve had the opportunity to work on various impactful projects.
+            </Paragraph>
+          </Col>
+        </Row>
+  
+        {/* Experience Cards */}
+        <Row gutter={[32, 32]} style={{paddingBottom: '30px' }}>
+          <Col span={24}>
+            {/* MRI Software Internship */}
+            <Card
+              title={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Avatar src="path-to-mri-software-logo.png" size={40} style={{ marginRight: '12px' }} />
+                  <span>Software Engineering Intern - MRI Software</span>
+                </div>
+              }
+              hoverable
+              style={{
+                width: '100%',
+                marginBottom: '20px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <Paragraph>
+                During my internship at MRI Software, I contributed to the development of 10+ API endpoints and modernized key system components, improving the overall performance.
+              </Paragraph>
+              <ul>
+                <li>Developed and deployed API endpoints in C# .NET, improving data access by 20%</li>
+                <li>Implemented RESTful APIs, boosting security and efficiency</li>
+                <li>Worked with an Agile team to deliver high-quality software</li>
+                <li>Led a fundraising initiative for a non-profit, raising $10,000</li>
+              </ul>
+              <div><strong>Relevant Skills:</strong> C# .NET, API Development, MSSQL, Agile, Scrum</div>
+            </Card>
+  
+            {/* Midmark Corporation Internship (Dec 2023) */}
+            <Card
+              title={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Avatar src="path-to-midmark-logo.png" size={40} style={{ marginRight: '12px' }} />
+                  <span>Software Engineering Intern - Midmark Corporation</span>
+                </div>
+              }
+              hoverable
+              style={{
+                width: '100%',
+                marginBottom: '20px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <Paragraph>
+                In my role at Midmark, I developed internal tools and worked on optimizing APIs and testing, resulting in improved stability and performance.
+              </Paragraph>
+              <ul>
+                <li>Developed internal C# tools, reducing bugs by 15%</li>
+                <li>Integrated Python testing to improve product quality by 100%</li>
+                <li>Optimized RESTful APIs, reducing response times by 10%</li>
+              </ul>
+              <div><strong>Relevant Skills:</strong> C#, Python, API Optimization, Unit Testing</div>
+            </Card>
+  
+            {/* Midmark Corporation Internship (Apr 2023) */}
+            <Card
+              title={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Avatar src="path-to-midmark-logo.png" size={40} style={{ marginRight: '12px' }} />
+                  <span>Software Engineering Intern - Midmark Corporation</span>
+                </div>
+              }
+              hoverable
+              style={{
+                width: '100%',
+                marginBottom: '20px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <Paragraph>
+                I worked on developing reusable React components and collaborated closely with designers to improve usability and reduce friction in the UI.
+              </Paragraph>
+              <ul>
+                <li>Developed 5+ reusable React components in TypeScript</li>
+                <li>Improved UI usability, reducing friction by 10%</li>
+                <li>Implemented micro frontends with Single-Spa</li>
+              </ul>
+              <div><strong>Relevant Skills:</strong> React, TypeScript, UI/UX Design, Micro Frontends</div>
+            </Card>
+  
+            {/* Stonewall Boxers Website Developer */}
+            <Card
+              title={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Avatar src="path-to-stonewall-boxers-logo.png" size={40} style={{ marginRight: '12px' }} />
+                  <span>Website Developer - Stonewall Boxers</span>
+                </div>
+              }
+              hoverable
+              style={{
+                width: '100%',
+                marginBottom: '20px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <Paragraph>
+                As a website developer for Stonewall Boxers, I built and optimized their website to drive traffic and enhance user experience.
+              </Paragraph>
+              <ul>
+                <li>Created and optimized a dynamic website that attracted hundreds of users</li>
+                <li>Implemented SEO strategies, boosting local web traffic</li>
+              </ul>
+              <div><strong>Relevant Skills:</strong> Web Development, SEO, HTML, CSS, JavaScript</div>
+            </Card>
+          </Col>
+        </Row>
+      </>
+    ),
+    cardTitle: "Experience"
+  },  
+  {
     id: 'projects',
     title: "Projects",
     content: (
@@ -141,6 +269,89 @@ const sections = [
     ),
     cardTitle: "Projects"
   },
+  {
+    id: 'coursework',
+    title: "Relevant Coursework",
+    content: (
+      <>
+        <Row gutter={[16, 16]}>
+          <Col span={24}>
+            <Title level={3}>
+              <CodeOutlined style={{ marginRight: '8px' }} /> Relevant Coursework
+            </Title>
+            <Paragraph>
+              Throughout my academic journey, I've completed a variety of courses that have helped me build a solid foundation in computer science and software engineering. Here are some of the key courses I have taken:
+            </Paragraph>
+          </Col>
+        </Row>
+  
+        {/* 2021-2022 Coursework */}
+        <Row gutter={[16, 16]} style={{paddingBottom: '20px' }}>
+          <Col span={24} md={12}>
+            <Card title="2021-2022" hoverable>
+              <ul>
+                <li>Computer Science 1</li>
+                <li>Data Structures</li>
+                <li>Introduction to Computer Systems</li>
+                <li>Python Programming</li>
+                <li>Information Security & Assurance</li>
+              </ul>
+            </Card>
+          </Col>
+  
+          {/* 2022-2023 Coursework */}
+          <Col span={24} md={12}>
+            <Card title="2022-2023" hoverable>
+              <ul>
+                <li>Discrete Computational Structures</li>
+                <li>Programming Languages</li>
+                <li>Database Design and Development</li>
+                <li>Design and Analysis of Algorithms</li>
+                <li>Operating Systems & Systems Programming</li>
+                <li>Software Engineering</li>
+              </ul>
+            </Card>
+          </Col>
+        </Row>
+  
+        {/* 2023-2024 Coursework */}
+        <Row gutter={[16, 16]} style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+          <Col span={24} md={12}>
+            <Card title="2023-2024" hoverable>
+              <ul>
+                <li>Principles of Artificial Intelligence</li>
+                <li>Communication Networks 1</li>
+                <li>Principles of the IOT</li>
+                <li>Digital Image Processing 1</li>
+                <li>Software and Application Security</li>
+              </ul>
+            </Card>
+          </Col>
+  
+          {/* 2024-2025 Coursework */}
+          <Col span={24} md={12}>
+            <Card title="2024-2025" hoverable>
+              <ul>
+                <li>Upcoming...</li>
+              </ul>
+            </Card>
+          </Col>
+        </Row>
+  
+        {/* 2025-2026 Coursework */}
+        <Row gutter={[16, 16]} style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+          <Col span={24} md={12}>
+            <Card title="2025-2026" hoverable>
+              <ul>
+                <li>Upcoming...</li>
+              </ul>
+            </Card>
+          </Col>
+        </Row>
+      </>
+    ),
+    cardTitle: "Relevant Coursework"
+  },    
   {
     id: 'skills',
     cardTitle: "Skills",
@@ -248,7 +459,7 @@ function App() {
   const [activeSection, setActiveSection] = useState('home'); // Track the active section
 
   const handleScroll = () => {
-    const sections = ['home', 'about', 'projects', 'skills', 'testimonials', 'contact'];
+    const sections = ['home', 'about', 'experience', 'projects', 'coursework', 'skills', 'testimonials', 'contact'];
     let currentSection = 'home'; // Default section
   
     sections.forEach((section, index) => {
@@ -280,10 +491,12 @@ function App() {
         <Menu theme="dark" mode="horizontal" selectedKeys={[activeSection]} style={{ backgroundColor: '#3A0268' }}>
           <Menu.Item key="1" style={{ color: '#fff' }}><a href="#home">Home</a></Menu.Item>
           <Menu.Item key="2" style={{ color: '#fff' }}><a href="#about">About Me</a></Menu.Item>
-          <Menu.Item key="3" style={{ color: '#fff' }}><a href="#projects">Projects</a></Menu.Item>
-          <Menu.Item key="4" style={{ color: '#fff' }}><a href="#skills">Skills</a></Menu.Item>
-          <Menu.Item key="5" style={{ color: '#fff' }}><a href="#testimonials">Testimonials</a></Menu.Item>
-          <Menu.Item key="6" style={{ color: '#fff' }}><a href="#contact">Contact</a></Menu.Item>
+          <Menu.Item key="3" style={{ color: '#fff' }}><a href="#experience">Experience</a></Menu.Item>
+          <Menu.Item key="4" style={{ color: '#fff' }}><a href="#projects">Projects</a></Menu.Item>
+          <Menu.Item key="5" style={{ color: '#fff' }}><a href="#coursework">Coursework</a></Menu.Item>
+          <Menu.Item key="6" style={{ color: '#fff' }}><a href="#skills">Skills</a></Menu.Item>
+          <Menu.Item key="7" style={{ color: '#fff' }}><a href="#testimonials">Testimonials</a></Menu.Item>
+          <Menu.Item key="8" style={{ color: '#fff' }}><a href="#contact">Contact</a></Menu.Item>
           <Menu.Item 
             key="7" 
             style={{
