@@ -293,7 +293,7 @@ function App() {
               transition: 'background-color 0.3s ease', 
             }}
           >
-            <a href="public/docs/Graber_Christian_Resume_2024.pdf" style={{ color: '#fff' }}>
+            <a href="/docs/Graber_Christian_Resume_2024.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}>
               Resume
             </a>
           </Menu.Item>
