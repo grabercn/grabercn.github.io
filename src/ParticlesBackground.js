@@ -1,140 +1,101 @@
-import { useEffect, useState, useRef } from "react";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadSlim } from "@tsparticles/slim"; // Using slim version of tsparticles
+import { useEffect, useState } from "react";
 
 const ParticlesBackground = () => {
-  const [init, setInit] = useState(false);
+  const [particles, setParticles] = useState([]);
+  const numParticles = 50;
 
-  // State for storing scroll position
-  const [scrollY, setScrollY] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false); // Track if scrolling is happening
-
-  // Use a ref to persist the timeout across renders
-  const scrollTimeoutRef = useRef(null);
-
-  // Scroll event handler to update scrollY state and freeze particles
-  const handleScroll = () => {
-    setScrollY(window.scrollY);
-    setIsScrolling(true); // Scroll is happening
-
-    // Clear any existing timeout to reset it
-    clearTimeout(scrollTimeoutRef.current);
-
-    // Set a new timeout to freeze the particles after 100ms of inactivity
-    scrollTimeoutRef.current = setTimeout(() => {
-      setIsScrolling(false); // Freeze after scrolling stops for a while
-    }, 100); // Freeze particles 100ms after scroll stops
-  };
-
+  // Initialize particle positions and directions
   useEffect(() => {
-    // Attach scroll event listener
-    window.addEventListener("scroll", handleScroll);
+    const initialParticles = [];
 
-    // Cleanup scroll event listener and clear timeout on component unmount
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeoutRef.current); // Clear the timeout when the component unmounts
+    for (let i = 0; i < numParticles; i++) {
+      initialParticles.push({
+        id: i,
+        top: Math.random() * window.innerHeight, 
+        left: Math.random() * window.innerWidth,
+        size: Math.random() * 10 + 5, // Smaller size between 5 and 15px
+        directionX: Math.random() < 0.5 ? -1 : 1, // Random horizontal direction
+        directionY: Math.random() < 0.5 ? -1 : 1, // Random vertical direction
+      });
+    }
+
+    setParticles(initialParticles);
+  }, []);
+
+  // Update particle positions and handle bouncing effect with opacity fade and blur
+  useEffect(() => {
+    const moveInterval = setInterval(() => {
+      setParticles((prevParticles) => {
+        return prevParticles.map((particle) => {
+          const newParticle = { ...particle };
+
+          // Update position based on direction
+          newParticle.top += newParticle.directionY * 3; // Slightly slower movement
+          newParticle.left += newParticle.directionX * 3;
+
+          // Bounce off the walls by reversing direction when hitting boundaries
+          if (newParticle.top <= 0 || newParticle.top >= window.innerHeight - newParticle.size) {
+            newParticle.directionY = -newParticle.directionY;
+          }
+          if (newParticle.left <= 0 || newParticle.left >= window.innerWidth - newParticle.size) {
+            newParticle.directionX = -newParticle.directionX;
+          }
+
+          return newParticle;
+        });
+      });
+    }, 30);
+
+    return () => clearInterval(moveInterval); // Cleanup on unmount
+  }, []);
+
+  // Calculate the fade and blur effect based on the particle's position
+  const getParticleStyle = (particle) => {
+    const distanceToEdgeX = Math.min(particle.left, window.innerWidth - particle.left);
+    const distanceToEdgeY = Math.min(particle.top, window.innerHeight - particle.top);
+    const distanceToEdge = Math.min(distanceToEdgeX, distanceToEdgeY);
+
+    const maxDistance = Math.min(window.innerWidth, window.innerHeight) / 2;
+    const opacity = Math.max(0.1, 1 - distanceToEdge / maxDistance); // Fade effect
+    const blur = Math.min(10, (1 - opacity) * 10); // Blur effect
+
+    return {
+      position: "absolute",
+      top: particle.top,
+      left: particle.left,
+      width: particle.size,
+      height: particle.size,
+      borderRadius: "50%", // All circles
+      backgroundColor: "#9b4dca", // Purple color
+      opacity: opacity,
+      filter: `blur(${blur}px)`, // Apply the blur effect
+      transition: "transform 0.2s ease-out", // Smooth movement
     };
-  }, []);
-
-  // Define particles config directly as a JavaScript object
-  const particlesConfig = {
-    particles: {
-      number: {
-        value: 200, // Increased number of particles for a more "bubbly" effect
-        density: {
-          enable: true,
-          value_area: 800, // Density of the particles in the viewport
-        },
-      },
-      shape: {
-        type: "circle", // Particle shape (circle to mimic bubbles)
-      },
-      opacity: {
-        value: 1.0, // Slightly lower opacity for a softer look
-        random: true, // Random opacity for a more natural bubble effect
-        animation: {
-          enable: true,
-          speed: 1, // Slow opacity change to make the bubbles less harsh
-          minimumValue: 0.3, // Minimum opacity for softer fade
-        },
-      },
-      color: {
-        value: "#D3D3D3", // Light grey color for the particles
-      },
-      size: {
-        value: 1.5, // Smaller particles to resemble bubbles
-        random: true, // Random sizes for varied bubble sizes
-        animation: {
-          enable: true,
-          speed: 1, // Slow size growth for bubble-like movement
-          minimumValue: 1, // Minimum particle size (to look like small bubbles)
-        },
-      },
-      links: {
-        enable: false, // Disable links for a cleaner look (no connections between bubbles)
-      },
-      move: {
-        enable: true,
-        speed: 1, // Upward movement speed of particles
-        direction: "top", // Particles should move upward to simulate bubbles rising
-        random: false, // No random directionality to simulate a steady upward motion
-        straight: false,
-        outModes: {
-          default: "out", // Particles will disappear when they go out of bounds
-        },
-        attract: {
-          enable: false,
-        },
-      },
-    },
   };
 
-  // This should be run only once per application lifetime
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      // Initialize particles engine and load Slim
-      await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-    });
-  }, []);
-
-  // Function to handle particles loaded (no need for console.log)
-  const particlesLoaded = (container) => {
-    // You can handle additional tasks after particles are loaded
-  };
-
-  if (init) {
-    return (
-      <>
-        {/* Particles Layer */}
-        <div
-          style={{
-            position: "fixed", // Fix particles in place relative to the viewport
-            top: 0,
-            left: 0,
-            zIndex: 0, // Ensure particles stay in the background
-            width: "100vw", // Full viewport width
-            height: "200vh", // Ensure particles cover enough area for scrolling
-            pointerEvents: "none", // Prevent interaction with particles
-            transform: isScrolling
-              ? `translateY(${scrollY * 0.1}px)` // Apply freeze effect during scroll
-              : `translateY(${scrollY * 0.1}px)`, // Freeze position at scroll position
-            transition: isScrolling ? "none" : "transform 0.5s ease-out", // No transition when scrolling happens
-          }}
-        >
-          <Particles
-            id="tsparticles"
-            options={particlesConfig} // Directly inject the config here
-            particlesLoaded={particlesLoaded} // Trigger particlesLoaded callback when particles are loaded
+  return (
+    <>
+      {/* Particles Layer */}
+      <div
+        style={{
+          position: "fixed", // Fix particles in place relative to the viewport
+          top: 0,
+          left: 0,
+          zIndex: 0, // Ensure particles stay in the background
+          width: "100vw", // Full viewport width
+          height: "200vh", // Ensure particles cover enough area for scrolling
+          pointerEvents: "none", // Prevent interaction with particles
+        }}
+      >
+        {particles.map((particle) => (
+          <div
+            key={particle.id}
+            style={getParticleStyle(particle)} // Apply dynamic style based on position
           />
-        </div>
-      </>
-    );
-  }
-
-  return <></>;
+        ))}
+      </div>
+    </>
+  );
 };
 
 export default ParticlesBackground;

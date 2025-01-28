@@ -319,11 +319,14 @@ function App() {
         >
           {sections.map((section, index) => (
             <div key={section.id} id={section.id}>
+              <br />
               <FloatingCard title={section.cardTitle}>
                 <FloatingText className="text-animation">
                   {section.content}
                 </FloatingText>
               </FloatingCard>
+              <br />
+              <br />
             </div>
           ))}
         </motion.div>

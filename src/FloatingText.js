@@ -42,7 +42,6 @@ const FloatingText = ({ children, className, context }) => {
         duration: 2,     // Duration of the transition effect
       }}
       style={{
-        ...customStyles, // Apply the custom styles based on context
       }}
     >
       {children}
