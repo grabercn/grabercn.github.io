@@ -86,3 +86,42 @@ html {
   color: #fff !important;
 }
 
+/* Ensure the layout content doesn't have extra padding on mobile */
+@media (max-width: 768px) {
+  /* Remove padding for layout content */
+  .ant-layout-content {
+    padding: 0 !important;
+  }
+
+  /* Make sure the site layout content has no additional padding */
+  .site-layout-content {
+    padding: 0 !important;
+  }
+
+  /* Target the FloatingCard class (make sure it exists or use the appropriate class) */
+  .floating-card {
+    width: 100% !important; /* Force full width */
+    margin: 0 !important; /* Remove margin */
+    background: rgba(255, 255, 255, 0.85) !important; /* Slight transparency */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 10px !important;
+  }
+
+  /* Adjust Card inside FloatingCard */
+  .ant-card {
+    width: 100% !important; /* Make sure the card itself takes full width */
+    margin: 0 !important; /* Ensure no margin overrides */
+    padding: 20px !important; /* Set the padding to the value you want */
+  }
+
+  /* Optionally, if you need to tweak any title margins */
+  .ant-card .ant-card-head-title {
+    margin-bottom: 15px !important; /* If you want title spacing */
+  }
+
+  /* Ensure that cards do not have unwanted horizontal padding on smaller screens */
+  .ant-card-body {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}

@@ -5,8 +5,8 @@ import FloatingText from './FloatingText'; // Import the FloatingText component
 const FloatingCard = ({ children, title }) => {
   return (
     <FloatingText>
-      <Card 
-        hoverable 
+      <Card  
+        className="floating-card"
         style={{
           position: 'relative',
           zIndex: 1,

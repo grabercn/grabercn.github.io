@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Typography, Row, Col, Card, Avatar } from 'antd';
+import { Layout, Menu, Typography, Row, Col, Card } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
-import { UserOutlined, CodeOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, BranchesOutlined } from '@ant-design/icons';
+import { UserOutlined, CodeOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined } from '@ant-design/icons';
 import Banner from './Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
@@ -340,7 +340,7 @@ function App() {
           <Menu.Item key="6" style={{ color: '#fff' }}><a href="#testimonials">Testimonials</a></Menu.Item>
           <Menu.Item key="7" style={{ color: '#fff' }}><a href="#contact">Contact</a></Menu.Item>
           <Menu.Item 
-            key="7" 
+            key="8" 
             style={{
               color: '#fff', 
               fontWeight: 'bold', 
@@ -361,11 +361,13 @@ function App() {
       {/* Add the ParticlesBackground component */}
       <ParticlesBackground />
 
-      <Content style={{
-        padding: '0 50px',
-        backgroundColor: '#f3e8f9',
-        cursor: 'default'
-      }}>
+      <Content
+        style={{
+          padding: '0 50px',
+          backgroundColor: '#f3e8f9',
+          cursor: 'default',
+        }}
+      >
         <motion.div
           className="site-layout-content"
           style={{ padding: '24px 0' }}
@@ -376,8 +378,18 @@ function App() {
           {sections.map((section, index) => (
             <div key={section.id} id={section.id}>
               <br />
-              <FloatingCard title={section.cardTitle} >
-                <FloatingText className="text-animation" >
+              <FloatingCard
+                title={section.cardTitle}
+                style={{
+                  // Mobile styles
+                  width: '100%',
+                  margin: '0 auto',
+                  borderRadius: '10px',
+                  background: 'rgba(255, 255, 255, 0.85)', // Slight transparency
+                  boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
+                }}
+              >
+                <FloatingText className="text-animation">
                   {section.content}
                 </FloatingText>
               </FloatingCard>
