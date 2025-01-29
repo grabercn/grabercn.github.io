@@ -241,7 +241,7 @@ const sections = [
         <li>
           <RocketOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
           <a href="https://github.com/grabercn/ForumHub" target="_blank" rel="noopener noreferrer">
-            ForumHub: React, JavaScript, Java, PostgreSQL
+            ForumHub: React, JavaScript, Java, Spring Boot, PostgreSQL
           </a>
           <p>
             Developed a dynamic React-based forum website hosted on Azure, featuring a modern architecture and interface. Implemented pagination and efficient rendering of hundreds of posts, comments, and reactions.
