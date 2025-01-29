@@ -249,7 +249,7 @@ const sections = [
         </li>
         <li>
           <CarOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
-          <a href="https://github.com/grabercn/RideShareApp" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/OwenAEdwards/RideShare.Android" target="_blank" rel="noopener noreferrer">
             RideShare App: Kotlin, C#, .NET, MongoDB
           </a>
           <p>
@@ -258,7 +258,7 @@ const sections = [
         </li>
         <li>
           <ShoppingCartOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
-          <a href="https://github.com/grabercn/eCommerceApp" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/grabercn/Database-eCommerce-Website" target="_blank" rel="noopener noreferrer">
             eCommerce Application: Java, Spring Boot, React, PostgreSQL
           </a>
           <p>
@@ -506,7 +506,7 @@ function App() {
               transition: 'background-color 0.3s ease', 
             }}
           >
-            <a href="public/docs/Graber_Christian_Resume_2024.pdf" style={{ color: '#fff' }}>
+            <a href="/docs/Graber_Christian_Resume_2024.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}>
               Resume
             </a>
           </Menu.Item>
