@@ -18,9 +18,10 @@ const experienceData = [
       'Led a fundraising initiative for a non-profit, raising $10,000'
     ],
     skills: ['C# .NET', 'API Development', 'MSSQL', 'Agile', 'Scrum'],
+    date: "May 2024 - Aug 2024"
   },
   {
-    title: 'Software Engineering Intern - Midmark Corporation (Dec 2023)',
+    title: 'Software Engineering Intern - Midmark Corporation',
     link: 'https://midmark.com/about',
     avatarSrc: '/images/midmark-icon.jpg',
     description: 'In my role at Midmark, I developed internal tools and worked on optimizing APIs and testing, resulting in improved stability and performance.',
@@ -30,9 +31,10 @@ const experienceData = [
       'Optimized RESTful APIs, reducing response times by 10%',
     ],
     skills: ['C#', 'Python', 'API Optimization', 'Unit Testing'],
+    date: "Aug 2023 - Dec 2023"
   },
   {
-    title: 'Software Engineering Intern - Midmark Corporation (Apr 2023)',
+    title: 'Software Engineering Intern - Midmark Corporation',
     link: 'https://midmark.com/about',
     avatarSrc: '/images/midmark-icon.jpg',
     description: 'I worked on developing reusable React components and collaborated closely with designers to improve usability and reduce friction in the UI.',
@@ -42,6 +44,7 @@ const experienceData = [
       'Implemented micro frontends with Single-Spa',
     ],
     skills: ['React', 'TypeScript', 'UI/UX Design', 'Micro Frontends'],
+    date: "Jan 2023 - Apr 2023"
   },
   {
     title: 'Website Developer - Stonewall Boxers',
@@ -53,6 +56,7 @@ const experienceData = [
       'Implemented SEO strategies, boosting local web traffic',
     ],
     skills: ['Web Development', 'SEO', 'HTML', 'CSS', 'JavaScript'],
+    date: "Jan 2019 - Mar 2019"
   },
 ];
 
@@ -79,14 +83,17 @@ const Experience = () => {
             <Card
               key={index}
               title={
-                <a href={experience.link} target="_blank" rel="noopener noreferrer">
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                <a href={experience.link} target="_blank" rel="noopener noreferrer" style={{display: 'inline-block', overflow: 'hidden', wordWrap: 'break-word' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                     <Avatar src={experience.avatarSrc} size={40} style={{ marginRight: '12px' }} />
-                    <span>{experience.title}</span>
+                    <span style={{ wordWrap: 'break-word', whiteSpace: 'normal', flex: '1 1 auto' }}>{experience.title}</span>
                   </div>
+                  {/* Date below the title */}
+                  <small style={{ display: 'block', marginTop: '5px', color: 'grey' }}>
+                    {experience.date}
+                  </small>
                 </a>
               }
-              hoverable
               style={{
                 width: '100%',
                 marginBottom: '20px',
