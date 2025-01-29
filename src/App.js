@@ -71,9 +71,9 @@ const sections = [
               <RocketOutlined style={{ marginRight: '8px' }} /> My Technical Interests
             </Title>
             <Paragraph>
-              I’m particularly interested in full-stack development and cloud computing. I enjoy building robust backends using technologies like Node.js, C#, and SQL,
+              I'm particularly interested in full-stack development and cloud computing. I enjoy building robust backends using technologies like Node.js, C#, and SQL,
               while also creating beautiful, user-friendly front-end experiences with React, TypeScript, and Tailwind CSS. 
-              I’m passionate about building scalable, efficient solutions and have a strong foundation in designing APIs, working with databases, and ensuring the best user experiences.
+              I'm passionate about building scalable, efficient solutions and have a strong foundation in designing APIs, working with databases, and ensuring the best user experiences.
               My other interests include IoT, microservices, and containerization technologies such as Docker, which I find fascinating for their potential in making systems more flexible and scalable.
             </Paragraph>
           </Col>
@@ -84,7 +84,7 @@ const sections = [
               <RocketOutlined style={{ marginRight: '8px' }} /> Career Goals
             </Title>
             <Paragraph>
-              As I move closer to graduating, I’m eager to continue honing my skills in software engineering, particularly in roles where I can contribute to meaningful projects that make a difference.
+              As I move closer to graduating, I'm eager to continue honing my skills in software engineering, particularly in roles where I can contribute to meaningful projects that make a difference.
               I'm looking for opportunities where I can apply my technical expertise in software development and gain hands-on experience with new technologies.
               Ultimately, I aim to grow into a versatile engineer who can work across different domains and continue learning throughout my career.
             </Paragraph>
@@ -96,7 +96,7 @@ const sections = [
               <CodeOutlined style={{ marginRight: '8px' }} /> Fun Facts
             </Title>
             <Paragraph>
-              Aside from coding, I enjoy staying active and exploring new hobbies. Whether it’s learning new programming languages, experimenting with robotics, or even participating in hackathons, I’m always looking to grow.
+              Aside from coding, I enjoy staying active and exploring new hobbies. Whether it's learning new programming languages, experimenting with robotics, or even participating in hackathons, I'm always looking to grow.
               I also love to share knowledge and collaborate with others in tech communities. I believe in the power of continuous learning and sharing knowledge to help drive innovation.
             </Paragraph>
           </Col>
@@ -116,7 +116,7 @@ const sections = [
               <CodeOutlined style={{ marginRight: '8px' }} /> My Professional Experience
             </Title>
             <Paragraph>
-              Here are some highlights from my internships and co-op roles, where I’ve had the opportunity to work on various impactful projects.
+              Here are some highlights from my internships and co-op roles, where I've had the opportunity to work on various impactful projects.
             </Paragraph>
           </Col>
         </Row>
@@ -241,7 +241,7 @@ const sections = [
         <li>
           <RocketOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
           <a href="https://github.com/grabercn/ForumHub" target="_blank" rel="noopener noreferrer">
-            ForumHub: React, JavaScript, Java, PostgreSQL
+            ForumHub: React, JavaScript, Java, Spring Boot, PostgreSQL
           </a>
           <p>
             Developed a dynamic React-based forum website hosted on Azure, featuring a modern architecture and interface. Implemented pagination and efficient rendering of hundreds of posts, comments, and reactions.
@@ -321,29 +321,9 @@ const sections = [
               <ul>
                 <li>Principles of Artificial Intelligence</li>
                 <li>Communication Networks 1</li>
-                <li>Principles of the IOT</li>
+                <li>Principles of the IoT</li>
                 <li>Digital Image Processing 1</li>
                 <li>Software and Application Security</li>
-              </ul>
-            </Card>
-          </Col>
-  
-          {/* 2024-2025 Coursework */}
-          <Col span={24} md={12}>
-            <Card title="2024-2025" hoverable>
-              <ul>
-                <li>Upcoming...</li>
-              </ul>
-            </Card>
-          </Col>
-        </Row>
-  
-        {/* 2025-2026 Coursework */}
-        <Row gutter={[16, 16]} style={{ paddingTop: '20px', paddingBottom: '20px' }}>
-          <Col span={24} md={12}>
-            <Card title="2025-2026" hoverable>
-              <ul>
-                <li>Upcoming...</li>
               </ul>
             </Card>
           </Col>
