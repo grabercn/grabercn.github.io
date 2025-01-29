@@ -321,29 +321,9 @@ const sections = [
               <ul>
                 <li>Principles of Artificial Intelligence</li>
                 <li>Communication Networks 1</li>
-                <li>Principles of the IOT</li>
+                <li>Principles of the IoT</li>
                 <li>Digital Image Processing 1</li>
                 <li>Software and Application Security</li>
-              </ul>
-            </Card>
-          </Col>
-  
-          {/* 2024-2025 Coursework */}
-          <Col span={24} md={12}>
-            <Card title="2024-2025" hoverable>
-              <ul>
-                <li>Upcoming...</li>
-              </ul>
-            </Card>
-          </Col>
-        </Row>
-  
-        {/* 2025-2026 Coursework */}
-        <Row gutter={[16, 16]} style={{ paddingTop: '20px', paddingBottom: '20px' }}>
-          <Col span={24} md={12}>
-            <Card title="2025-2026" hoverable>
-              <ul>
-                <li>Upcoming...</li>
               </ul>
             </Card>
           </Col>
