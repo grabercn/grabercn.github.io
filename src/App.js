@@ -3,13 +3,12 @@ import { Layout, Menu, Typography, Row, Col, Card } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
 import { UserOutlined, CodeOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined } from '@ant-design/icons';
-import Banner from './Banner';
+import Banner from './other/Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
 import ParticlesBackground from './animations/ParticlesBackground'; // Import the ParticlesBackground Component
 import SkillsContent from './content/SkillsContent';
 import Experience from './content/ExperienceContent';
-
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 

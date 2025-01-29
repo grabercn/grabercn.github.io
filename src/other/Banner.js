@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDownOutlined } from '@ant-design/icons';
 import { Row, Col, Button, Typography, Image } from 'antd';
-import JumpingText from './animations/JumpingText';
+import JumpingText from '../animations/JumpingText';
 
 const { Title, Paragraph } = Typography;
 
