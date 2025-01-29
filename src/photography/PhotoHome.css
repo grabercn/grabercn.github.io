@@ -1,104 +1,61 @@
 /* Stack Container */
 .stack-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 50px;
-  }
-  
-  /* Stack Images - Overlapping images */
-  .photo-stack {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    margin: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    z-index: 1;
-  }
-  
-  /* Stack Thumbnails */
-  .stack-thumbnails {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    transition: all 0.5s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-  }
-  
-  .stack-thumbnails.open {
-    position: static;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-  
-  .stack-thumbnail {
-    position: absolute;
-    transition: all 0.3s ease;
-    width: 90%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .stack-thumbnail img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  
-  /* Expanded images grid under the stack */
-  .stack-expanded-images {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
-    z-index: 10;
-    opacity: 0;
-    transform: scale(0.9);
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-    visibility: hidden;
-  }
-  
-  .stack-expanded-images.open {
-    opacity: 1;
-    transform: scale(1);
-    visibility: visible;
-  }
-  
-  .stack-expanded-image {
-    cursor: pointer;
-  }
-  
-  .stack-expanded-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-  }
-  
-  .stack-expanded-image:hover img {
-    transform: scale(1.05);
-  }
-  
-  /* Collapse Arrow Button */
-  .collapse-arrow {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 50px;
+}
+
+/* Ensure the stack is fixed in place */
+.photo-stack {
+  position: relative; /* Keep the stack fixed */
+  width: 300px;
+  height: 300px;
+  margin: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1; /* Ensure stack remains above the grid */
+}
+
+/* Stack Images - Overlapping images */
+.stack-thumbnails {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  transition: all 0.5s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.stack-thumbnail {
+  position: absolute;
+  transition: all 0.3s ease;
+  width: 90%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.stack-thumbnail img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Stack Name (for showing stack title) */
+.stack-name {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
