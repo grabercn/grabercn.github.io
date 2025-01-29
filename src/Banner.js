@@ -68,7 +68,7 @@ const Banner = () => {
           <Image
             width="100%"
             height="100%"
-            src="https://images.pexels.com/photos/18069694/pexels-photo-18069694/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-illustration-depicts-language-models-which-generate-text-it-was-created-by-wes-cockx-as-part-of-the-visualising-ai-project-l.png"
+            src="/images/banner.jpg"
             preview={false}
             style={{
               objectFit: 'cover',
@@ -111,6 +111,11 @@ const Banner = () => {
                 span={24} // Full width to avoid padding issues
                 style={{ padding: 0 }} // Ensure no padding on Col
               >
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                  <div style={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden',  border: '4px solid purple' }}>
+                    <img src="/images/profile.jpg" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+                  </div>
+                </div>
                 <Title
                   style={{
                     fontSize: '48px',
@@ -134,15 +139,17 @@ const Banner = () => {
                   Get in Touch
                 </Button>
                 <div style={{ marginTop: '20px' }}>
-                  <ArrowDownOutlined
-                    style={{
-                      fontSize: '36px',
-                      color: '#fff',
-                      marginTop: '20px',
-                      cursor: 'pointer',
-                      animation: 'bounce 1.5s infinite',
-                    }}
-                  />
+                  <a href="#contact">
+                    <ArrowDownOutlined
+                      style={{
+                        fontSize: '36px',
+                        color: '#fff',
+                        marginTop: '20px',
+                        cursor: 'pointer',
+                        animation: 'bounce 1.5s infinite',
+                      }}
+                    />
+                  </a>
                 </div>
               </Col>
             </JumpingText>

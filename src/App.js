@@ -2,51 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Typography, Row, Col, Card, Avatar } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
-import { UserOutlined, CodeOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined } from '@ant-design/icons';
+import { UserOutlined, CodeOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, BranchesOutlined } from '@ant-design/icons';
 import Banner from './Banner';
 import FloatingText from './FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./FloatingCard"
 import ParticlesBackground from './ParticlesBackground'; // Import the ParticlesBackground Component
-import SkillsCarousel from './SkillsCarousel'; // Import the SkillsCarousel Component
+import SkillsContent from './SkillsContent';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 
 const sections = [
-  {
-    id: 'home',
-    title: "Welcome to My Portfolio",
-    content: (
-      <>
-        <Row gutter={[16, 16]}>
-          <Col span={24}>
-            <Title level={3} style={{ display: 'flex', alignItems: 'center' }}>
-              <img
-                src="/images/profile.jpg"
-                alt="Profile"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  marginRight: '15px',
-                }}
-              />
-              Welcome to My Portfolio
-            </Title>
-            <Paragraph>
-              Here you can take a glimpse into my journey, my work, and my passion projects. 
-              <br />
-              I'm Christian Graber, a Computer Science student with a passion for software development and technology. 
-              <br />
-              I'm excited to share my projects, skills, and experiences with you. 
-              <br />
-            </Paragraph>
-          </Col>
-        </Row>
-      </>
-    ),
-    cardTitle: "Welcome to My Portfolio"
-  },
   {
     id: 'about',
     title: "About Me",
@@ -55,7 +21,7 @@ const sections = [
         <Row gutter={[16, 16]}>
           <Col span={24}>
             <Title level={3}>
-              <UserOutlined style={{ marginRight: '8px' }} /> A Little About Me
+              <UserOutlined style={{ marginRight: '8px' }} /> Who I Am
             </Title>
             <Paragraph>
               Hi! I'm Christian Graber, a passionate software developer currently in my fourth year of studying Computer Science at the University of Cincinnati. 
@@ -68,7 +34,7 @@ const sections = [
         <Row gutter={[16, 16]}>
           <Col span={24}>
             <Title level={4}>
-              <RocketOutlined style={{ marginRight: '8px' }} /> My Technical Interests
+              <LaptopOutlined style={{ marginRight: '8px' }} /> My Technical Interests
             </Title>
             <Paragraph>
               I’m particularly interested in full-stack development and cloud computing. I enjoy building robust backends using technologies like Node.js, C#, and SQL,
@@ -93,7 +59,7 @@ const sections = [
         <Row gutter={[16, 16]}>
           <Col span={24}>
             <Title level={4}>
-              <CodeOutlined style={{ marginRight: '8px' }} /> Fun Facts
+              <LikeOutlined style={{ marginRight: '8px' }} /> Fun Facts
             </Title>
             <Paragraph>
               Aside from coding, I enjoy staying active and exploring new hobbies. Whether it’s learning new programming languages, experimenting with robotics, or even participating in hackathons, I’m always looking to grow.
@@ -113,7 +79,7 @@ const sections = [
         <Row gutter={[16, 16]} style={{ paddingTop: '20px', paddingBottom: '40px' }}>
           <Col span={24}>
             <Title level={3}>
-              <CodeOutlined style={{ marginRight: '8px' }} /> My Professional Experience
+              <BranchesOutlined style={{ marginRight: '8px' }} /> My Professional Experience
             </Title>
             <Paragraph>
               Here are some highlights from my internships and co-op roles, where I’ve had the opportunity to work on various impactful projects.
@@ -127,10 +93,12 @@ const sections = [
             {/* MRI Software Internship */}
             <Card
               title={
+                <a href='https://mrisoftware.com/about' target="_blank">
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar src="path-to-mri-software-logo.png" size={40} style={{ marginRight: '12px' }} />
+                  <Avatar src="/images/mri-icon.jpg" size={40} style={{ marginRight: '12px' }} />
                   <span>Software Engineering Intern - MRI Software</span>
                 </div>
+                </a>
               }
               hoverable
               style={{
@@ -143,10 +111,10 @@ const sections = [
                 During my internship at MRI Software, I contributed to the development of 10+ API endpoints and modernized key system components, improving the overall performance.
               </Paragraph>
               <ul>
-                <li>Developed and deployed API endpoints in C# .NET, improving data access by 20%</li>
+                <li>Developed and deployed API endpoints in C# .NET, <b>improving data access by 20%</b></li>
                 <li>Implemented RESTful APIs, boosting security and efficiency</li>
                 <li>Worked with an Agile team to deliver high-quality software</li>
-                <li>Led a fundraising initiative for a non-profit, raising $10,000</li>
+                <li>Led a fundraising initiative for a non-profit, <b>raising $10,000</b></li>
               </ul>
               <div><strong>Relevant Skills:</strong> C# .NET, API Development, MSSQL, Agile, Scrum</div>
             </Card>
@@ -154,10 +122,12 @@ const sections = [
             {/* Midmark Corporation Internship (Dec 2023) */}
             <Card
               title={
+                <a href='https://midmark.com/about' target="_blank">
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar src="path-to-midmark-logo.png" size={40} style={{ marginRight: '12px' }} />
+                  <Avatar src="/images/midmark-icon.jpg" size={40} style={{ marginRight: '12px' }} />
                   <span>Software Engineering Intern - Midmark Corporation</span>
                 </div>
+                </a>
               }
               hoverable
               style={{
@@ -170,9 +140,9 @@ const sections = [
                 In my role at Midmark, I developed internal tools and worked on optimizing APIs and testing, resulting in improved stability and performance.
               </Paragraph>
               <ul>
-                <li>Developed internal C# tools, reducing bugs by 15%</li>
-                <li>Integrated Python testing to improve product quality by 100%</li>
-                <li>Optimized RESTful APIs, reducing response times by 10%</li>
+                <li>Developed internal C# tools, <b>reducing bugs by 15%</b></li>
+                <li>Integrated Python testing to <b>improve product quality by 100%</b></li>
+                <li>Optimized RESTful APIs, <b>reducing response times by 10%</b></li>
               </ul>
               <div><strong>Relevant Skills:</strong> C#, Python, API Optimization, Unit Testing</div>
             </Card>
@@ -180,10 +150,12 @@ const sections = [
             {/* Midmark Corporation Internship (Apr 2023) */}
             <Card
               title={
+                <a href='https://midmark.com/about' target="_blank">
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar src="path-to-midmark-logo.png" size={40} style={{ marginRight: '12px' }} />
+                  <Avatar src="/images/midmark-icon.jpg" size={40} style={{ marginRight: '12px' }} />
                   <span>Software Engineering Intern - Midmark Corporation</span>
                 </div>
+                </a>
               }
               hoverable
               style={{
@@ -196,8 +168,8 @@ const sections = [
                 I worked on developing reusable React components and collaborated closely with designers to improve usability and reduce friction in the UI.
               </Paragraph>
               <ul>
-                <li>Developed 5+ reusable React components in TypeScript</li>
-                <li>Improved UI usability, reducing friction by 10%</li>
+                <li>Developed <b>5+ reusable React components</b> in TypeScript</li>
+                <li>Improved UI usability, <b>reducing friction by 10%</b></li>
                 <li>Implemented micro frontends with Single-Spa</li>
               </ul>
               <div><strong>Relevant Skills:</strong> React, TypeScript, UI/UX Design, Micro Frontends</div>
@@ -206,10 +178,12 @@ const sections = [
             {/* Stonewall Boxers Website Developer */}
             <Card
               title={
+                <a href='http://stonewallboxers.com/' target="_blank">
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar src="path-to-stonewall-boxers-logo.png" size={40} style={{ marginRight: '12px' }} />
+                  <Avatar src="/images/stonewall-icon.jpg" size={40} style={{ marginRight: '12px' }} />
                   <span>Website Developer - Stonewall Boxers</span>
                 </div>
+                </a>
               }
               hoverable
               style={{
@@ -222,7 +196,7 @@ const sections = [
                 As a website developer for Stonewall Boxers, I built and optimized their website to drive traffic and enhance user experience.
               </Paragraph>
               <ul>
-                <li>Created and optimized a dynamic website that attracted hundreds of users</li>
+                <li>Created and optimized a dynamic website that attracted <b>hundreds of users</b></li>
                 <li>Implemented SEO strategies, boosting local web traffic</li>
               </ul>
               <div><strong>Relevant Skills:</strong> Web Development, SEO, HTML, CSS, JavaScript</div>
@@ -356,7 +330,7 @@ const sections = [
     id: 'skills',
     cardTitle: "Skills",
     content: (
-        <SkillsCarousel />
+        <SkillsContent />
     ),
   },
   {
@@ -436,31 +410,47 @@ const sections = [
     title: "Contact",
     content: (
       <>
-        <Paragraph>Feel free to reach out to me through the following methods:</Paragraph>
-          <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
-            <li>
-              <MailOutlined style={{ marginRight: '8px' }} />
-              <a href="mailto:grabercn@mail.uc.edu">grabercn@mail.uc.edu</a>
-            </li>
-            <li>
-              <LinkedinOutlined style={{ marginRight: '8px' }} />
-              <a href="https://www.linkedin.com/in/christian-graber" target="_blank" rel="noopener noreferrer">
-                christian-graber
-              </a>
-            </li>
+        <Paragraph style={{ textAlign: 'center', fontSize: '18px', color: '#555', marginBottom: '20px' }}>
+          Feel free to reach out to me through the following methods:
+        </Paragraph>
+        <ul style={{ listStyleType: 'none', paddingLeft: 0, margin: '0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '10px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
+            <MailOutlined style={{ marginRight: '12px', fontSize: '28px', color: '#007BFF', transition: 'color 0.3s ease, transform 0.3s ease' }} />
+            <a 
+              href="mailto:grabercn@mail.uc.edu" 
+              style={{ fontSize: '18px', color: '#007BFF', textDecoration: 'none', transition: 'color 0.3s ease, transform 0.3s ease' }}
+              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} // Slight scaling effect on hover
+              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} // Reset scale
+            >
+              grabercn@mail.uc.edu
+            </a>
+          </li>
+          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '10px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
+            <LinkedinOutlined style={{ marginRight: '12px', fontSize: '28px', color: '#0077b5', transition: 'color 0.3s ease, transform 0.3s ease' }} />
+            <a 
+              href="https://www.linkedin.com/in/christian-graber" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              style={{ fontSize: '18px', color: '#0077b5', textDecoration: 'none', transition: 'color 0.3s ease, transform 0.3s ease' }}
+              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} // Slight scaling effect on hover
+              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} // Reset scale
+            >
+              christian-graber
+            </a>
+          </li>
         </ul>
       </>
     ),
     cardTitle: "Contact"
-  }
+  }  
 ];
 
 function App() {
   const [activeSection, setActiveSection] = useState('home'); // Track the active section
 
   const handleScroll = () => {
-    const sections = ['home', 'about', 'experience', 'projects', 'coursework', 'skills', 'testimonials', 'contact'];
-    let currentSection = 'home'; // Default section
+    const sections = ['about', 'experience', 'projects', 'coursework', 'skills', 'testimonials', 'contact'];
+    let currentSection = ''; // Default section
   
     sections.forEach((section, index) => {
       const sectionElement = document.getElementById(section);
@@ -489,14 +479,13 @@ function App() {
       <Header style={{ padding: '0 50px', background: '#3A0268' }}>
         <div className="logo" />
         <Menu theme="dark" mode="horizontal" selectedKeys={[activeSection]} style={{ backgroundColor: '#3A0268' }}>
-          <Menu.Item key="1" style={{ color: '#fff' }}><a href="#home">Home</a></Menu.Item>
-          <Menu.Item key="2" style={{ color: '#fff' }}><a href="#about">About Me</a></Menu.Item>
-          <Menu.Item key="3" style={{ color: '#fff' }}><a href="#experience">Experience</a></Menu.Item>
-          <Menu.Item key="4" style={{ color: '#fff' }}><a href="#projects">Projects</a></Menu.Item>
-          <Menu.Item key="5" style={{ color: '#fff' }}><a href="#coursework">Coursework</a></Menu.Item>
-          <Menu.Item key="6" style={{ color: '#fff' }}><a href="#skills">Skills</a></Menu.Item>
-          <Menu.Item key="7" style={{ color: '#fff' }}><a href="#testimonials">Testimonials</a></Menu.Item>
-          <Menu.Item key="8" style={{ color: '#fff' }}><a href="#contact">Contact</a></Menu.Item>
+          <Menu.Item key="1" style={{ color: '#fff' }}><a href="#about">About Me</a></Menu.Item>
+          <Menu.Item key="2" style={{ color: '#fff' }}><a href="#experience">Experience</a></Menu.Item>
+          <Menu.Item key="3" style={{ color: '#fff' }}><a href="#projects">Projects</a></Menu.Item>
+          <Menu.Item key="4" style={{ color: '#fff' }}><a href="#coursework">Coursework</a></Menu.Item>
+          <Menu.Item key="5" style={{ color: '#fff' }}><a href="#skills">Skills</a></Menu.Item>
+          <Menu.Item key="6" style={{ color: '#fff' }}><a href="#testimonials">Testimonials</a></Menu.Item>
+          <Menu.Item key="7" style={{ color: '#fff' }}><a href="#contact">Contact</a></Menu.Item>
           <Menu.Item 
             key="7" 
             style={{
@@ -522,6 +511,7 @@ function App() {
       <Content style={{
         padding: '0 50px',
         backgroundColor: '#f3e8f9',
+        cursor: 'default'
       }}>
         <motion.div
           className="site-layout-content"
@@ -533,8 +523,8 @@ function App() {
           {sections.map((section, index) => (
             <div key={section.id} id={section.id}>
               <br />
-              <FloatingCard title={section.cardTitle}>
-                <FloatingText className="text-animation">
+              <FloatingCard title={section.cardTitle} >
+                <FloatingText className="text-animation" >
                   {section.content}
                 </FloatingText>
               </FloatingCard>
