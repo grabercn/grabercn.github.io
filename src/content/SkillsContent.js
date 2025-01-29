@@ -1,6 +1,6 @@
 import React from 'react';
 import { Progress } from 'antd';
-import { CodeOutlined, AppstoreAddOutlined, CloudOutlined, BranchesOutlined, GlobalOutlined, KeyOutlined, SearchOutlined, MinusCircleOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { AppstoreAddOutlined, GlobalOutlined, KeyOutlined, SearchOutlined, PlusOutlined } from '@ant-design/icons';
 
 // Skills data
 const skills = [
@@ -62,7 +62,7 @@ const SkillsContent = () => {
 
       <br />
 
-      <h3 style={{ display: 'flex', alignItems: 'center' }}><SearchOutlined style={{ marginRight: '10px' }} />Skills</h3>
+      <h3 style={{ display: 'flex', alignItems: 'center' }}><SearchOutlined style={{ marginRight: '10px' }} />Languages</h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '15px' }}>
         {skills.map((skill, index) => (
           <div key={index} style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center' }}>

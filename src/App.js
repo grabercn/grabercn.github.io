@@ -4,10 +4,11 @@ import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
 import { UserOutlined, CodeOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, BranchesOutlined } from '@ant-design/icons';
 import Banner from './Banner';
-import FloatingText from './FloatingText'; // Import the FloatingText Component
-import FloatingCard from "./FloatingCard"
-import ParticlesBackground from './ParticlesBackground'; // Import the ParticlesBackground Component
-import SkillsContent from './SkillsContent';
+import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
+import FloatingCard from "./animations/FloatingCard"
+import ParticlesBackground from './animations/ParticlesBackground'; // Import the ParticlesBackground Component
+import SkillsContent from './content/SkillsContent';
+import Experience from './content/ExperienceContent';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
@@ -75,138 +76,10 @@ const sections = [
     id: 'experience',
     title: "Experience",
     content: (
-      <>
-        <Row gutter={[16, 16]} style={{ paddingTop: '20px', paddingBottom: '40px' }}>
-          <Col span={24}>
-            <Title level={3}>
-              <BranchesOutlined style={{ marginRight: '8px' }} /> My Professional Experience
-            </Title>
-            <Paragraph>
-              Here are some highlights from my internships and co-op roles, where I've had the opportunity to work on various impactful projects.
-            </Paragraph>
-          </Col>
-        </Row>
-  
-        {/* Experience Cards */}
-        <Row gutter={[32, 32]} style={{paddingBottom: '30px' }}>
-          <Col span={24}>
-            {/* MRI Software Internship */}
-            <Card
-              title={
-                <a href='https://mrisoftware.com/about' target="_blank">
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar src="/images/mri-icon.jpg" size={40} style={{ marginRight: '12px' }} />
-                  <span>Software Engineering Intern - MRI Software</span>
-                </div>
-                </a>
-              }
-              hoverable
-              style={{
-                width: '100%',
-                marginBottom: '20px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <Paragraph>
-                During my internship at MRI Software, I contributed to the development of 10+ API endpoints and modernized key system components, improving the overall performance.
-              </Paragraph>
-              <ul>
-                <li>Developed and deployed API endpoints in C# .NET, <b>improving data access by 20%</b></li>
-                <li>Implemented RESTful APIs, boosting security and efficiency</li>
-                <li>Worked with an Agile team to deliver high-quality software</li>
-                <li>Led a fundraising initiative for a non-profit, <b>raising $10,000</b></li>
-              </ul>
-              <div><strong>Relevant Skills:</strong> C# .NET, API Development, MSSQL, Agile, Scrum</div>
-            </Card>
-  
-            {/* Midmark Corporation Internship (Dec 2023) */}
-            <Card
-              title={
-                <a href='https://midmark.com/about' target="_blank">
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar src="/images/midmark-icon.jpg" size={40} style={{ marginRight: '12px' }} />
-                  <span>Software Engineering Intern - Midmark Corporation</span>
-                </div>
-                </a>
-              }
-              hoverable
-              style={{
-                width: '100%',
-                marginBottom: '20px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <Paragraph>
-                In my role at Midmark, I developed internal tools and worked on optimizing APIs and testing, resulting in improved stability and performance.
-              </Paragraph>
-              <ul>
-                <li>Developed internal C# tools, <b>reducing bugs by 15%</b></li>
-                <li>Integrated Python testing to <b>improve product quality by 100%</b></li>
-                <li>Optimized RESTful APIs, <b>reducing response times by 10%</b></li>
-              </ul>
-              <div><strong>Relevant Skills:</strong> C#, Python, API Optimization, Unit Testing</div>
-            </Card>
-  
-            {/* Midmark Corporation Internship (Apr 2023) */}
-            <Card
-              title={
-                <a href='https://midmark.com/about' target="_blank">
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar src="/images/midmark-icon.jpg" size={40} style={{ marginRight: '12px' }} />
-                  <span>Software Engineering Intern - Midmark Corporation</span>
-                </div>
-                </a>
-              }
-              hoverable
-              style={{
-                width: '100%',
-                marginBottom: '20px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <Paragraph>
-                I worked on developing reusable React components and collaborated closely with designers to improve usability and reduce friction in the UI.
-              </Paragraph>
-              <ul>
-                <li>Developed <b>5+ reusable React components</b> in TypeScript</li>
-                <li>Improved UI usability, <b>reducing friction by 10%</b></li>
-                <li>Implemented micro frontends with Single-Spa</li>
-              </ul>
-              <div><strong>Relevant Skills:</strong> React, TypeScript, UI/UX Design, Micro Frontends</div>
-            </Card>
-  
-            {/* Stonewall Boxers Website Developer */}
-            <Card
-              title={
-                <a href='http://stonewallboxers.com/' target="_blank">
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar src="/images/stonewall-icon.jpg" size={40} style={{ marginRight: '12px' }} />
-                  <span>Website Developer - Stonewall Boxers</span>
-                </div>
-                </a>
-              }
-              hoverable
-              style={{
-                width: '100%',
-                marginBottom: '20px',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <Paragraph>
-                As a website developer for Stonewall Boxers, I built and optimized their website to drive traffic and enhance user experience.
-              </Paragraph>
-              <ul>
-                <li>Created and optimized a dynamic website that attracted <b>hundreds of users</b></li>
-                <li>Implemented SEO strategies, boosting local web traffic</li>
-              </ul>
-              <div><strong>Relevant Skills:</strong> Web Development, SEO, HTML, CSS, JavaScript</div>
-            </Card>
-          </Col>
-        </Row>
-      </>
+      <Experience />
     ),
-    cardTitle: "Experience"
-  },  
+    cardTitle: ""
+  },
   {
     id: 'projects',
     title: "Projects",
@@ -304,7 +177,7 @@ const sections = [
         </Row>
       </>
     ),
-    cardTitle: "Relevant Coursework"
+    cardTitle: ""
   },    
   {
     id: 'skills',

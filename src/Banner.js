@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDownOutlined } from '@ant-design/icons';
 import { Row, Col, Button, Typography, Image } from 'antd';
-import JumpingText from './JumpingText';
+import JumpingText from './animations/JumpingText';
 
 const { Title, Paragraph } = Typography;
 
@@ -74,6 +74,7 @@ const Banner = () => {
               objectFit: 'cover',
               borderRadius: '8px',
               filter: 'url(#chromatic)', // Chromatic aberration effect
+              opacity: 0.6,
             }}
           />
         </motion.div>
