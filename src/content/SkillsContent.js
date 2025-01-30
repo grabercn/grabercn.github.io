@@ -79,6 +79,7 @@ const SkillsContent = () => {
               status={getSkillLevelColor(skill.proficiency)} 
               strokeWidth={10} 
               style={{ width: '35%', marginTop: '10px', marginBottom: '10px' }}
+              showInfo={false} // This will remove the percentage display
             />
           </div>
         ))}
