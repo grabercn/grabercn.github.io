@@ -1,0 +1,15 @@
+.photo-banner {
+    background-color: rgba(0, 0, 0, 0.0);
+    border-radius: 8px;
+    padding: 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.0);
+  }
+  
+  .ant-layout-header {
+    padding: 0 50px;
+  }
+  
+  .ant-menu-dark .ant-menu-item-selected {
+    background-color: #1890ff;
+  }
+  

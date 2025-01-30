@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NotFound from './NotFound';
 import App from '../App';
+import PhotoHome from '../photography/PhotoHome';
 
 const PageRoutes = () => {
   return (
@@ -9,6 +10,7 @@ const PageRoutes = () => {
       <Routes>
         {/* Fallback route for 404 */}
         <Route path='/' element={<App/>} />
+        <Route path="/photo" element={<PhotoHome/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
