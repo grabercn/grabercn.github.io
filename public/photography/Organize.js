@@ -17,8 +17,8 @@ async function addWatermarkToImage(imagePath, watermarkText) {
   ctx.drawImage(img, 0, 0);
 
   // Set the watermark text properties
-  ctx.font = '48px Arial';
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; // White with transparency
+  ctx.font = '78px Arial';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'; // White with transparency
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.rotate(-30 * Math.PI / 180); // Rotate watermark

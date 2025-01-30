@@ -118,8 +118,11 @@ const PhotoBanner = () => {
             }}
           >
             <div style={{ textAlign: 'center' }}>
-              <Title level={1}>Welcome to the Photography Gallery</Title>
-              <h1>Browse through our stunning collection of photos!</h1>
+              <Title level={1}>Welcome to my Photography Gallery</Title>
+              <h1 style={{ color: '#333' }}>Browse through the stunning collection of photos!</h1>
+              <p style={{ color: '#333' }}>
+                Contact <a href="mailto:grabercn@mail.uc.edu" style={{ color: '#333' }}>grabercn</a> for watermark-free versions!
+              </p>
             </div>
           </div>
         </div>
