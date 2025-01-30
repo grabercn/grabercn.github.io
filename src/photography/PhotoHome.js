@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Image } from 'antd';
 import ParticlesBackground from '../animations/ParticlesBackground';
 import PhotoBanner from './PhotoBanner';
+import { Footer } from 'antd/es/layout/layout';
 
 const PhotoHome = () => {
   const [photoObjects, setPhotoObjects] = useState([]);
@@ -64,6 +65,21 @@ const PhotoHome = () => {
           <p>No photos available.</p>
         )}
       </Row>
+      
+      <Footer style={{
+        textAlign: 'center', 
+        background: '#001529', 
+        color: '#fff', 
+        padding: '20px 0', 
+        fontSize: '14px', 
+        borderTop: '1px solid #444',
+        zIndex: 1,
+      }}>
+        <div style={{ marginBottom: '10px' }}>&copy; 2025 Christian Graber. All rights reserved.</div>
+        <div style={{ fontSize: '12px', color: '#bbb' }}>
+          Built with <span style={{ color: '#61DAFB' }}>React</span> and <span style={{ color: '#F7DF1E' }}>JavaScript</span> by Christian Graber
+        </div>
+      </Footer>
     </div>
   );
 };

@@ -43,7 +43,7 @@ const PhotoBanner = ({ photoObjects }) => {
           position: 'sticky',
           top: 0,
           zIndex: 1,
-          backgroundColor: '#001529',
+          background: 'linear-gradient(to right,rgb(101, 0, 121),rgb(117, 0, 111))', // Gradient from black to gray
           padding: 0,
         }}
       >
@@ -63,21 +63,14 @@ const PhotoBanner = ({ photoObjects }) => {
           >
             Go Home
           </Button>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            style={{
-              marginBottom: 0,
-              flexGrow: 1,
-              justifyContent: 'center',
-            }}
-            responsive={false}
-          >
-            <Menu.Item key="1">Photo Gallery</Menu.Item>
-            <Menu.Item key="2" style={{ marginLeft: 'auto' }}>
-              Christian Graber
-            </Menu.Item>
-          </Menu>
+          {/* Display photo count */}
+          <Typography.Text style={{ color: '#fff', marginLeft: '16px', textAlign: 'center' }}>
+            {photoObjects.length} Photos
+          </Typography.Text>
+          {/* pentax tag right aligned */}
+          <Typography.Text level={3} style={{ color: '#fff', textAlign: 'right', flexGrow: 1, marginRight: '16px' }}>
+            All Photos Taken on Pentax K3 Mk II
+          </Typography.Text>
         </div>
       </Header>
 
