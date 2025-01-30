@@ -1,8 +1,41 @@
 const fs = require('fs');
 const path = require('path');
+const { createCanvas, loadImage } = require('canvas'); // Using 'canvas' library to add watermark
 
 // Directory of your photos
 const photographyDir = path.join(__dirname, '', ''); // Ensure this is set correctly
+
+// Function to add watermark to the image using canvas
+async function addWatermarkToImage(imagePath, watermarkText) {
+  const img = await loadImage(imagePath);
+
+  // Create a canvas to overlay the watermark
+  const canvas = createCanvas(img.width, img.height);
+  const ctx = canvas.getContext('2d');
+
+  // Draw the image to the canvas
+  ctx.drawImage(img, 0, 0);
+
+  // Set the watermark text properties
+  ctx.font = '78px Arial';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'; // White with transparency
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.rotate(-30 * Math.PI / 180); // Rotate watermark
+
+  // Add the watermark to the image (centered)
+  const x = canvas.width / 2;
+  const y = canvas.height / 2;
+  ctx.fillText(watermarkText, x, y);
+
+  // Convert the canvas to a buffer (image data)
+  const buffer = canvas.toBuffer('image/png');
+
+  // Overwrite the original image with the watermarked image
+  await fs.promises.writeFile(imagePath, buffer);
+  
+  return imagePath; // Return the original image path after overwrite
+}
 
 // Function to rename and organize photos asynchronously
 async function organizePhotos() {
@@ -51,7 +84,7 @@ async function organizePhotos() {
       }
     }
 
-    // Second pass: Rename files that are not correctly named
+    // Second pass: Rename files that are not correctly named and add watermark
     for (let index = 0; index < imageFiles.length; index++) {
       const file = imageFiles[index];
       const ext = path.extname(file); // Get file extension (e.g., .jpg, .png)
@@ -72,11 +105,15 @@ async function organizePhotos() {
       await fs.promises.rename(oldFilePath, newFilePath);
       console.log(`Renamed ${file} to ${newFileName}`);
 
-      // Add the new photo object to the photoObjects
+      // Add watermark to the renamed image and overwrite the original image
+      const watermarkText = '© Christian Graber';
+      const watermarkedImagePath = await addWatermarkToImage(newFilePath, watermarkText);
+
+      // Add the new photo object with the watermarked image path
       photoObjects[`photo${photoIndex}`] = {
         id: photoIndex,
         name: newFileName,
-        path: `/photography/${newFileName}` // Path relative to your public folder
+        path: `/photography/${path.basename(watermarkedImagePath)}`, // Path relative to your public folder
       };
 
       photoIndex++; // Increment the photo index for the next file
