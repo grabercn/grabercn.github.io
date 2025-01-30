@@ -1,5 +1,7 @@
 /* PhotoHome.css */
 .photo-gallery {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5); /* Black with transparency */
     padding: 20px;
   }
   

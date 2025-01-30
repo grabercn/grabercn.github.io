@@ -23,6 +23,8 @@ const PhotoHome = () => {
       {/*Define the particle background */}
       <ParticlesBackground />
 
+      
+
       {/* lets use a banner */}
       <PhotoBanner />
 
