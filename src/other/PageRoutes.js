@@ -9,9 +9,9 @@ const PageRoutes = () => {
     <Router>
       <Routes>
         {/* Fallback route for 404 */}
-        <Route path='/' exact element={<App />} />
-        <Route path="/photo" exact element={<PhotoHome />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path='/' element={<App />} />
+        <Route path="/photo" element={<PhotoHome />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>
   );

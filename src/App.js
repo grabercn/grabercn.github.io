@@ -62,7 +62,7 @@ const sections = [
               <LikeOutlined style={{ marginRight: '8px' }} /> Fun Facts
             </Title>
             <Paragraph>
-              Aside from coding, I enjoy staying active and exploring new hobbies. Whether that's travelling, <a href='/#/photo' >photography</a>, creating music, or hiking mountains, I'm always looking to grow.
+              Aside from coding, I enjoy staying active and exploring new hobbies. Whether that's travelling, photography, creating music, or hiking mountains, I'm always looking to grow.
               I also love to share knowledge and collaborate with others in tech communities. I believe in the power of continuous learning and sharing knowledge to help drive innovation.
             </Paragraph>
           </Col>
@@ -189,6 +189,7 @@ const sections = [
   },  
   {
     id: 'skills',
+    title: "Skills",
     cardTitle: "Skills",
     content: (
         <SkillsContent />
@@ -312,18 +313,26 @@ function App() {
   const handleScroll = () => {
     const sections = ['about', 'experience', 'projects', 'coursework', 'skills', 'testimonials', 'contact'];
     let currentSection = ''; // Default section
-  
+
     sections.forEach((section, index) => {
       const sectionElement = document.getElementById(section);
       if (sectionElement) {
         const rect = sectionElement.getBoundingClientRect();
-        if (rect.top <= 0 && rect.bottom > 0) {
-          currentSection = (index + 1).toString(); // Set the active section key as string '1', '2', etc.
+        if (rect.top <= window.innerHeight / 2 && rect.bottom > window.innerHeight / 2) {
+          currentSection = section; // Use section id as the active section key
         }
       }
     });
-  
+
     setActiveSection(currentSection); // Update the active section state
+  };
+
+  // handleMenuClick function to scroll to the right section
+  const handleMenuClick = (id) => {
+    const sectionElement = document.getElementById(id);
+    if (sectionElement) {
+      sectionElement.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   useEffect(() => {
@@ -337,29 +346,25 @@ function App() {
 
   return (
     <Layout>
-      <Header style={{ padding: '0 50px', background: '#3A0268' }}>
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" selectedKeys={[activeSection]} style={{ backgroundColor: '#3A0268' }}>
-          <Menu.Item key="1" style={{ color: '#fff' }}><a href="#about">About Me</a></Menu.Item>
-          <Menu.Item key="2" style={{ color: '#fff' }}><a href="#experience">Experience</a></Menu.Item>
-          <Menu.Item key="3" style={{ color: '#fff' }}><a href="#projects">Projects</a></Menu.Item>
-          <Menu.Item key="4" style={{ color: '#fff' }}><a href="#coursework">Coursework</a></Menu.Item>
-          <Menu.Item key="5" style={{ color: '#fff' }}><a href="#skills">Skills</a></Menu.Item>
-          <Menu.Item key="6" style={{ color: '#fff' }}><a href="#testimonials">Testimonials</a></Menu.Item>
-          <Menu.Item key="7" style={{ color: '#fff' }}><a href="#contact">Contact</a></Menu.Item>
-          <Menu.Item 
-            key="8" 
-            style={{
-              color: '#fff', 
-              fontWeight: 'bold', 
-              backgroundColor: '#d850e1', 
-              transition: 'background-color 0.3s ease', 
-            }}
-          >
-            <a href="/docs/Graber_Christian_Resume_2024.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}>
-              Resume
-            </a>
-          </Menu.Item>
+      <Header style={{ background: '#4D04A0', padding: '0 20px' }}>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          selectedKeys={[activeSection]}
+          style={{
+            lineHeight: '64px',
+            backgroundColor: '#4D04A0', // Set background to purple
+            borderBottom: 'none', // Optional: remove border to blend with the header
+          }}
+        >
+          {sections.map((section) => (
+            <Menu.Item
+              key={section.id}
+              onClick={() => handleMenuClick(section.id)}
+            >
+              {section.title}
+            </Menu.Item>
+          ))}
         </Menu>
       </Header>
 
