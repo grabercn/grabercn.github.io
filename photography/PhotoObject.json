@@ -1,4 +1,4 @@
-const photoObjects = {
+{
   "photo1": {
     "id": 1,
     "name": "photo1.jpg",
@@ -59,6 +59,4 @@ const photoObjects = {
     "name": "photo9.jpg",
     "path": "/photography/photo9.jpg"
   }
-};
-
-module.exports = photoObjects;
+}

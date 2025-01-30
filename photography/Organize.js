@@ -119,12 +119,12 @@ async function organizePhotos() {
       photoIndex++; // Increment the photo index for the next file
     }
 
-    // Now, write the photoObjects to PhotoObject.js
-    const photoObjectScript = `const photoObjects = ${JSON.stringify(photoObjects, null, 2)};\n\nmodule.exports = photoObjects;`;
+    // Now, write the photoObjects to PhotoObject.json as a JSON file
+    const photoObjectJSON = JSON.stringify(photoObjects, null, 2);
 
     // Ensure we save the file correctly
-    await fs.promises.writeFile(path.join(__dirname, 'PhotoObject.js'), photoObjectScript, 'utf8');
-    console.log('PhotoObject.js has been saved successfully.');
+    await fs.promises.writeFile(path.join(__dirname, 'PhotoObject.json'), photoObjectJSON, 'utf8');
+    console.log('PhotoObject.json has been saved successfully.');
   } catch (err) {
     console.error('Error:', err);
   }
