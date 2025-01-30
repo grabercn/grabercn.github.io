@@ -6,28 +6,17 @@ import './PhotoBanner.css'; // Optional, for custom styling
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
-const PhotoBanner = () => {
-  const [photoObjects, setPhotoObjects] = useState({});
+const PhotoBanner = ({ photoObjects }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [randomPhoto, setRandomPhoto] = useState(null); // State for the random photo
-
-  // Fetch photoObjects from PhotoObject.js
-  useEffect(() => {
-    fetch('/photography/PhotoObject.js')
-      .then((response) => response.text())
-      .then((text) => {
-        const photoObjects = eval(text);
-        setPhotoObjects(photoObjects);
-      });
-  }, []);
+  const [randomPhoto, setRandomPhoto] = useState(null);
 
   // Set a random photo once on component mount
   useEffect(() => {
-    if (Object.keys(photoObjects).length > 0) {
-      const random = Object.values(photoObjects)[Math.floor(Math.random() * Object.keys(photoObjects).length)];
-      setRandomPhoto(random);
+    if (photoObjects && photoObjects.length > 0) {
+      const random = photoObjects[Math.floor(Math.random() * photoObjects.length)];
+      setRandomPhoto(random); // Set the random photo object
     }
-  }, [photoObjects]); // Run this effect only when photoObjects is loaded
+  }, [photoObjects]); // Run this effect only when photoObjects is updated
 
   // Handle scroll position for parallax effect
   useEffect(() => {
@@ -46,9 +35,6 @@ const PhotoBanner = () => {
     };
   };
 
-  // Get the photo count
-  const photoCount = Object.keys(photoObjects).length;
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {/* Sticky Header */}
@@ -61,7 +47,14 @@ const PhotoBanner = () => {
           padding: 0,
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            height: '100%',
+          }}
+        >
           <Button
             type="link"
             icon={<HomeOutlined />}
@@ -73,12 +66,14 @@ const PhotoBanner = () => {
           <Menu
             theme="dark"
             mode="horizontal"
-            style={{ marginBottom: 0, flexGrow: 1, justifyContent: 'center' }}
+            style={{
+              marginBottom: 0,
+              flexGrow: 1,
+              justifyContent: 'center',
+            }}
             responsive={false}
           >
-            <Menu.Item key="1">
-              Photo Gallery ({photoCount} Photos)
-            </Menu.Item>
+            <Menu.Item key="1">Photo Gallery</Menu.Item>
             <Menu.Item key="2" style={{ marginLeft: 'auto' }}>
               Christian Graber
             </Menu.Item>
@@ -95,7 +90,7 @@ const PhotoBanner = () => {
             position: 'relative',
             height: '100vh',
             overflow: 'hidden',
-            backgroundImage: `url(${randomPhoto ? randomPhoto.path : '/images/default-banner.jpg'})`, // Random photo or default if no photos
+            backgroundImage: `url(${randomPhoto ? randomPhoto.path : '/images/default-banner.jpg'})`, // Random photo or fallback
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             ...parallaxEffect(scrollPosition),
@@ -119,10 +114,19 @@ const PhotoBanner = () => {
           >
             <div style={{ textAlign: 'center' }}>
               <Title level={1}>Welcome to my Photography Gallery</Title>
-              <h1 style={{ color: '#333' }}>Browse through the stunning collection of photos!</h1>
-              <p style={{ color: '#333' }}>
-                Contact <a href="mailto:grabercn@mail.uc.edu" style={{ color: '#333' }}>grabercn</a> for watermark-free versions!
-              </p>
+              <h1 style={{ color: '#333' }}>
+                Browse through the stunning collection of photos!
+              </h1>
+              <h2 style={{ color: '#333' }}>
+                Contact{' '}
+                <a
+                  href="mailto:grabercn@mail.uc.edu"
+                  style={{ color: '#333' }}
+                >
+                  grabercn
+                </a>{' '}
+                for watermark-free versions!
+              </h2>
             </div>
           </div>
         </div>
