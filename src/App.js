@@ -120,7 +120,7 @@ const sections = [
     title: "Relevant Coursework",
     content: (
       <>
-        <Row gutter={[16, 16]}>
+        <Row gutter={[16, 16]} style={{ marginBottom: '20px' }}>
           <Col span={24}>
             <Title level={3}>
               <CodeOutlined style={{ marginRight: '8px' }} /> Relevant Coursework
@@ -131,53 +131,62 @@ const sections = [
           </Col>
         </Row>
   
-        {/* 2021-2022 Coursework */}
-        <Row gutter={[16, 16]} style={{paddingBottom: '20px' }}>
-          <Col span={24} md={12}>
-            <Card title="2021-2022" hoverable>
-              <ul>
-                <li>Computer Science 1</li>
-                <li>Data Structures</li>
-                <li>Introduction to Computer Systems</li>
-                <li>Python Programming</li>
-                <li>Information Security & Assurance</li>
-              </ul>
-            </Card>
-          </Col>
-  
-          {/* 2022-2023 Coursework */}
-          <Col span={24} md={12}>
-            <Card title="2022-2023" hoverable>
-              <ul>
-                <li>Discrete Computational Structures</li>
-                <li>Programming Languages</li>
-                <li>Database Design and Development</li>
-                <li>Design and Analysis of Algorithms</li>
-                <li>Operating Systems & Systems Programming</li>
-                <li>Software Engineering</li>
-              </ul>
-            </Card>
-          </Col>
-        </Row>
-  
-        {/* 2023-2024 Coursework */}
-        <Row gutter={[16, 16]} style={{ paddingTop: '20px', paddingBottom: '20px' }}>
-          <Col span={24} md={12}>
-            <Card title="2023-2024" hoverable>
-              <ul>
-                <li>Principles of Artificial Intelligence</li>
-                <li>Communication Networks 1</li>
-                <li>Principles of the IoT</li>
-                <li>Digital Image Processing 1</li>
-                <li>Software and Application Security</li>
-              </ul>
-            </Card>
-          </Col>
+        {/* Year Row: Display years horizontally */}
+        <Row gutter={[16, 16]} style={{ marginBottom: '0px' }} justify="center">
+          {['2021-2022', '2022-2023', '2023-2024', '2024-2025', '2025-2026'].map((year, index) => (
+            <Col key={index} span={8} style={{ textAlign: 'center' }}>
+              <Card 
+                title={year}
+                bordered={false}
+                style={{ backgroundColor: '#f0f0f0', padding: '0px', fontWeight: 'bold', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'}}
+              >
+                <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+                  {[
+                    index === 0 ? [
+                      'Computer Science 1',
+                      'Data Structures',
+                      'Introduction to Computer Systems',
+                      'Python Programming',
+                      'Information Security & Assurance'
+                    ] : index === 1 ? [
+                      'Discrete Computational Structures',
+                      'Programming Languages',
+                      'Database Design and Development',
+                      'Design and Analysis of Algorithms',
+                      'Operating Systems & Systems Programming',
+                      'Software Engineering'
+                    ] : index === 2 ? [
+                      'Principles of Artificial Intelligence',
+                      'Communication Networks 1',
+                      'Principles of the IoT',
+                      'Digital Image Processing 1',
+                      'Software and Application Security'
+                    ] : [], // 2024-2025 has no entries
+                    index === 3 ? [] : [], // 2025-2026 has no entries
+                  ].map((courses, courseIndex) => (
+                    <div key={courseIndex} style={{ marginBottom: '0px' }}>
+                      {courses.map((course, courseIdx) => (
+                        <Paragraph key={courseIdx} style={{
+                          backgroundColor: courseIdx % 2 === 0 ? '#d1c4e9' : '#f5f5f5', // Light purple and light grey
+                          padding: '10px', 
+                          borderRadius: '8px', 
+                          marginBottom: '10px', 
+                          color: '#333'
+                        }}>
+                          {course}
+                        </Paragraph>
+                      ))}
+                    </div>
+                  ))}
+                </ul>
+              </Card>
+            </Col>
+          ))}
         </Row>
       </>
     ),
     cardTitle: ""
-  },    
+  },  
   {
     id: 'skills',
     cardTitle: "Skills",
@@ -197,7 +206,7 @@ const sections = [
       >
         <Row gutter={[16, 16]} justify="start">
           <Col span={24} md={12} lg={8}>
-            <Card title="Owen" hoverable>
+            <Card title="Owen">
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ marginRight: '10px' }}>
                   <img 
@@ -225,7 +234,7 @@ const sections = [
           </Col>
 
           <Col span={24} md={12} lg={8}>
-            <Card title="John" hoverable>
+            <Card title="John" >
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ marginRight: '10px' }}>
                   <img 
