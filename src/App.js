@@ -62,7 +62,7 @@ const sections = [
               <LikeOutlined style={{ marginRight: '8px' }} /> Fun Facts
             </Title>
             <Paragraph>
-              Aside from coding, I enjoy staying active and exploring new hobbies. Whether that's travelling, photography, creating music, or hiking mountains, I'm always looking to grow.
+              Aside from coding, I enjoy staying active and exploring new hobbies. Whether that's travelling, <a href='/#/photo/'>photography</a>, creating music, or hiking mountains, I'm always looking to grow.
               I also love to share knowledge and collaborate with others in tech communities. I believe in the power of continuous learning and sharing knowledge to help drive innovation.
             </Paragraph>
           </Col>
