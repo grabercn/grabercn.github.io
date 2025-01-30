@@ -133,7 +133,7 @@ const sections = [
   
         {/* Year Row: Display years horizontally */}
         <Row gutter={[16, 16]} style={{ marginBottom: '0px' }} justify="center">
-          {['2021-2022', '2022-2023', '2023-2024', '2024-2025', '2025-2026'].map((year, index) => (
+          {['2021-2022', '2022-2023', '2023-2024'].map((year, index) => (
             <Col key={index} span={8} style={{ textAlign: 'center' }}>
               <Card 
                 title={year}
