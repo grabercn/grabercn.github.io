@@ -58,6 +58,14 @@ const PhotoHome = () => {
                 height="auto"
                 preview={{ src: photo.path }}
                 loading="lazy"
+                placeholder={
+                  <Image
+                    preview={false}
+                    src={`${photo.path}?x-oss-process=image/blur,r_50,s_50/quality,q_1/resize,m_mfit,h_200,w_200`} // Apply blur and resize
+                    width="100%"
+                    height="auto"
+                  />
+                }
               />
             </Col>
           ))
