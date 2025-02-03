@@ -4,6 +4,7 @@ import ParticlesBackground from '../animations/ParticlesBackground';
 import PhotoBanner from './PhotoBanner';
 import { Footer } from 'antd/es/layout/layout';
 import LazyLoad from 'react-lazyload';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const PhotoHome = () => {
   const [photoObjects, setPhotoObjects] = useState([]);
@@ -55,7 +56,7 @@ const PhotoHome = () => {
                 <LazyLoad
                   height={1000} // Provide a fixed height (or dynamically calculated height)
                   offset={100} // Load images when they are within 100px from the viewport
-                  placeholder={<div className="image-placeholder">Loading...</div>}
+                  placeholder={<div className="image-placeholder" style={{zIndex: 1}}><LoadingOutlined/></div>}
                 >
                   <Image
                     src={photo.path}

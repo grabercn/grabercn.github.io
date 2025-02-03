@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Button, Typography } from 'antd';
-import { HomeOutlined } from '@ant-design/icons'; // For the Home icon
+import { HomeOutlined, LoadingOutlined } from '@ant-design/icons'; // For the Home icon
 import LazyLoad from 'react-lazyload'; // Import the LazyLoad library
 import './PhotoBanner.css'; // Optional, for custom styling
 
@@ -83,7 +83,7 @@ const PhotoBanner = ({ photoObjects }) => {
           offset={100} // Trigger load 100px before it comes into view
           placeholder={
             <div className="image-placeholder" style={{ height: '100%', backgroundColor: '#f0f0f0' }}>
-              {/* Placeholder: You can customize it further (e.g., add a spinner or a gradient) */}
+              <LoadingOutlined />
             </div>
           }
         >
