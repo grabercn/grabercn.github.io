@@ -3,6 +3,7 @@ import { Row, Col, Image } from 'antd';
 import ParticlesBackground from '../animations/ParticlesBackground';
 import PhotoBanner from './PhotoBanner';
 import { Footer } from 'antd/es/layout/layout';
+import LazyLoad from 'react-lazyload';
 
 const PhotoHome = () => {
   const [photoObjects, setPhotoObjects] = useState([]);
@@ -48,31 +49,30 @@ const PhotoHome = () => {
       {photoObjects.length > 0 && <PhotoBanner photoObjects={photoObjects} />}
 
       <Row gutter={[16, 16]}>
-        {photoObjects.length > 0 ? (
-          photoObjects.map((photo) => (
-            <Col key={photo.id} xs={24} sm={12} md={8} lg={6}>
-              <Image
-                src={photo.path}
-                alt={photo.name}
-                width="100%"
-                height="auto"
-                preview={{ src: photo.path }}
-                loading="lazy"
-                placeholder={
+          {photoObjects.length > 0 ? (
+            photoObjects.map((photo) => (
+              <Col key={photo.id} xs={24} sm={12} md={8} lg={6}>
+                <LazyLoad
+                  height={1000} // Provide a fixed height (or dynamically calculated height)
+                  offset={100} // Load images when they are within 100px from the viewport
+                  placeholder={<div className="image-placeholder">Loading...</div>}
+                >
                   <Image
-                    preview={false}
-                    src={`${photo.path}?x-oss-process=image/blur,r_50,s_50/quality,q_1/resize,m_mfit,h_200,w_200`} // Apply blur and resize
+                    src={photo.path}
+                    alt={photo.name}
                     width="100%"
                     height="auto"
+                    preview={{ src: photo.path }}
+                    loading="lazy"
                   />
-                }
-              />
-            </Col>
-          ))
-        ) : (
-          <p>No photos available.</p>
-        )}
-      </Row>
+                </LazyLoad>
+              </Col>
+            ))
+          ) : (
+            <p>No photos available.</p>
+          )}
+        </Row>
+      );
       
       <Footer style={{
         textAlign: 'center', 

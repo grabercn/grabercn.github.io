@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu, Button, Typography } from 'antd';
+import { Layout, Button, Typography } from 'antd';
 import { HomeOutlined } from '@ant-design/icons'; // For the Home icon
+import LazyLoad from 'react-lazyload'; // Import the LazyLoad library
 import './PhotoBanner.css'; // Optional, for custom styling
 
 const { Header, Content } = Layout;
@@ -67,7 +68,7 @@ const PhotoBanner = ({ photoObjects }) => {
           <Typography.Text style={{ color: '#fff', marginLeft: '16px', textAlign: 'center' }}>
             {photoObjects.length} Photos
           </Typography.Text>
-          {/* pentax tag right aligned */}
+          {/* Pentax tag right aligned */}
           <Typography.Text level={3} style={{ color: '#fff', textAlign: 'right', flexGrow: 1, marginRight: '16px' }}>
             All Photos Taken on Pentax K3 Mk II
           </Typography.Text>
@@ -77,52 +78,62 @@ const PhotoBanner = ({ photoObjects }) => {
       {/* Main Content */}
       <Content style={{ padding: 0, marginTop: '0px' }}>
         {/* Parallax Background */}
-        <div
-          className="parallax-banner"
-          style={{
-            position: 'relative',
-            height: '100vh',
-            overflow: 'hidden',
-            backgroundImage: `url(${randomPhoto ? randomPhoto.path : '/images/default-banner.jpg'})`, // Random photo or fallback
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            ...parallaxEffect(scrollPosition),
-          }}
+        <LazyLoad
+          height={500} // Define a height for the LazyLoad wrapper
+          offset={100} // Trigger load 100px before it comes into view
+          placeholder={
+            <div className="image-placeholder" style={{ height: '100%', backgroundColor: '#f0f0f0' }}>
+              {/* Placeholder: You can customize it further (e.g., add a spinner or a gradient) */}
+            </div>
+          }
         >
           <div
-            className="photo-banner-overlay"
+            className="parallax-banner"
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 2,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: '#fff',
-              background: 'rgba(255, 255, 255, 0.5)', // Semi-transparent overlay for better readability
+              position: 'relative',
+              height: '100vh',
+              overflow: 'hidden',
+              backgroundImage: `url(${randomPhoto ? randomPhoto.path : '/images/default-banner.jpg'})`, // Random photo or fallback
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              ...parallaxEffect(scrollPosition),
             }}
           >
-            <div style={{ textAlign: 'center' }}>
-              <Title level={1}>Welcome to my Photography Gallery</Title>
-              <h1 style={{ color: '#333' }}>
-                Browse through the stunning collection of photos!
-              </h1>
-              <h2 style={{ color: '#333' }}>
-                Contact{' '}
-                <a
-                  href="mailto:grabercn@mail.uc.edu"
-                  style={{ color: '#333' }}
-                >
-                  grabercn
-                </a>{' '}
-                for watermark-free versions!
-              </h2>
+            <div
+              className="photo-banner-overlay"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                zIndex: 2,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#fff',
+                background: 'rgba(255, 255, 255, 0.5)', // Semi-transparent overlay for better readability
+              }}
+            >
+              <div style={{ textAlign: 'center' }}>
+                <Title level={1}>Welcome to my Photography Gallery</Title>
+                <h1 style={{ color: '#333' }}>
+                  Browse through the stunning collection of photos!
+                </h1>
+                <h2 style={{ color: '#333' }}>
+                  Contact{' '}
+                  <a
+                    href="mailto:grabercn@mail.uc.edu"
+                    style={{ color: '#333' }}
+                  >
+                    grabercn
+                  </a>{' '}
+                  for watermark-free versions!
+                </h2>
+              </div>
             </div>
           </div>
-        </div>
+        </LazyLoad>
       </Content>
     </Layout>
   );
