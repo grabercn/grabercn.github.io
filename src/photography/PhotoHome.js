@@ -73,7 +73,8 @@ const PhotoHome = () => {
             <p>No photos available.</p>
           )}
         </Row>
-      );
+
+      <br />
       
       <Footer style={{
         textAlign: 'center', 
