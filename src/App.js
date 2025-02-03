@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Typography, Row, Col, Card } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
-import { UserOutlined, CodeOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined } from '@ant-design/icons';
+import { UserOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined } from '@ant-design/icons';
 import Banner from './other/Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
@@ -77,7 +77,7 @@ const sections = [
     content: (
       <Experience />
     ),
-    cardTitle: ""
+    cardTitle: "My Professional Experience"
   },
   {
     id: 'projects',
@@ -122,9 +122,6 @@ const sections = [
       <>
         <Row gutter={[16, 16]} style={{ marginBottom: '20px' }}>
           <Col span={24}>
-            <Title level={3}>
-              <CodeOutlined style={{ marginRight: '8px' }} /> Relevant Coursework
-            </Title>
             <Paragraph>
               Throughout my academic journey, I've completed a variety of courses that have helped me build a solid foundation in computer science and software engineering. Here are some of the key courses I have taken:
             </Paragraph>
@@ -132,13 +129,18 @@ const sections = [
         </Row>
   
         {/* Year Row: Display years horizontally */}
-        <Row gutter={[16, 16]} style={{ marginBottom: '0px' }} justify="center">
+        <Row gutter={[16, 16]} justify="center">
           {['2021-2022', '2022-2023', '2023-2024'].map((year, index) => (
-            <Col key={index} span={8} style={{ textAlign: 'center' }}>
+            <Col key={index} xs={24} sm={12} md={8} style={{ textAlign: 'center' }}>
               <Card 
                 title={year}
                 bordered={false}
-                style={{ backgroundColor: '#f0f0f0', padding: '0px', fontWeight: 'bold', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'}}
+                style={{
+                  backgroundColor: '#f0f0f0', 
+                  padding: '0px', 
+                  fontWeight: 'bold', 
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                }}
               >
                 <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
                   {[
@@ -161,17 +163,16 @@ const sections = [
                       'Principles of the IoT',
                       'Digital Image Processing 1',
                       'Software and Application Security'
-                    ] : [], // 2024-2025 has no entries
-                    index === 3 ? [] : [], // 2025-2026 has no entries
+                    ] : []
                   ].map((courses, courseIndex) => (
                     <div key={courseIndex} style={{ marginBottom: '0px' }}>
                       {courses.map((course, courseIdx) => (
                         <Paragraph key={courseIdx} style={{
-                          backgroundColor: courseIdx % 2 === 0 ? '#d1c4e9' : '#f5f5f5', // Light purple and light grey
-                          padding: '10px', 
-                          borderRadius: '8px', 
-                          marginBottom: '10px', 
-                          color: '#333'
+                          backgroundColor: '#f5f5f5', // Light grey
+                          padding: '10px',
+                          borderRadius: '8px',
+                          marginBottom: '10px',
+                          color: '#333',
                         }}>
                           {course}
                         </Paragraph>
@@ -185,8 +186,8 @@ const sections = [
         </Row>
       </>
     ),
-    cardTitle: ""
-  },  
+    cardTitle: "Relevant Coursework",
+  },   
   {
     id: 'skills',
     title: "Skills",
@@ -298,6 +299,19 @@ const sections = [
               onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} // Reset scale
             >
               christian-graber
+            </a>
+          </li>
+          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '10px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
+            <GithubOutlined style={{ marginRight: '12px', fontSize: '28px', color: '#0077b5', transition: 'color 0.3s ease, transform 0.3s ease' }} />
+            <a 
+              href="https://github.com/grabercn/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              style={{ fontSize: '18px', color: '#0077b5', textDecoration: 'none', transition: 'color 0.3s ease, transform 0.3s ease' }}
+              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} // Slight scaling effect on hover
+              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} // Reset scale
+            >
+              grabercn
             </a>
           </li>
         </ul>

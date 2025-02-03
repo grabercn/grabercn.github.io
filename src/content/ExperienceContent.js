@@ -1,8 +1,7 @@
 import React from 'react';
 import { Row, Col, Card, Avatar, Typography, Tag } from 'antd';
-import { BranchesOutlined } from '@ant-design/icons';
 
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 // Experience Data
 const experienceData = [
@@ -66,10 +65,6 @@ const Experience = () => {
     <>
       <Row gutter={[16, 16]} style={{ paddingTop: '20px', paddingBottom: '40px' }}>
         <Col span={24}>
-          <Title level={3}>
-            <BranchesOutlined style={{ marginRight: '8px' }} />
-            My Professional Experience
-          </Title>
           <Paragraph>
             Here are some highlights from my internships and co-op roles, where I've had the opportunity to work on various impactful projects.
           </Paragraph>
