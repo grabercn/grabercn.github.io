@@ -1,11 +1,10 @@
 import React from 'react';
 import { Progress } from 'antd';
-import { AppstoreAddOutlined, GlobalOutlined, KeyOutlined, SearchOutlined, PlusOutlined } from '@ant-design/icons';
+import { AppstoreAddOutlined, GlobalOutlined, SearchOutlined, PlusOutlined, EditOutlined } from '@ant-design/icons';
 
 // Skills data
 const skills = [
   { name: "React", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/react.svg", proficiency: 90 },
-  { name: "Node.js", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/nodedotjs.svg", proficiency: 85 },
   { name: "TypeScript", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/typescript.svg", proficiency: 95 },
   { name: "JavaScript", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/javascript.svg", proficiency: 80 },
   { name: "Python", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/python.svg", proficiency: 85 },
@@ -26,7 +25,7 @@ const getSkillLevelColor = (proficiency) => {
 };
 
 const technologies = [
-  "Azure", "Docker", "React.js", "Angular", "MongoDB", "Tailwind", "Spring", "ASP.NET", "Node.js", "Google Cloud"
+  "Azure", "Docker", "React.js", "Angular", "MongoDB", "Tailwind", "Spring", "ASP.NET", "Google Cloud"
 ];
 
 const concepts = [
@@ -50,7 +49,7 @@ const SkillsContent = () => {
 
       <br />
 
-      <h3 style={{ display: 'flex', alignItems: 'center' }}><KeyOutlined style={{ marginRight: '10px' }} />Concepts</h3>
+      <h3 style={{ display: 'flex', alignItems: 'center' }}><EditOutlined style={{ marginRight: '10px' }} />Concepts</h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '10px' }}>
         {concepts.map((concept, index) => (
           <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
