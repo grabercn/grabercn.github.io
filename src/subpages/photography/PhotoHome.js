@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Image } from 'antd';
-import ParticlesBackground from '../animations/ParticlesBackground';
+import ParticlesBackground from '../../animations/ParticlesBackground';
 import PhotoBanner from './PhotoBanner';
 import { Footer } from 'antd/es/layout/layout';
 import LazyLoad from 'react-lazyload';

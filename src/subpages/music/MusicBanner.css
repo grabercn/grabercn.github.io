@@ -1,0 +1,65 @@
+/* MusicBanner.css */
+
+/* Container for the banner */
+.music-banner {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Set a height for the banner */
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Overlay with semi-transparent background for better text contrast */
+  .music-banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Black semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    z-index: 2;
+  }
+  
+  /* Text styling */
+  .music-banner-text {
+    max-width: 80%; /* Limit text width to avoid it being too wide */
+    font-size: 1.5rem;
+  }
+  
+  .music-banner-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #fff;
+  }
+  
+  .music-banner-subtitle {
+    font-size: 1.2rem;
+    color: #fff;
+    font-weight: normal;
+  }
+  
+  /* Optional: Adjust for small screens (responsive) */
+  @media (max-width: 768px) {
+    .music-banner {
+      height: 200px; /* Reduce height for mobile screens */
+    }
+  
+    .music-banner-title {
+      font-size: 1.8rem; /* Adjust title size for mobile */
+    }
+  
+    .music-banner-subtitle {
+      font-size: 1rem; /* Adjust subtitle size for mobile */
+    }
+  }
+  
