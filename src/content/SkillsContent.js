@@ -7,25 +7,31 @@ const skills = [
   { name: "React", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/react.svg", proficiency: 90 },
   { name: "TypeScript", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/typescript.svg", proficiency: 95 },
   { name: "JavaScript", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/javascript.svg", proficiency: 80 },
+  { name: "HTML", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/html5.svg", proficiency: 100 },
+  { name: "CSS", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/css3.svg", proficiency: 90 },
   { name: "Python", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/python.svg", proficiency: 85 },
   { name: "C#", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/csharp.svg", proficiency: 75 },
+  { name: "C", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/c.svg", proficiency: 50 },
+  { name: "C++", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/cplusplus.svg", proficiency: 70 },
   { name: "Java", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/java.svg", proficiency: 80 },
   { name: "SQL", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/sqlite.svg", proficiency: 90 },
+  { name: "Bash", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/gnubash.svg", proficiency: 60 },
+  { name: "Powershell", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/powershell.svg", proficiency: 50 }
 ];
 
 // Skill level mapping based on proficiency percentage
 const getSkillLevelColor = (proficiency) => {
   if (proficiency >= 90) {
-    return "success";  // Green for expert level
+    return "#52c41a";  // Green for expert level
   } else if (proficiency >= 70) {
-    return "active";  // Blue for intermediate level
+    return "#1890ff";  // Blue for intermediate level
   } else {
-    return "exception";  // Red for beginner level
+    return "#faad14";  // Yellow for beginner level
   }
 };
 
 const technologies = [
-  "Azure", "Docker", "React.js", "Angular", "MongoDB", "Tailwind", "Spring", "ASP.NET", "Google Cloud"
+  "Azure", "Docker", "React.js", "Node.js", "Angular", "MongoDB", "Tailwind", "Spring", "ASP.NET", "Google Cloud"
 ];
 
 const concepts = [
@@ -77,6 +83,7 @@ const SkillsContent = () => {
               percent={skill.proficiency} 
               status={getSkillLevelColor(skill.proficiency)} 
               strokeWidth={10} 
+              strokeColor={getSkillLevelColor(skill.proficiency)} // Apply the custom color based on proficiency
               style={{ width: '35%', marginTop: '10px', marginBottom: '10px' }}
               showInfo={false} // This will remove the percentage display
             />

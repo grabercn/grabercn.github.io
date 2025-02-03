@@ -16,7 +16,7 @@ const experienceData = [
       'Worked with an Agile team to deliver high-quality software',
       'Led a fundraising initiative for a non-profit, raising $10,000'
     ],
-    skills: ['C# .NET', 'API Development', 'MSSQL', 'Agile', 'Scrum'],
+    skills: ['C#', '.NET', 'API Development', 'MSSQL', 'Agile', 'Scrum'],
     date: "May 2024 - Aug 2024"
   },
   {
@@ -29,7 +29,7 @@ const experienceData = [
       'Integrated Python testing to improve product quality by 100%',
       'Optimized RESTful APIs, reducing response times by 10%',
     ],
-    skills: ['C#', 'Python', 'API Optimization', 'Unit Testing'],
+    skills: ['C#', '.NET', 'Python', 'API Optimization', 'Unit Testing'],
     date: "Aug 2023 - Dec 2023"
   },
   {
