@@ -181,7 +181,7 @@ const sections = [
       >
         <Row gutter={[16, 16]} justify="start">
           <Col span={24} md={12} lg={8}>
-            <Card title="Owen">
+            <Card title="Owen" style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',}}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ marginRight: '10px' }}>
                   <img 
@@ -209,7 +209,7 @@ const sections = [
           </Col>
 
           <Col span={24} md={12} lg={8}>
-            <Card title="John" >
+            <Card title="John" style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',}} >
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ marginRight: '10px' }}>
                   <img 
