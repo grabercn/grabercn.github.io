@@ -40,7 +40,7 @@ const concepts = [
   "Mobile Development", "Agile Methodologies", "Cross-Platform Development", "Responsive Design", "Microservices"
 ];
 
-const SkillsContent = () => {
+const Skills = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <h3 style={{ display: 'flex', alignItems: 'center' }}><GlobalOutlined style={{ marginRight: '10px' }} />Technologies</h3>
@@ -94,4 +94,4 @@ const SkillsContent = () => {
   );
 };
 
-export default SkillsContent;
+export default Skills;

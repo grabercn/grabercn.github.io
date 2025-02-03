@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Typography, Row, Col, Card } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
-import { UserOutlined, RocketOutlined, CarOutlined, ShoppingCartOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined } from '@ant-design/icons';
+import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined } from '@ant-design/icons';
 import Banner from './other/Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
 import ParticlesBackground from './animations/ParticlesBackground'; // Import the ParticlesBackground Component
-import SkillsContent from './content/SkillsContent';
+import Skills from './content/SkillsContent';
 import Experience from './content/ExperienceContent';
+import Projects from './content/ProjectsContent';
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 
@@ -83,35 +84,7 @@ const sections = [
     id: 'projects',
     title: "Projects",
     content: (
-      <ul>
-        <li>
-          <RocketOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
-          <a href="https://github.com/grabercn/ForumHub" target="_blank" rel="noopener noreferrer">
-            ForumHub: React, JavaScript, Java, Spring Boot, PostgreSQL
-          </a>
-          <p>
-            Developed a dynamic React-based forum website hosted on Azure, featuring a modern architecture and interface. Implemented pagination and efficient rendering of hundreds of posts, comments, and reactions.
-          </p>
-        </li>
-        <li>
-          <CarOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
-          <a href="https://github.com/OwenAEdwards/RideShare.Android" target="_blank" rel="noopener noreferrer">
-            RideShare App: Kotlin, C#, .NET, MongoDB
-          </a>
-          <p>
-            Developed an Android-based ride-sharing app using Kotlin with a .NET Core backend and MSSQL for data storage. Utilized MSSQL Server and MongoDB for scalable data management.
-          </p>
-        </li>
-        <li>
-          <ShoppingCartOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
-          <a href="https://github.com/grabercn/Database-eCommerce-Website" target="_blank" rel="noopener noreferrer">
-            eCommerce Application: Java, Spring Boot, React, PostgreSQL
-          </a>
-          <p>
-            Developed a full-stack eCommerce web application using Java (Spring Boot) for the backend, React for the frontend, and PostgreSQL for data storage. Designed the database schema and synchronized the backend for Object-Relational Mapping.
-          </p>
-        </li>
-      </ul>
+      <Projects />
     ),
     cardTitle: "Projects"
   },
@@ -193,7 +166,7 @@ const sections = [
     title: "Skills",
     cardTitle: "Skills",
     content: (
-        <SkillsContent />
+        <Skills />
     ),
   },
   {
