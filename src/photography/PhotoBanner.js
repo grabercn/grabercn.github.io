@@ -128,7 +128,7 @@ const PhotoBanner = ({ photoObjects }) => {
                   >
                     grabercn
                   </a>{' '}
-                  for watermark-free versions!
+                  for watermark-free and full-res versions!
                 </h2>
               </div>
             </div>
