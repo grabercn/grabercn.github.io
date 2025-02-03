@@ -147,6 +147,7 @@ const Banner = () => {
                   Get in Touch
                 </Button>
                 <div style={{ marginTop: '20px' }}>
+                  {/* eslint-disable-next-line */}
                   <a onClick={scrollToContact}>
                     <ArrowDownOutlined
                       style={{
