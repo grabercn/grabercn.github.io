@@ -43,6 +43,13 @@ const Banner = () => {
     };
   };
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div style={{ backgroundColor: '#2c1e7d', overflow: 'hidden' }}>
       {/* Full-Page Parallax Banner */}
@@ -136,11 +143,11 @@ const Banner = () => {
                 >
                   A glimpse into my journey, my work, and my passion.
                 </Paragraph>
-                <Button type="primary" size="large" href="#contact">
+                <Button type="primary" size="large" onClick={scrollToContact}>
                   Get in Touch
                 </Button>
                 <div style={{ marginTop: '20px' }}>
-                  <a href="#contact">
+                  <a onClick={scrollToContact}>
                     <ArrowDownOutlined
                       style={{
                         fontSize: '36px',
