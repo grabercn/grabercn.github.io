@@ -48,19 +48,23 @@ const Projects = () => {
         return (
           <Col key={index} xs={24} sm={12} md={8} lg={6}>
             <Card
-              style={{ width: '100%', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', }}
+              style={{
+                width: '100%',
+                borderRadius: '8px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+              }}
               cover={
-                <Row gutter={[16, 16]}>
+                <Row gutter={[0, 0]}>
                   {project.gallery.slice(0, 1).map((imageUrl, imgIndex) => (
-                    <Col key={imgIndex} xs={24}>
+                    <Col key={imgIndex} span={24}>
                       <Image
                         width="100%"
+                        height={200} // Adjust this height to ensure it spans the card
                         src={imageUrl}
                         alt={`Project ${index + 1} Image ${imgIndex + 1}`}
                         style={{
                           borderRadius: '8px',
-                          maxHeight: '150px',
-                          objectFit: 'cover'
+                          objectFit: 'cover',
                         }}
                         fallback="/images/banner.jpg" // Placeholder image
                       />
