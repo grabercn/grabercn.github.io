@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, List, Typography, Divider, Spin } from 'antd';
+import { Card, Row, Col, List, Typography, Divider, Spin, Button, message } from 'antd';
 import MusicBanner from './MusicBanner'; // Import the MusicBanner
+import ParticlesBackground from '../../animations/ParticlesBackground';
+import FooterComponent from '../../other/Footer';
 
 const { Title, Text } = Typography;
 
 const MusicHome = () => {
   // State values
-  const [currentMusic, setCurrentMusic] = useState([]);
   const [releaseHistory, setReleaseHistory] = useState([]);
-  const [upcomingMusic, setUpcomingMusic] = useState([]);
+  const [latestNews, setLatestNews] = useState([]);
+  const [demos, setDemos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -19,41 +21,43 @@ const MusicHome = () => {
   const corsProxy = 'https://api.cors.lol/?url=';
 
   // Fetching data from Deezer API
-  useEffect(() => {
-    const fetchMusicData = async () => {
-      try {
-        setLoading(true);
-        setError(null); // Reset error state on new fetch attempt
+  const fetchMusicData = async () => {
+    try {
+      setLoading(true);
+      setError(null); // Reset error state on new fetch attempt
 
-        // Fetch top tracks (current music)
-        const currentMusicResponse = await fetch(`${corsProxy}https://api.deezer.com/artist/${artistId}/top?limit=5`);
-        if (!currentMusicResponse.ok) {
-          throw new Error('Failed to fetch current music');
-        }
-        const currentMusicData = await currentMusicResponse.json();
-        setCurrentMusic(currentMusicData.data);
-
-        // Fetch artist's albums (release history)
-        const releaseHistoryResponse = await fetch(`${corsProxy}https://api.deezer.com/artist/${artistId}/albums`);
-        if (!releaseHistoryResponse.ok) {
-          throw new Error('Failed to fetch release history');
-        }
-        const releaseHistoryData = await releaseHistoryResponse.json();
-        setReleaseHistory(releaseHistoryData.data);
-
-        // Fetch upcoming music (mock data)
-        setUpcomingMusic([
-          { title: 'Upcoming Album', releaseDate: 'Unknown' },
-        ]);
-      } catch (error) {
-        setError(error.message); // Set error if any API call fails
-      } finally {
-        setLoading(false);
+      // Fetch artist's albums (release history)
+      const releaseHistoryResponse = await fetch(`${corsProxy}https://api.deezer.com/artist/${artistId}/albums`);
+      if (!releaseHistoryResponse.ok) {
+        throw new Error('Failed to fetch release history');
       }
-    };
+      const releaseHistoryData = await releaseHistoryResponse.json();
+      setReleaseHistory(releaseHistoryData.data);
 
+      // Fetch latest news (mock data for now)
+      setLatestNews([
+        { title: 'Upcoming Album Teased', date: '2025-02-02', description: 'The artist has teased an upcoming album, coming soon in 2025!' },
+      ]);
+
+      // Demos - Manually add audio tracks
+      setDemos([
+        { title: 'Demo Track 1', audioUrl: '/public/music/demo1.mp3' },
+      ]);
+    } catch (error) {
+      setError(error.message); // Set error if any API call fails
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchMusicData();
   }, []);
+
+  // Retry fetching data on button click
+  const handleRetry = () => {
+    fetchMusicData();
+  };
 
   // Render loading spinner if data is being fetched
   if (loading) {
@@ -66,6 +70,14 @@ const MusicHome = () => {
       <div style={{ padding: '20px', textAlign: 'center' }}>
         <Title level={3}>Something went wrong...</Title>
         <Text type="danger">{error}</Text>
+        <br />
+        <Button type="primary" onClick={handleRetry} style={{ marginTop: '10px' }}>
+          Retry
+        </Button>
+        <br />
+        <Text type="secondary" style={{ marginTop: '10px' }}>
+          Try again later
+        </Text>
       </div>
     );
   }
@@ -74,7 +86,7 @@ const MusicHome = () => {
   const latestReleaseCover = releaseHistory.length > 0 ? releaseHistory[0].cover_xl : '/images/default-cover.jpg';
 
   return (
-    <div style={{ }}>
+    <div>
       {/* Music Banner at the top with the latest release cover */}
       <MusicBanner
         photoPath={latestReleaseCover}  // Full resolution cover of the latest release
@@ -84,19 +96,20 @@ const MusicHome = () => {
 
       <Title level={2}>Music Home</Title>
 
-      {/* Current Music */}
+      <ParticlesBackground /> {/*add particles */}
+
+      {/* Latest News */}
       <Row gutter={16}>
         <Col span={24}>
-          <Card title="Current Music" bordered>
+          <Card title="Latest News" bordered>
             <List
-              itemLayout="horizontal"
-              dataSource={currentMusic.length > 0 ? currentMusic : [{ title: 'No data available' }]}
+              itemLayout="vertical"
+              dataSource={latestNews}
               renderItem={(item) => (
                 <List.Item>
                   <List.Item.Meta
                     title={item.title}
-                    description={`Release Date: ${item.release_date}`}
-                    avatar={<img src={item.cover_medium} alt={item.title} style={{ width: 50, height: 50 }} />}
+                    description={`${item.date} - ${item.description}`}
                   />
                 </List.Item>
               )}
@@ -130,18 +143,23 @@ const MusicHome = () => {
 
       <Divider />
 
-      {/* Upcoming Music */}
+      {/* Demos */}
       <Row gutter={16}>
         <Col span={24}>
-          <Card title="Upcoming Music" bordered>
+          <Card title="Demos" bordered>
             <List
               itemLayout="horizontal"
-              dataSource={upcomingMusic.length > 0 ? upcomingMusic : [{ title: 'No upcoming music available', releaseDate: 'TBD' }]}
+              dataSource={demos}
               renderItem={(item) => (
                 <List.Item>
                   <List.Item.Meta
                     title={item.title}
-                    description={`Release Date: ${item.releaseDate}`}
+                    description={
+                      <audio controls>
+                        <source src={item.audioUrl} type="audio/mp3" />
+                        Your browser does not support the audio element.
+                      </audio>
+                    }
                   />
                 </List.Item>
               )}
@@ -149,6 +167,20 @@ const MusicHome = () => {
           </Card>
         </Col>
       </Row>
+
+      <br />
+
+      <div style={{
+        textAlign: 'center', 
+        background: '#001529', 
+        color: '#fff', 
+        padding: '20px 0', 
+        fontSize: '14px', 
+        borderTop: '1px solid #444',
+        zIndex: 1,
+      }}>
+        <FooterComponent />
+      </div>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import PhotoBanner from './PhotoBanner';
 import { Footer } from 'antd/es/layout/layout';
 import LazyLoad from 'react-lazyload';
 import { LoadingOutlined } from '@ant-design/icons';
+import FooterComponent from '../../other/Footer';
 
 const PhotoHome = () => {
   const [photoObjects, setPhotoObjects] = useState([]);
@@ -76,7 +77,7 @@ const PhotoHome = () => {
 
       <br />
       
-      <Footer style={{
+      <div style={{
         textAlign: 'center', 
         background: '#001529', 
         color: '#fff', 
@@ -85,11 +86,8 @@ const PhotoHome = () => {
         borderTop: '1px solid #444',
         zIndex: 1,
       }}>
-        <div style={{ marginBottom: '10px' }}>&copy; 2025 Christian Graber. All rights reserved.</div>
-        <div style={{ fontSize: '12px', color: '#bbb' }}>
-          Built with <span style={{ color: '#61DAFB' }}>React</span> and <span style={{ color: '#F7DF1E' }}>JavaScript</span> by Christian Graber
-        </div>
-      </Footer>
+        <FooterComponent />
+      </div>
     </div>
   );
 };

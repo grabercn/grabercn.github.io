@@ -10,6 +10,7 @@ import ParticlesBackground from './animations/ParticlesBackground'; // Import th
 import Skills from './content/SkillsContent';
 import Experience from './content/ExperienceContent';
 import Projects from './content/ProjectsContent';
+import FooterComponent from './other/Footer';
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 
@@ -409,10 +410,7 @@ function App() {
         borderTop: '1px solid #444',
         zIndex: 1,
       }}>
-        <div style={{ marginBottom: '10px' }}>&copy; 2025 Christian Graber. All rights reserved.</div>
-        <div style={{ fontSize: '12px', color: '#bbb' }}>
-          Built with <span style={{ color: '#61DAFB' }}>React</span> and <span style={{ color: '#F7DF1E' }}>JavaScript</span> by Christian Graber
-        </div>
+        <FooterComponent />
       </Footer>
     </Layout>
   );
