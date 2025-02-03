@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { createCanvas, loadImage } = require('canvas'); // Using 'canvas' library to add watermark
+const sharp = require('sharp'); // Add sharp for image compression
 
 // Directory of your photos
 const photographyDir = path.join(__dirname, '', ''); // Ensure this is set correctly
@@ -35,6 +36,40 @@ async function addWatermarkToImage(imagePath, watermarkText) {
   await fs.promises.writeFile(imagePath, buffer);
   
   return imagePath; // Return the original image path after overwrite
+}
+
+// Function to compress the image using sharp
+async function compressImage(imagePath) {
+  const ext = path.extname(imagePath).toLowerCase();
+  
+  let outputFormat = 'jpeg'; // Default format for JPEG
+  let quality = 70; // Set a decent quality level for compression
+
+  // If the image is PNG, we can compress it and convert it to WebP for better performance
+  if (ext === '.png') {
+    outputFormat = 'webp'; // Convert PNG to WebP
+    quality = 75; // Slightly higher compression for PNG to WebP conversion
+  }
+
+  // Generate a new output path for the compressed image
+  const compressedImagePath = imagePath.replace(ext, `-compressed${ext}`);
+
+  // Use sharp to process the image
+  await sharp(imagePath)
+  .resize({ // Auto-resizing
+    fit: sharp.fit.inside, // Ensures the image fits inside the specified dimensions
+    withoutEnlargement: true, // Prevent enlargement of smaller images
+    // Optional: specify max dimensions if you want to constrain image size
+    width: 1200, // Max width
+  })
+  .toFormat(outputFormat, { quality }) // Convert to selected format with the desired quality
+  .toFile(compressedImagePath); // Save to new compressed image path
+
+  console.log(`Compressed image: ${compressedImagePath}`);
+
+  // Overwrite the original file with the compressed version (if needed)
+  await fs.promises.rename(compressedImagePath, imagePath);
+  console.log(`Replaced original image with the compressed version: ${imagePath}`);
 }
 
 // Function to rename and organize photos asynchronously
@@ -109,7 +144,10 @@ async function organizePhotos() {
       const watermarkText = '© Christian Graber';
       const watermarkedImagePath = await addWatermarkToImage(newFilePath, watermarkText);
 
-      // Add the new photo object with the watermarked image path
+      // Compress the image to reduce file size
+      await compressImage(watermarkedImagePath);
+
+      // Add the new photo object with the watermarked and compressed image path
       photoObjects[`photo${photoIndex}`] = {
         id: photoIndex,
         name: newFileName,
