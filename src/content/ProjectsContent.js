@@ -13,7 +13,7 @@ const Projects = () => {
       liveLink: "https://theforumhub.com", // Live link for "See it in action"
       icon: <RocketOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
-        "https://via.placeholder.com/200x150?text=ForumHub+1"
+        "/images/project1.png"
       ],
       tags: ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'JavaScript', 'Azure Cloud Services']
     },
@@ -24,7 +24,7 @@ const Projects = () => {
       link: "https://github.com/OwenAEdwards/RideShare.Android",
       icon: <CarOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
-        "https://via.placeholder.com/200x150?text=RideShare+1"
+        "/images/project2.jpg"
       ],
       tags: ['Kotlin', '.NET', 'MongoDB', 'C#', 'Android']
     },
@@ -35,7 +35,7 @@ const Projects = () => {
       link: "https://github.com/grabercn/ShopFront",
       icon: <ShoppingCartOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
-        "https://via.placeholder.com/200x150?text=eCommerce+1"
+        "/images/project3.jpg"
       ],
       tags: ['Java', 'Javascript', 'Spring Boot', 'React', 'PostgreSQL']
     },
@@ -45,7 +45,7 @@ const Projects = () => {
       link: "https://github.com/grabercn/Database-eCommerce-Website",
       icon: <DiscordOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
-        "https://via.placeholder.com/200x150?text=eCommerce+1"
+        "/images/project4.jpg"
       ],
       tags: ['Python', 'AI', 'Rest APIs']
     },
@@ -56,7 +56,7 @@ const Projects = () => {
       link: "https://github.com/grabercn/StockyAiTrader",
       icon: <StockOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
-        "https://via.placeholder.com/200x150?text=eCommerce+1"
+        "/images/project5.jpg"
       ],
       tags: ['Python', 'AI', 'Transformers', 'Sequence Classification']
     }
