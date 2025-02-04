@@ -1,5 +1,5 @@
-import { RocketOutlined, CarOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { Image, Row, Col, Card, Typography, Tag } from "antd";
+import { RocketOutlined, CarOutlined, ShoppingCartOutlined, DiscordOutlined, StockOutlined } from "@ant-design/icons";
+import { Image, Row, Col, Card, Typography, Tag, Button } from "antd";
 
 const { Title, Paragraph } = Typography;
 
@@ -10,16 +10,17 @@ const Projects = () => {
       description:
         "Developed a dynamic React-based forum website hosted on Azure, featuring a modern architecture and interface. Implemented pagination and efficient rendering of hundreds of posts, comments, and reactions. This project focused on scalability and performance for handling large user interactions.",
       link: "https://github.com/grabercn/ForumHub",
+      liveLink: "https://theforumhub.com", // Live link for "See it in action"
       icon: <RocketOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
         "https://via.placeholder.com/200x150?text=ForumHub+1"
       ],
-      tags: ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'JavaScript']
+      tags: ['React', 'Java', 'Spring Boot', 'PostgreSQL', 'JavaScript', 'Azure Cloud Services']
     },
     {
       title: "RideShare App",
       description:
-        "Developed an Android-based ride-sharing app using Kotlin with a .NET Core backend and MSSQL for data storage. Utilized MSSQL Server and MongoDB for scalable data management. This app was built to support real-time ride tracking and dynamic pricing.",
+        "Developed an Android-based ride-sharing app using Kotlin with a .NET Core backend and SQL for data storage. Utilized Microsoft SQL Server and MongoDB for scalable data management. This app was built to support real-time ride tracking and dynamic pricing.",
       link: "https://github.com/OwenAEdwards/RideShare.Android",
       icon: <CarOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
@@ -28,22 +29,42 @@ const Projects = () => {
       tags: ['Kotlin', '.NET', 'MongoDB', 'C#', 'Android']
     },
     {
-      title: "eCommerce Application",
+      title: "ShopFront",
       description:
         "Developed a full-stack eCommerce web application using Java (Spring Boot) for the backend, React for the frontend, and PostgreSQL for data storage. Designed the database schema and synchronized the backend for Object-Relational Mapping. This app supports features like product catalog, shopping cart, and order management.",
-      link: "https://github.com/grabercn/Database-eCommerce-Website",
+      link: "https://github.com/grabercn/ShopFront",
       icon: <ShoppingCartOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
         "https://via.placeholder.com/200x150?text=eCommerce+1"
       ],
-      tags: ['Java', 'Spring Boot', 'React', 'PostgreSQL']
+      tags: ['Java', 'Javascript', 'Spring Boot', 'React', 'PostgreSQL']
+    },
+    {
+      title: "Gemini & Media Discord Bot",
+      description: "Maintain a Python-based Gemini Discord Bot that integrates AI for dynamic message responses. The bot supports a range of features including music playback, YouTube downloads, custom voice commands, and user interaction management. Utilized Discord.py, PyTube, and FFmpeg to implement functionalities such as music queues, playback control, and user-specific commands. Ensured ease of use through customizable configurations and streamlined user experience.",
+      link: "https://github.com/grabercn/Database-eCommerce-Website",
+      icon: <DiscordOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
+      gallery: [
+        "https://via.placeholder.com/200x150?text=eCommerce+1"
+      ],
+      tags: ['Python', 'AI', 'Rest APIs']
+    },
+    {
+      title: "Stocky AI Trader",
+      description:
+        "Built an AI-powered stock trading application using Python, leveraging Transformers and Sequence Classification models for predictive analysis. Integrated a PyQt5 GUI to enable seamless interaction for day trading and long-term trade tracking. The application downloads live market data to inform trades and utilizes AI-driven strategies to make and execute trades. Currently operating in paper trading mode to test and refine AI models, with plans to transition to live trading in the future.",
+      link: "https://github.com/grabercn/StockyAiTrader",
+      icon: <StockOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
+      gallery: [
+        "https://via.placeholder.com/200x150?text=eCommerce+1"
+      ],
+      tags: ['Python', 'AI', 'Transformers', 'Sequence Classification']
     }
   ];
 
   return (
     <Row gutter={[16, 24]} justify="start">
       {projectData.map((project, index) => {
-        const [titleBeforeColon, titleAfterColon] = project.title.split(":");
 
         return (
           <Col key={index} xs={24} sm={12} md={8} lg={6}>
@@ -59,29 +80,28 @@ const Projects = () => {
                     <Col key={imgIndex} span={24}>
                       <Image
                         width="100%"
-                        height={200} // Adjust this height to ensure it spans the card
+                        height={200}
                         src={imageUrl}
                         alt={`Project ${index + 1} Image ${imgIndex + 1}`}
                         style={{
                           borderRadius: '8px',
                           objectFit: 'cover',
                         }}
-                        fallback="/images/banner.jpg" // Placeholder image
+                        fallback="/images/banner.jpg"
                       />
                     </Col>
                   ))}
                 </Row>
               }
             >
-              <div style={{ padding: '16px' }}>
+              <div style={{  }}>
                 <Title level={4} style={{ marginBottom: '8px' }}>
-                  <span style={{ fontWeight: 'bold' }}>{titleBeforeColon}</span> {titleAfterColon}
+                  <span style={{ fontWeight: 'bold' }}>{project.icon}{project.title}</span>
                 </Title>
                 <Paragraph style={{ marginBottom: '16px' }}>
                   {project.description}
                 </Paragraph>
 
-                {/* Project Tags */}
                 <div style={{ marginBottom: '16px' }}>
                   {project.tags.map((tag, tagIndex) => (
                     <Tag key={tagIndex} color="blue" style={{ marginRight: '8px', marginBottom: '8px' }}>
@@ -90,9 +110,19 @@ const Projects = () => {
                   ))}
                 </div>
 
+                {/* View Project on GitHub Link */}
                 <a href={project.link} target="_blank" rel="noopener noreferrer">
                   <strong>View Project on GitHub</strong>
                 </a>
+
+                {/* Conditional Button: "See it in Action" */}
+                {project.liveLink && (
+                  <div style={{ marginTop: '16px' }}>
+                    <a href={project.liveLink} style={{color: 'purple'}} target="_blank">
+                      <strong>See it in Action</strong>
+                      </a>
+                  </div>
+                )}
               </div>
             </Card>
           </Col>

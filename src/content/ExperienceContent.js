@@ -16,7 +16,7 @@ const experienceData = [
       'Worked with an Agile team to deliver high-quality software',
       'Led a fundraising initiative for a non-profit, raising $10,000'
     ],
-    skills: ['C#', '.NET', 'API Development', 'MSSQL', 'Agile', 'Scrum'],
+    skills: ['C#', '.NET', 'API Development', 'Microsoft SQL Server', 'Agile', 'Scrum'],
     date: "May 2024 - Aug 2024"
   },
   {

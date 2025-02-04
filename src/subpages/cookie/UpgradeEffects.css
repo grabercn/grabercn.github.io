@@ -1,0 +1,43 @@
+.upgrade-effects-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 10;
+  }
+  
+  .effect-cat,
+  .effect-banana,
+  .effect-pizza,
+  .effect-quantum {
+    position: absolute;
+    transition: transform 1s ease-in-out;
+  }
+  
+  .cat-icon {
+    font-size: 40px;
+    animation: move-cat 5s infinite;
+  }
+  
+  .banana-icon {
+    font-size: 40px;
+    animation: move-banana 5s infinite;
+  }
+  
+  .pizza-icon {
+    font-size: 40px;
+    animation: move-pizza 5s infinite;
+  }
+  
+  .quantum-icon {
+    font-size: 40px;
+    animation: move-quantum 5s infinite;
+  }
+  
+  @keyframes move-cat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+    100% { transform: translateY(0); }
+  }
+  
+  /* Similarly define other animations */
+  
