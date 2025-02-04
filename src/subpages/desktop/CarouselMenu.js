@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { UpOutlined } from '@ant-design/icons';  // Import the up arrow icon
-import { Layout, Row, Col } from 'antd';
 import { AppstoreAddOutlined, DesktopOutlined, FileOutlined, SearchOutlined, GithubOutlined, CloudOutlined } from '@ant-design/icons';
+import { Layout, Row, Col } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import './CarouselMenu.css';
 import App from '../../App';
@@ -19,55 +18,24 @@ const desktopIcons = [
 
 // AppWindow component to render the floating window with animation
 const AppWindow = ({ label, onClose }) => {
-  const [scrollingUp, setScrollingUp] = useState(false);
-  const [showArrow, setShowArrow] = useState(false);
-  const [pullDistance, setPullDistance] = useState(0); // Tracks how far user has pulled
-
-  // Handle scroll event to trigger closing of the window
-  const handleScroll = (e) => {
-    if (e.deltaY < 0) { // If user scrolls up
-      setPullDistance((prev) => Math.max(prev - e.deltaY, 0)); // Increase pull distance on scroll up
-      if (pullDistance > 50) { // When pulled enough, show the arrow
-        setShowArrow(true);
-      } else {
-        setShowArrow(false);
-      }
-
-      if (window.scrollY === 0 && pullDistance > 500) {
-        // Once the user scrolls and pulls beyond a certain point, trigger the closing
-        setScrollingUp(true); 
-      }
-    } else {
-      setShowArrow(false); // Hide the arrow when scrolling down
-      setPullDistance(0); // Reset the pull distance when scrolling down
-    }
-  };
-
-  // Use the useEffect to add event listener for scroll
-  useEffect(() => {
-    window.addEventListener('wheel', handleScroll);
-
-    return () => {
-      window.removeEventListener('wheel', handleScroll);
-    };
-  }, [pullDistance]);
-
-  // Animate the closing of the app window when scrolling up
   return (
     <motion.div
       className="app-window"
-      initial={{ opacity: 0, y: -50 }} // Initial state (invisible, slightly below)
-      animate={scrollingUp ? { opacity: 0, y: -50 } : { opacity: 1, y: 0 }} // Animate to visible or sliding up if scrolling up
-      exit={{ opacity: 0, y: -50 }} // Exit animation (fade out and slide up)
-      transition={{ duration: 0.3 }} // Animation duration
-      onAnimationComplete={() => scrollingUp && onClose()} // Close the dialog after animation
+      initial={{ opacity: 0, y: 50 }} // Start from below (slide up effect)
+      animate={{ opacity: 1, y: 0 }}  // Move to normal position (visible)
+      exit={{
+        opacity: 0, 
+        y: 50,
+        transition: { duration: 0.3 } // Slide down when closing with transition
+      }} // Slide down when closing
+      transition={{ duration: 0.3 }} // Open animation speed-up
     >
       <div className="app-window-content">
-          {label === 'Portfolio' && <App/>}
+        {label === 'Portfolio' && <App />}
       </div>
 
-      {/* The up arrow that appears during the "extra pull" phase */}
-      <UpOutlined className={`arrow-up ${showArrow ? 'show' : ''}`} />
+      {/* Close button */}
+      <button className="close-btn" onClick={onClose}>X</button>
     </motion.div>
   );
 };
@@ -132,6 +100,7 @@ const CarouselMenu = () => {
               }}
             >
               <div
+                id={icon.id}
                 className="desktop-icon-wrapper"
                 onClick={() => handleMouseClick(index)} // Click to select and launch app
                 onKeyPress={(e) => e.key === ' ' && handleSelection()}
