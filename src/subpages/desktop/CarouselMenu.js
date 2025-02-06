@@ -32,6 +32,7 @@ const AppWindow = ({ label, onClose }) => {
     >
       <div className="app-window-content">
         {label === 'Portfolio' && <App />}
+        {label === 'Documents' && <h1>Hey</h1>}
       </div>
 
       {/* Close button */}
@@ -70,6 +71,7 @@ const CarouselMenu = () => {
     setHoveredIndex(null); // Unselect hover effect when clicked
     const selectedApp = desktopIcons[index];
     setCurrentAppLabel(selectedApp.label); // Store selected app label
+    
     setAppWindowVisible(true); // Show app window
   };
 
@@ -94,8 +96,8 @@ const CarouselMenu = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                transform: `scale(${index === selectedIndex || index === hoveredIndex ? 1.5 : 1})`,
-                transition: 'transform 0.3s ease, opacity 0.3s ease',
+                transform: `scale(${index === hoveredIndex ? 1.2 : 1})`,
+                transition: 'transform 0.1s ease, opacity 0.1s ease',
                 opacity: index === selectedIndex || index === hoveredIndex ? 1 : 0.7,
               }}
             >
@@ -103,7 +105,6 @@ const CarouselMenu = () => {
                 id={icon.id}
                 className="desktop-icon-wrapper"
                 onClick={() => handleMouseClick(index)} // Click to select and launch app
-                onKeyPress={(e) => e.key === ' ' && handleSelection()}
                 onMouseEnter={() => handleHover(index)} // Hover effect
                 onMouseLeave={handleMouseLeave} // Hover leave effect
                 role="button"

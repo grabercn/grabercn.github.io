@@ -29,7 +29,7 @@
   justify-content: center;
   cursor: pointer;
   text-align: center;
-  padding: 70px; /* Adjust padding here */
+  margin: 5vw; /* Adjust padding here */
   transition: all 0.1s ease;
   opacity: 0.8;
   transform: scale(1);
@@ -48,7 +48,7 @@
 }
 
 .desktop-icon-wrapper .desktop-icon {
-  font-size: 50px; /* Icon size */
+  font-size: 5vw; /* Icon size */
   margin-bottom: 8px;
   padding: 20px;  /* Padding around the icon */
   background-color: white;
@@ -91,7 +91,7 @@
   position: absolute;
   bottom: 20px; /* Adjusted to move it higher */
   right: 20px; /* Move it a bit more towards the edge */
-  background-color: #ffffff52; /* Red background for visibility */
+  background-color: #53535377; /* Red background for visibility */
   border-radius: 50%; /* Make it round */
   color: white; /* White text */
   font-size: 18px; /* Adjusted font size for clarity */
