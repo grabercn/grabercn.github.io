@@ -96,7 +96,7 @@ const CarouselMenu = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                transform: `scale(${index === hoveredIndex ? 1.2 : 1})`,
+                transform: `scale(${index === hoveredIndex ? 1 : 1})`,
                 transition: 'transform 0.1s ease, opacity 0.1s ease',
                 opacity: index === selectedIndex || index === hoveredIndex ? 1 : 0.7,
               }}
