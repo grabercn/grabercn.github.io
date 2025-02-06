@@ -1,5 +1,5 @@
 import { RocketOutlined, CarOutlined, ShoppingCartOutlined, DiscordOutlined, StockOutlined } from "@ant-design/icons";
-import { Image, Row, Col, Card, Typography, Tag, Button } from "antd";
+import { Image, Row, Col, Card, Typography, Tag } from "antd";
 
 const { Title, Paragraph } = Typography;
 
@@ -118,7 +118,7 @@ const Projects = () => {
                 {/* Conditional Button: "See it in Action" */}
                 {project.liveLink && (
                   <div style={{ marginTop: '16px' }}>
-                    <a href={project.liveLink} style={{color: 'purple'}} target="_blank">
+                    <a href={project.liveLink} style={{color: 'purple'}} target="_blank" rel="noopener noreferrer">
                       <strong>See it in Action</strong>
                       </a>
                   </div>
