@@ -1,19 +1,38 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { AppstoreAddOutlined, DesktopOutlined, FileOutlined, SearchOutlined, GithubOutlined, CloudOutlined } from '@ant-design/icons';
+import { AppstoreAddOutlined, FileOutlined, FolderOpenOutlined, GithubOutlined } from '@ant-design/icons';
 import { Layout, Row, Col } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import './CarouselMenu.css';
 import App from '../../App';
+import ExternalWebsite from './Apps/ExternalWebsite';
+import AppButtonList from './Apps/AppButtonList';
+import SparklesBackground from '../../animations/SparklesBackground';
 
-// Define the icons and actions
+// Define the icons and actions, including colors for each icon (fallback for missing colors)
 const desktopIcons = [
-  { id: 'app1', label: 'Portfolio', icon: <AppstoreAddOutlined /> },
-  { id: 'app2', label: 'Documents', icon: <FileOutlined /> },
-  { id: 'app3', label: 'Desktop', icon: <DesktopOutlined /> },
-  { id: 'app4', label: 'Search', icon: <SearchOutlined /> },
-  { id: 'app5', label: 'Github', icon: <GithubOutlined /> },
-  { id: 'app6', label: 'Cloud', icon: <CloudOutlined /> },
+  { 
+    id: 'app1', 
+    label: 'Portfolio', 
+    icon: <FolderOpenOutlined />,
+    iconColor: '#71068F', // Icon color for this specific icon
+    buttonTextColor: '#430056', // Button text color
+  },
+  { 
+    id: 'app2', 
+    label: 'Readme', 
+    icon: <FileOutlined />,
+  },
+  { 
+    id: 'app3', 
+    label: 'Github', 
+    icon: <GithubOutlined />,
+  },
+  { 
+    id: 'app4', 
+    label: 'Apps', 
+    icon: <AppstoreAddOutlined />,
+  },
 ];
 
 // AppWindow component to render the floating window with animation
@@ -32,7 +51,9 @@ const AppWindow = ({ label, onClose }) => {
     >
       <div className="app-window-content">
         {label === 'Portfolio' && <App />}
-        {label === 'Documents' && <h1>Hey</h1>}
+        {label === 'Readme' && <ExternalWebsite url={"https://mkview.tech/https://github.com/grabercn/grabercn/blob/main/README.md"}/> }
+        {label === 'Github' && <ExternalWebsite url={"https://gh-profile-viewer.vercel.app/grabercn"} />}
+        {label === 'Apps' && <AppButtonList />}
       </div>
 
       {/* Close button */}
@@ -46,14 +67,6 @@ const CarouselMenu = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isAppWindowVisible, setAppWindowVisible] = useState(false);
   const [currentAppLabel, setCurrentAppLabel] = useState('');
-
-  // Handle selection via spacebar or click
-  const handleSelection = () => {
-    if (selectedIndex === -1) return; // Do nothing if no item is selected yet
-    const selectedApp = desktopIcons[selectedIndex];
-    setCurrentAppLabel(selectedApp.label); // Store selected app label
-    setAppWindowVisible(true); // Show app window
-  };
 
   // Handle hover selection
   const handleHover = (index) => {
@@ -81,48 +94,67 @@ const CarouselMenu = () => {
   };
 
   return (
-    <Layout className="desktop-layout">
-      <Content className="desktop">
-        <Row gutter={[32, 32]} justify="center" wrap>
-          {desktopIcons.map((icon, index) => (
-            <Col
-              key={icon.id}
-              xs={8}
-              sm={6}
-              md={4}
-              lg={3}
-              xl={2}
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                transform: `scale(${index === hoveredIndex ? 1 : 1})`,
-                transition: 'transform 0.1s ease, opacity 0.1s ease',
-                opacity: index === selectedIndex || index === hoveredIndex ? 1 : 0.7,
-              }}
-            >
-              <div
-                id={icon.id}
-                className="desktop-icon-wrapper"
-                onClick={() => handleMouseClick(index)} // Click to select and launch app
-                onMouseEnter={() => handleHover(index)} // Hover effect
-                onMouseLeave={handleMouseLeave} // Hover leave effect
-                role="button"
-                tabIndex={0}
-              >
-                <div className="desktop-icon">{icon.icon}</div>
-                <span className="desktop-icon-label">{icon.label}</span>
-              </div>
-            </Col>
-          ))}
-        </Row>
+    <div>
+      {/* Sparkles Background: Place it behind the grid */}
+      <div style={{ position: 'absolute', zIndex: 0, top: 0, left: 0, width: '100%', height: '100vh' }}>
+        <SparklesBackground />
+      </div>
 
-        {/* Show AppWindow if it's visible */}
-        {isAppWindowVisible && (
-          <AppWindow label={currentAppLabel} onClose={closeAppWindow} />
-        )}
-      </Content>
-    </Layout>
+      {/* Main Layout: Ensure icons and grid are above the background */}
+      <Layout className="desktop-layout">
+        <Content className="desktop">
+          <Row gutter={[32, 32]} justify="center" wrap>
+            {desktopIcons.map((icon, index) => (
+              <Col
+                key={icon.id}
+                xs={8}
+                sm={6}
+                md={4}
+                lg={3}
+                xl={2}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  transform: `scale(${index === hoveredIndex ? 1 : 1})`,
+                  transition: 'transform 0.1s ease, opacity 0.1s ease',
+                  opacity: index === selectedIndex || index === hoveredIndex ? 1 : 0.7,
+                  zIndex: 1, // Make sure icons are on top of the background
+                }}
+              >
+                <div
+                  id={icon.id}
+                  className="desktop-icon-wrapper"
+                  onClick={() => handleMouseClick(index)} // Click to select and launch app
+                  onMouseEnter={() => handleHover(index)} // Hover effect
+                  onMouseLeave={handleMouseLeave} // Hover leave effect
+                  role="button"
+                  tabIndex={0}
+                  style={{
+                    color: icon.buttonTextColor || '#000000', // Default text color
+                  }}
+                >
+                  <div
+                    className="desktop-icon"
+                    style={{
+                      color: icon.iconColor || '#000000', // Default icon color
+                    }}
+                  >
+                    {icon.icon}
+                  </div>
+                  <span className="desktop-icon-label">{icon.label}</span>
+                </div>
+              </Col>
+            ))}
+          </Row>
+
+          {/* Show AppWindow if it's visible */}
+          {isAppWindowVisible && (
+            <AppWindow label={currentAppLabel} onClose={closeAppWindow} />
+          )}
+        </Content>
+      </Layout>
+    </div>
   );
 };
 

@@ -29,7 +29,7 @@
   justify-content: center;
   cursor: pointer;
   text-align: center;
-  margin: 5vw; /* Adjust padding here */
+  margin: 10vw; /* Adjust padding here between (around) the icons */
   transition: all 0.1s ease;
   opacity: 0.8;
   transform: scale(1);
@@ -48,7 +48,7 @@
 }
 
 .desktop-icon-wrapper .desktop-icon {
-  font-size: 5vw; /* Icon size */
+  font-size: 6vw; /* Icon size */
   margin-bottom: 8px;
   padding: 20px;  /* Padding around the icon */
   background-color: white;
@@ -57,10 +57,10 @@
   transition: all 0.3s ease;
 }
 
-/* Optional: Add spacing between icons in the grid */
+/* Optional: Add dynamic spacing between icons in the grid */
 @media screen and (max-width: 767px) {
   .desktop-icon-wrapper {
-    margin: 10px;
+    margin: 2vw; /* Adjust spacing relative to viewport width */
   }
 }
 

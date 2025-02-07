@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Image } from 'antd';
-import ParticlesBackground from '../../animations/ParticlesBackground';
+import { Row, Col, Image, Spin } from 'antd';  // Import Spin for loading indicator
 import PhotoBanner from './PhotoBanner';
 import LazyLoad from 'react-lazyload';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -8,6 +7,7 @@ import FooterComponent from '../../other/Footer';
 
 const PhotoHome = () => {
   const [photoObjects, setPhotoObjects] = useState([]);
+  const [loading, setLoading] = useState(true); // State to track loading status
 
   useEffect(() => {
     // Fetch the photoObjects.json file from the public folder
@@ -37,56 +37,65 @@ const PhotoHome = () => {
       })
       .catch((error) => {
         console.error("Error loading photo data:", error); // Handle errors
+      })
+      .finally(() => {
+        setLoading(false); // Data has finished loading
       });
   }, []);
 
   return (
     <div className="photo-gallery">
-      {/* Define the particle background */}
-      <ParticlesBackground />
+      {/* Show loading spinner until the data is fetched */}
+      {loading ? (
+        <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Spin size="large" />
+        </div>
+      ) : (
+        <>
 
-      {/* Pass the photoObjects data to the PhotoBanner component */}
-      {/* Conditionally render PhotoBanner only if photoObjects is not empty */}
-      {photoObjects.length > 0 && <PhotoBanner photoObjects={photoObjects} />}
+          {/* Pass the photoObjects data to the PhotoBanner component */}
+          {/* Conditionally render PhotoBanner only if photoObjects is not empty */}
+          {photoObjects.length > 0 && <PhotoBanner photoObjects={photoObjects} />}
 
-      <Row gutter={[16, 16]}>
-          {photoObjects.length > 0 ? (
-            photoObjects.map((photo) => (
-              <Col key={photo.id} xs={24} sm={12} md={8} lg={6}>
-                <LazyLoad
-                  height={1000} // Provide a fixed height (or dynamically calculated height)
-                  offset={100} // Load images when they are within 100px from the viewport
-                  placeholder={<div className="image-placeholder" style={{zIndex: 1}}><LoadingOutlined/></div>}
-                >
-                  <Image
-                    src={photo.path}
-                    alt={photo.name}
-                    width="100%"
-                    height="auto"
-                    preview={{ src: photo.path }}
-                    loading="lazy"
-                  />
-                </LazyLoad>
-              </Col>
-            ))
-          ) : (
-            <p>No photos available.</p>
-          )}
-        </Row>
+          <Row gutter={[16, 16]}>
+            {photoObjects.length > 0 ? (
+              photoObjects.map((photo) => (
+                <Col key={photo.id} xs={24} sm={12} md={8} lg={6}>
+                  <LazyLoad
+                    height={1000} // Provide a fixed height (or dynamically calculated height)
+                    offset={100} // Load images when they are within 100px from the viewport
+                  >
+                    <Image
+                      src={photo.path}
+                      alt={photo.name}
+                      width="100%"
+                      height="auto"
+                      preview={{ src: photo.path }}
+                      loading="lazy"
+                    />
+                  </LazyLoad>
+                </Col>
+              ))
+            ) : (
+              <p>No photos available.</p>
+            )}
+          </Row>
 
-      <br />
-      
-      <div style={{
-        textAlign: 'center', 
-        background: '#001529', 
-        color: '#fff', 
-        padding: '20px 0', 
-        fontSize: '14px', 
-        borderTop: '1px solid #444',
-        zIndex: 1,
-      }}>
-        <FooterComponent />
-      </div>
+          <br />
+
+          <div style={{
+            textAlign: 'center',
+            background: '#001529',
+            color: '#fff',
+            padding: '20px 0',
+            fontSize: '14px',
+            borderTop: '1px solid #444',
+            zIndex: 1,
+          }}>
+            <FooterComponent />
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, List, Typography, Divider, Spin, Button } from 'antd';
 import MusicBanner from './MusicBanner'; // Import the MusicBanner
-import ParticlesBackground from '../../animations/ParticlesBackground';
 import FooterComponent from '../../other/Footer';
 
 const { Title, Text } = Typography;
@@ -95,8 +94,6 @@ const MusicHome = () => {
       />
 
       <Title level={2}>Music Home</Title>
-
-      <ParticlesBackground /> {/*add particles */}
 
       {/* Latest News */}
       <Row gutter={16}>

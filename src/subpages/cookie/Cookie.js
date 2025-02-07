@@ -3,7 +3,6 @@ import { Button, Typography } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import ShopModal from "./ShopModal"; // Import the ShopModal
 import "./Cookie.css"; // Import the CSS file for animations
-import ParticlesBackground from "../../animations/ParticlesBackground";
 
 const { Title } = Typography;
 
@@ -272,8 +271,6 @@ const CookieClicker = () => {
 
   return (
     <div className="cookie-clicker-container">
-
-      <ParticlesBackground />
 
       <Title level={2}>Cookie Clicker</Title>
       <div className="cookie-icon-container" onClick={handleClickCookie}>
