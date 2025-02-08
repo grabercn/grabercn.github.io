@@ -59,7 +59,6 @@ async function compressImage(imagePath) {
   .resize({ // Auto-resizing
     fit: sharp.fit.inside, // Ensures the image fits inside the specified dimensions
     withoutEnlargement: true, // Prevent enlargement of smaller images
-    // Optional: specify max dimensions if you want to constrain image size
     width: 1200, // Max width
   })
   .toFormat(outputFormat, { quality }) // Convert to selected format with the desired quality
@@ -122,7 +121,7 @@ async function organizePhotos() {
     // Second pass: Rename files that are not correctly named and add watermark
     for (let index = 0; index < imageFiles.length; index++) {
       const file = imageFiles[index];
-      const ext = path.extname(file); // Get file extension (e.g., .jpg, .png)
+      let ext = path.extname(file).toLowerCase(); // Ensure extension is lowercase
       const baseName = path.basename(file, ext); // Get the base name without extension
 
       // If the file is already named correctly, skip it
@@ -151,17 +150,14 @@ async function organizePhotos() {
       photoObjects[`photo${photoIndex}`] = {
         id: photoIndex,
         name: newFileName,
-        path: `/photography/${path.basename(watermarkedImagePath)}`, // Path relative to your public folder
+        path: `/photography/${path.basename(watermarkedImagePath)}`,
       };
 
       photoIndex++; // Increment the photo index for the next file
     }
 
-    // Now, write the photoObjects to PhotoObject.json as a JSON file
-    const photoObjectJSON = JSON.stringify(photoObjects, null, 2);
-
-    // Ensure we save the file correctly
-    await fs.promises.writeFile(path.join(__dirname, 'PhotoObject.json'), photoObjectJSON, 'utf8');
+    // Save the photo objects to PhotoObject.json
+    await fs.promises.writeFile(path.join(__dirname, 'PhotoObject.json'), JSON.stringify(photoObjects, null, 2), 'utf8');
     console.log('PhotoObject.json has been saved successfully.');
   } catch (err) {
     console.error('Error:', err);
