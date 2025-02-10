@@ -96,6 +96,9 @@ const PhotoHome = () => {
                   {/* Overlay that appears on hover */}
                   <div className="overlay" onClick={() => openModal(photo)}>
                     <FullscreenOutlined className="overlay-icon" />
+                    <div className="overlay-description">
+                      {photo.description}
+                    </div>
                   </div>
                 </motion.div>
               ))

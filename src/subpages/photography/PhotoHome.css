@@ -50,6 +50,7 @@
   background: rgba(0, 0, 0, 0.3);
   opacity: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: opacity 0.3s ease;
@@ -64,4 +65,14 @@
   color: #fff;
   font-size: 2rem;
   cursor: pointer;
+}
+
+/* New styling for the photo description on hover */
+.overlay-description {
+  margin-top: 10px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  padding: 0 10px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
 }

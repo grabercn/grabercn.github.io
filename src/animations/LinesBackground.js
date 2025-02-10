@@ -10,9 +10,6 @@ const LinesBackground = () => {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
   };
 
-  // Function to generate a random speed (duration of the animation)
-  const getRandomSpeed = () => Math.random() * 5 + 3; // Random speed between 3s and 8s
-
   // Function to generate random vertical position for more dynamic placement
   const getRandomTop = () => Math.random() * 100 + "%"; // Random vertical position between 0% and 100%
 
