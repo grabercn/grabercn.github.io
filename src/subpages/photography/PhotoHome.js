@@ -1,99 +1,142 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Image, Spin } from 'antd';  // Import Spin for loading indicator
+import { Spin, Modal } from 'antd'; // Modal for full screen view
+import { FullscreenOutlined } from '@ant-design/icons'; // Fullscreen icon
 import PhotoBanner from './PhotoBanner';
 import LazyLoad from 'react-lazyload';
-import { LoadingOutlined } from '@ant-design/icons';
 import FooterComponent from '../../other/Footer';
+import Masonry from 'react-masonry-css'; // Masonry layout library
+import { motion } from 'framer-motion'; // For smooth animations
+import './PhotoHome.css';
 
 const PhotoHome = () => {
   const [photoObjects, setPhotoObjects] = useState([]);
-  const [loading, setLoading] = useState(true); // State to track loading status
+  const [loading, setLoading] = useState(true);
+  const [selectedPhoto, setSelectedPhoto] = useState(null); // State for the full screen modal
 
   useEffect(() => {
     // Fetch the photoObjects.json file from the public folder
     fetch('/photography/PhotoObject.json')
       .then((response) => {
-        // Check if the response is OK
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json();  // Parse the JSON response
+        return response.json();
       })
       .then((data) => {
-        // Ensure the data is an object and has the correct format
         if (typeof data !== 'object' || Array.isArray(data)) {
           throw new Error("Fetched data is not in the expected object format.");
         }
-
-        // Convert the object to an array to map over
         const photosArray = Object.values(data);
-
-        // Ensure the array is not empty
         if (photosArray.length > 0) {
-          setPhotoObjects(photosArray); // Store the fetched data as an array
+          setPhotoObjects(photosArray);
         } else {
           console.error("No photos found in the fetched data.");
         }
       })
       .catch((error) => {
-        console.error("Error loading photo data:", error); // Handle errors
+        console.error("Error loading photo data:", error);
       })
       .finally(() => {
-        setLoading(false); // Data has finished loading
+        setLoading(false);
       });
   }, []);
 
+  // Breakpoint settings for react-masonry-css.
+  const breakpointColumnsObj = {
+    default: 4,
+    1200: 3,
+    768: 2,
+    480: 1,
+  };
+
+  const openModal = (photo) => {
+    setSelectedPhoto(photo);
+  };
+
+  const closeModal = () => {
+    setSelectedPhoto(null);
+  };
+
   return (
     <div className="photo-gallery">
-      {/* Show loading spinner until the data is fetched */}
       {loading ? (
-        <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div
+          style={{
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
           <Spin size="large" />
         </div>
       ) : (
         <>
-
-          {/* Pass the photoObjects data to the PhotoBanner component */}
-          {/* Conditionally render PhotoBanner only if photoObjects is not empty */}
           {photoObjects.length > 0 && <PhotoBanner photoObjects={photoObjects} />}
 
-          <Row gutter={[16, 16]}>
+          {/* Masonry layout */}
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="gallery-grid"
+            columnClassName="gallery-column"
+          >
             {photoObjects.length > 0 ? (
               photoObjects.map((photo) => (
-                <Col key={photo.id} xs={24} sm={12} md={8} lg={6}>
-                  <LazyLoad
-                    height={1000} // Provide a fixed height (or dynamically calculated height)
-                    offset={100} // Load images when they are within 100px from the viewport
-                  >
-                    <Image
-                      src={photo.path}
-                      alt={photo.name}
-                      width="100%"
-                      height="auto"
-                      preview={{ src: photo.path }}
-                      loading="lazy"
-                    />
+                <motion.div
+                  key={photo.id}
+                  layout
+                  className="gallery-item"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <LazyLoad height={200} offset={100}>
+                    <img src={photo.path} alt={photo.name} loading="lazy" />
                   </LazyLoad>
-                </Col>
+                  {/* Overlay that appears on hover */}
+                  <div className="overlay" onClick={() => openModal(photo)}>
+                    <FullscreenOutlined className="overlay-icon" />
+                  </div>
+                </motion.div>
               ))
             ) : (
               <p>No photos available.</p>
             )}
-          </Row>
+          </Masonry>
 
           <br />
 
-          <div style={{
-            textAlign: 'center',
-            background: '#001529',
-            color: '#fff',
-            padding: '20px 0',
-            fontSize: '14px',
-            borderTop: '1px solid #444',
-            zIndex: 1,
-          }}>
+          <div
+            style={{
+              textAlign: 'center',
+              background: '#001529',
+              color: '#fff',
+              padding: '20px 0',
+              fontSize: '14px',
+              borderTop: '1px solid #444',
+              zIndex: 1,
+            }}
+          >
             <FooterComponent />
           </div>
+
+          {/* Full screen modal for viewing the photo */}
+          {selectedPhoto && (
+            <Modal
+              visible={!!selectedPhoto}
+              footer={null}
+              onCancel={closeModal}
+              centered
+              bodyStyle={{ padding: 0, backgroundColor: '#000' }}
+              width="90%"
+            >
+              <img
+                src={selectedPhoto.path}
+                alt={selectedPhoto.name}
+                style={{ width: '100%', height: 'auto' }}
+              />
+            </Modal>
+          )}
         </>
       )}
     </div>
