@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Drawer, Button, Menu } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { Map, Marker } from 'pigeon-maps';
@@ -25,6 +25,15 @@ const LanguageMapHome = () => {
   const [center, setCenter] = useState([46.603354, 1.888334]);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [welcomeVisible, setWelcomeVisible] = useState(true);
+
+  // Optional: detect mobile screen size for additional mobile tweaks if needed.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleCountryClick = (country) => {
     setSelectedCountry(country);
@@ -108,16 +117,41 @@ const LanguageMapHome = () => {
       </motion.div>
 
       <Drawer
-        title="Menu"
+        title={null} // Remove default title for a custom close button
         placement="left"
         onClose={() => setDrawerVisible(false)}
         visible={drawerVisible}
-        closeIcon={false}
-        style={{ zIndex: 1500 }}
+        closable={false} // Hide default close button
+        style={{ zIndex: 2000 }} // Ensure it's above everything
         maskClosable={true}
-      >
+        >
+        {/* Custom Close Button - Only Show on Mobile */}
+        {isMobile && (
+            <div 
+            onClick={() => setDrawerVisible(false)}
+            style={{
+                position: 'absolute',
+                top: 10,
+                right: 10,
+                background: '#C175FF',
+                borderRadius: '50%',
+                width: 40,
+                height: 40,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#fff',
+                fontSize: 20,
+                cursor: 'pointer',
+                zIndex: 3000, // Ensure it's above everything
+            }}
+            >
+            ✕
+            </div>
+        )}
+
         {renderDrawerContent()}
-      </Drawer>
+        </Drawer>
 
       <Modal
         visible={welcomeVisible}
@@ -204,32 +238,39 @@ const LanguageMapHome = () => {
         onCancel={handleCloseModal}
         footer={null}
         width="100%"
-        closable={true}
-        closeIcon={
-          <div
-            style={{
-              background: '#C175FF',
-              borderRadius: '50%',
-              width: 32,
-              height: 32,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: '#fff',
-              fontSize: 16,
-              cursor: 'pointer'
-            }}
-          >
-            X
-          </div>
-        }
+        closable={!isMobile}  // on desktop use default close icon; on mobile, use our custom button below
         style={{ top: 0, height: '100vh', padding: 0 }}
-        bodyStyle={{ height: '100vh', overflowY: 'auto', padding: 20 }}
-        maskClosable={false}
+        bodyStyle={{ height: '100vh', overflowY: 'auto', padding: 0 }}
       >
-        {selectedCountry && (
-          <CountryDetail country={selectedCountry} />
-        )}
+        <div style={{ position: 'relative', height: '100%' }}>
+          {/* Custom mobile close button */}
+          {isMobile && (
+            <div
+              onClick={handleCloseModal}
+              style={{
+                position: 'absolute',
+                top: 10,
+                right: 10,
+                background: '#C175FF',
+                borderRadius: '50%',
+                width: 32,
+                height: 32,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#fff',
+                fontSize: 16,
+                cursor: 'pointer',
+                zIndex: 1000
+              }}
+            >
+              X
+            </div>
+          )}
+          {selectedCountry && (
+            <CountryDetail country={selectedCountry} onClose={handleCloseModal} />
+          )}
+        </div>
       </Modal>
     </div>
   );
