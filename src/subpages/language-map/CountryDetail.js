@@ -6,6 +6,14 @@ const { Title, Paragraph, Text } = Typography;
 const { Panel } = Collapse;
 
 const CountryDetail = ({ country, onClose }) => {
+    // Mobile detection hook.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   // Refs for scrolling to sections.
   const basicRef = useRef(null);
   const movingRef = useRef(null);
@@ -53,15 +61,6 @@ const CountryDetail = ({ country, onClose }) => {
     { key: 'cost', label: 'Cost of Living', ref: costRef },
     { key: 'cities', label: 'Best Cities', ref: bestCitiesRef },
   ];
-
-  // Mobile detection hook.
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   return (
     <>

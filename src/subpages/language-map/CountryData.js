@@ -3,7 +3,7 @@ const countries = [
     {
       name: 'Canada',
       language: 'English & French',
-      flagUrl: 'https://flagcdn.com/w20/ca.png',
+      flagUrl: 'https://flagcdn.com/w320/ca.png',
       coordinates: [56.1304, -106.3468],
       moreInfo: {
         visaProcess: `
@@ -60,7 +60,7 @@ const countries = [
     {
       name: 'France',
       language: 'French',
-      flagUrl: 'https://flagcdn.com/w20/fr.png',
+      flagUrl: 'https://flagcdn.com/w320/fr.png',
       coordinates: [46.603354, 1.888334],
       moreInfo: {
         visaProcess: `
@@ -128,7 +128,7 @@ const countries = [
     {
       name: 'Germany',
       language: 'German',
-      flagUrl: 'https://flagcdn.com/w20/de.png',
+      flagUrl: 'https://flagcdn.com/w320/de.png',
       coordinates: [51.165691, 10.451526],
       moreInfo: {
         visaProcess: `
@@ -193,7 +193,7 @@ const countries = [
     {
       name: 'Australia',
       language: 'English',
-      flagUrl: 'https://flagcdn.com/w20/au.png',
+      flagUrl: 'https://flagcdn.com/w320/au.png',
       coordinates: [-25.2744, 133.7751],
       moreInfo: {
         visaProcess: `
@@ -258,7 +258,7 @@ const countries = [
     {
       name: 'Japan',
       language: 'Japanese',
-      flagUrl: 'https://flagcdn.com/w20/jp.png',
+      flagUrl: 'https://flagcdn.com/w320/jp.png',
       coordinates: [36.2048, 138.2529],
       moreInfo: {
         visaProcess: `
@@ -321,7 +321,7 @@ const countries = [
     {
       name: 'Australia',
       language: 'English',
-      flagUrl: 'https://flagcdn.com/w20/au.png',
+      flagUrl: 'https://flagcdn.com/w320/au.png',
       coordinates: [-25.2744, 133.7751],
       moreInfo: {
         visaProcess: `
@@ -382,7 +382,7 @@ const countries = [
     {
       name: 'Japan',
       language: 'Japanese',
-      flagUrl: 'https://flagcdn.com/w20/jp.png',
+      flagUrl: 'https://flagcdn.com/w320/jp.png',
       coordinates: [36.2048, 138.2529],
       moreInfo: {
         visaProcess: `
