@@ -5,6 +5,7 @@ import App from '../App';
 import PhotoHome from '../subpages/photography/PhotoHome';
 import MusicHome from '../subpages/music/MusicHome';
 import DesktopLauncher from '../subpages/desktop/DesktopLauncher';
+import LanguageMapHome from '../subpages/language-map/LanguageMapHome'
 
 const PageRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const PageRoutes = () => {
         <Route path="/photo" element={<PhotoHome />} />
         <Route path='/music' element={<MusicHome />} />
         <Route path='/desktop' element={<DesktopLauncher />} />
+        <Route path='/map' element={<LanguageMapHome />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>
