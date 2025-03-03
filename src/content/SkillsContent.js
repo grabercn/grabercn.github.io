@@ -16,7 +16,8 @@ const skills = [
   { name: "Java", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/java.svg", proficiency: 80 },
   { name: "SQL", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/sqlite.svg", proficiency: 90 },
   { name: "Bash", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/gnubash.svg", proficiency: 60 },
-  { name: "Powershell", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/powershell.svg", proficiency: 50 }
+  { name: "Powershell", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/powershell.svg", proficiency: 50 },
+  { name: "Dart", icon: "https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/dart.svg", proficiency: 30 }
 ];
 
 // Skill level mapping based on proficiency percentage
@@ -31,7 +32,7 @@ const getSkillLevelColor = (proficiency) => {
 };
 
 const technologies = [
-  "Azure", "Docker", "React.js", "Node.js", "Angular", "MongoDB", "Tailwind", "Spring", "ASP.NET", "Google Cloud"
+  "Azure", "AWS", "Docker", "React.js", "Flutter", "Node.js", "Angular", "MongoDB", "Tailwind", "Spring", "ASP.NET", "Google Cloud"
 ];
 
 const concepts = [
