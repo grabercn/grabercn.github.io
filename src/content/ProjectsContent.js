@@ -63,7 +63,7 @@ const Projects = () => {
     {
       title: "Resumancer",
       description:
-        "Collaborated on, and designed an AI-powered Resume Optimizer for RevUC Hackathon. The project uses generative AI, NLP, and OCR to analyze resumes and provide feedback on how to improve them. This includes both customized personal and detailed statistical data. The project is built using Python, Flask, React, and JavaScript. The project was hosted on AWS using EC2 and Elastic Beanstalk for the Backend, AWS Amplify for the Front End, S3 Buckets for Document Storage, and Amazon Bedrock for Generative AI.",
+        "Designed an AI-powered resume optimizer for RevUC Hackathon. The project uses generative AI via Amazon Bedrock, NLP via Textract, and OCR via Amazon Comprehend to analyze resumes and provide feedback on how to improve them. This includes both customized and detailed statistical data. The project is built using React to provide data display and a resume view, and Flask to interface with AWS and provide customized feedback. The project was hosted on AWS using EC2 and Elastic Beanstalk for the Backend, AWS Amplify for the Front End, and S3 Buckets for Document Storage.",
       link: "https://github.com/grabercn/Resumancer",
       icon: <BookOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
