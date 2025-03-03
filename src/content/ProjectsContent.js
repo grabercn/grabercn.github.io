@@ -37,7 +37,7 @@ const Projects = () => {
       gallery: [
         "/images/project3.jpg"
       ],
-      tags: ['Java', 'Javascript', 'Spring Boot', 'React', 'PostgreSQL']
+      tags: ['Java', 'JavaScript', 'Spring Boot', 'React', 'PostgreSQL']
     },
     {
       title: "Gemini & Media Discord Bot",
@@ -63,13 +63,13 @@ const Projects = () => {
     {
       title: "Resumancer",
       description:
-        "Collaborated on, and designed an AI Powered Resume Project for RevUC Hackathon. The project uses AI to analyze resumes and provide feedback on how to improve them, including personal and detailed statistical data. The project is built using Python, Flask, React, and Node.js. The project was hosted on AWS using EC2, Beanstalk, S3, and Bedrock.",
+        "Collaborated on, and designed an AI-powered Resume Optimizer for RevUC Hackathon. The project uses generative AI, NLP, and OCR to analyze resumes and provide feedback on how to improve them. This includes both customized personal and detailed statistical data. The project is built using Python, Flask, React, and JavaScript. The project was hosted on AWS using EC2 and Elastic Beanstalk for the Backend, AWS Amplify for the Front End, S3 Buckets for Document Storage, and Amazon Bedrock for Generative AI.",
       link: "https://github.com/grabercn/Resumancer",
       icon: <BookOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
         "/images/project6.jpg"
       ],
-      tags: ['AI', 'AWS', 'Python', 'Flask', 'React', 'Node.js']
+      tags: ['AI', 'AWS', 'Python', 'Flask', 'React', 'JavaScript']
     }
   ];
 
