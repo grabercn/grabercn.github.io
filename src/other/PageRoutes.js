@@ -5,7 +5,7 @@ import App from '../App';
 import PhotoHome from '../subpages/photography/PhotoHome';
 import MusicHome from '../subpages/music/MusicHome';
 import DesktopLauncher from '../subpages/desktop/DesktopLauncher';
-import LanguageMapHome from '../subpages/language-map/LanguageMapHome'
+import LanguageMapHome from '../subpages/photo-map/PhotoMapHome'
 
 const PageRoutes = () => {
   return (
