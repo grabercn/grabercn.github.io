@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDownOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, DownloadOutlined } from '@ant-design/icons';
 import { Row, Col, Button, Typography, Image } from 'antd';
 import JumpingText from '../animations/JumpingText';
 
@@ -145,6 +145,19 @@ const Banner = () => {
                 </Paragraph>
                 <Button type="primary" size="large" onClick={scrollToContact}>
                   Get in Touch
+                </Button>
+                <div style={{ marginTop: '20px' }}/>
+                <Button
+                  style={{
+                    color: '#fff', // White text
+                    backgroundColor: '#4B0082', // Dark purple background
+                  }}
+                  type="default"
+                  size="large"
+                  onClick={() => window.open('/docs/Graber_Christian_Resume_2024.pdf', '_blank')}
+                >
+                  <DownloadOutlined style={{ marginRight: '8px' }} />
+                  View Resume
                 </Button>
                 <div style={{ marginTop: '20px' }}>
                   {/* eslint-disable-next-line */}

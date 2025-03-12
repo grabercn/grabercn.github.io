@@ -42,8 +42,8 @@ html {
 
 /* Set the background color for buttons */
 .ant-btn {
-  background-color: rgb(193, 117, 255) !important;
-  border-color: rgb(240, 221, 255) !important;
+  background-color: rgb(193, 117, 255) ;
+  border-color: rgb(240, 221, 255) ;
 }
 
 /* Set the color for Menu items */

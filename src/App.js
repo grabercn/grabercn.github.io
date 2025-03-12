@@ -292,7 +292,7 @@ const sections = [
       </>
     ),
     cardTitle: "Contact"
-  }  
+  }
 ];
 
 function App() {
