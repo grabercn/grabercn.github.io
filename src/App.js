@@ -11,6 +11,9 @@ import Skills from './content/SkillsContent';
 import Experience from './content/ExperienceContent';
 import Projects from './content/ProjectsContent';
 import FooterComponent from './other/Footer';
+import ModernPurpleBackground from './animations/ModernPurpleBackground';
+import NinetiesPatternBackground from './animations/NinetiesPatternBackground';
+import GlowingHeaderAnimation from './animations/GlowingHeaderAnimation';
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 
@@ -345,6 +348,7 @@ function App() {
             borderBottom: 'none', // Optional: remove border to blend with the header
           }}
         >
+          <GlowingHeaderAnimation/>
           {sections.map((section) => (
             <Menu.Item
               key={section.id}
@@ -359,8 +363,9 @@ function App() {
       {/* Use the Banner Component */}
       <Banner />
 
-      {/* Add the ParticlesBackground component */}
-      <ParticlesBackground />
+      {/* Add the Header and Background animations components */}
+      <NinetiesPatternBackground /> 
+      <ModernPurpleBackground />
 
       <Content
         style={{

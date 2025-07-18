@@ -93,6 +93,7 @@ const Projects = () => {
                         width="100%"
                         height={200}
                         src={imageUrl}
+                        preview={false}
                         alt={`Project ${index + 1} Image ${imgIndex + 1}`}
                         style={{
                           borderRadius: '8px',
