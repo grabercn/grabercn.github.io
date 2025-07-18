@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // This component creates a 90's-inspired animated background.
 // It features "slithering" zig-zags and squiggles that fade in and out on scroll.
@@ -69,7 +69,7 @@ const NinetiesPatternBackground = () => {
         });
       }
       setShapes(newShapes);
-    };
+    }
 
     generateShapes();
     window.addEventListener('resize', generateShapes);

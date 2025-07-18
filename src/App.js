@@ -6,7 +6,6 @@ import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutli
 import Banner from './other/Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
-import ParticlesBackground from './animations/ParticlesBackground'; // Import the ParticlesBackground Component
 import Skills from './content/SkillsContent';
 import Experience from './content/ExperienceContent';
 import Projects from './content/ProjectsContent';
