@@ -1,70 +1,104 @@
-.uihome-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+/* --- Global Styles & Variables --- */
+:root {
+  --primary-bg: #f0f4f8; /* Light, airy background */
+  --card-bg: #ffffff;
+  --text-primary: #1e293b; /* Dark slate for high contrast */
+  --text-secondary: #475569;
+  --accent-color: #3b82f6; /* A nice blue for accents */
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --border-radius: 12px;
 }
 
-.uihome-header {
-    text-align: center;
-    margin-bottom: 40px;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primary-bg);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to the top */
+  min-height: 100vh;
+  padding: 2rem;
 }
 
-.uihome-header h1 {
-    font-size: 2.5em;
-    color: #333;
-    margin-bottom: 10px;
+/* --- Main Container --- */
+.ui-home-container {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
 }
 
-.uihome-header p {
-    font-size: 1.1em;
-    color: #666;
-    max-width: 800px;
-    line-height: 1.6;
+/* --- Headings and Text --- */
+.ui-home-container h1 {
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -1px;
 }
 
-.uihome-sections {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    width: 100%;
-    max-width: 1200px;
+.ui-home-container h2 {
+  font-size: 1.75rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
 }
 
-.uihome-section-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 25px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.ui-home-container p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
 }
 
-.uihome-section-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+/* --- "About Me" Section Card --- */
+.about-me-section {
+  background-color: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 25px -5px var(--shadow-color);
+  margin-top: 2rem;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.uihome-section-card h2 {
-    font-size: 1.8em;
-    color: #007bff;
-    margin-bottom: 15px;
+.about-me-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.12);
 }
 
-.uihome-section-card p {
-    font-size: 1em;
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 20px;
+/* --- Animations --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.uihome-section-card .button {
-    display: inline-block;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-}
+/* --- Responsive Design for smaller screens --- */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
 
-.uihome-section-card .button:hover {
-    background-color: #0056a3;
+  .ui-home-container h1 {
+    font-size: 2rem;
+  }
+
+  .ui-home-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .about-me-section {
+    padding: 1.5rem;
+  }
 }
