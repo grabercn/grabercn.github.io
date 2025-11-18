@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 // JumpingText Component
 const JumpingText = ({ children }) => {
   const [time, setTime] = useState(0); // Time state to control animation
+  const rafRef = useRef(null);
 
   useEffect(() => {
     // Start continuous animation
     const animateMovement = () => {
       setTime(prevTime => prevTime + 0.01); // Increment time for smooth animation
-      requestAnimationFrame(animateMovement); // Keep animation going smoothly
+      rafRef.current = requestAnimationFrame(animateMovement); // Keep animation going smoothly
     };
 
-    animateMovement(); // Start the animation loop
+    rafRef.current = requestAnimationFrame(animateMovement);
 
-    // No cleanup needed for continuous animation
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
   // Vertical bounce effect with a spring-based transition

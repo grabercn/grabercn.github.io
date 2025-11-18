@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowDownOutlined, DownloadOutlined } from '@ant-design/icons';
 import { Row, Col, Button, Typography, Image } from 'antd';
 import JumpingText from '../animations/JumpingText';
+import NinetiesPatternBackground from '../animations/NinetiesPatternBackground';
 
 const { Title, Paragraph } = Typography;
 
@@ -36,12 +37,12 @@ const Banner = () => {
 
   const parallaxEffect = (scrollPosition) => {
     const translateY = scrollPosition * 0.2;
-    const blur = Math.min(scrollPosition / 10, 15);
     return {
-      transform: `translateY(-${translateY}px)`,
-      filter: `blur(${blur}px)`,
+      // Slight scale prevents subpixel seams along edges
+      transform: `translateY(-${translateY}px) scale(1.03)`,
     };
   };
+  const scrollBlur = Math.min(scrollPosition / 10, 15);
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -53,7 +54,7 @@ const Banner = () => {
   return (
     <div style={{ backgroundColor: '#2c1e7d', overflow: 'hidden' }}>
       {/* Full-Page Parallax Banner */}
-      <div className="banner" style={{ position: 'relative', height: '100vh' }}>
+      <div id="hero-banner" className="banner" style={{ position: 'relative', height: '100svh' }}>
         {/* Animated Background Image with Parallax and Blur Effect */}
         <motion.div
           className="background-image"
@@ -68,20 +69,28 @@ const Banner = () => {
             zIndex: 1,
             transform: 'translateZ(0)',
             transition: 'filter 1.5s ease-in-out',
-            filter: `brightness(${glowSettings.brightness}) blur(${glowSettings.blur}px)`,
+            // No blur at top; blur increases only with scroll
+            filter: `brightness(${glowSettings.brightness}) blur(${scrollBlur.toFixed(2)}px)`,
             ...parallaxEffect(scrollPosition),
           }}
         >
-          <Image
-            width="100%"
-            height="100%"
+          {/* Squiggles sit inside the blurred layer */}
+          <NinetiesPatternBackground />
+          <img
             src="/images/banner.jpg"
-            preview={false}
+            alt=""
+            loading="eager"
+            decoding="async"
             style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
               objectFit: 'cover',
-              borderRadius: '8px',
+              borderRadius: 0,
               filter: 'url(#chromatic)', // Chromatic aberration effect
               opacity: 0.6,
+              zIndex: 0,
             }}
           />
         </motion.div>
@@ -154,7 +163,7 @@ const Banner = () => {
                   }}
                   type="default"
                   size="large"
-                  onClick={() => window.open('/docs/Graber_Christian_Resume_2024.pdf', '_blank')}
+                  onClick={() => window.open('/docs/Graber_Christian_Resume_2025.pdf', '_blank')}
                 >
                   <DownloadOutlined style={{ marginRight: '8px' }} />
                   View Resume

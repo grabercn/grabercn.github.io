@@ -49,7 +49,8 @@ const ModernPurpleBackground = () => {
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #f8f7ff; /* A very light, almost white purple */
+      /* Richer, always-on subtle purple gradient base */
+      background: linear-gradient(135deg, #f2e9ff 0%, #eadbff 100%);
       z-index: 0; /* Ensures the background stays behind all other content */
       overflow: hidden; /* Prevents scrollbars from appearing from oversized circles */
     }
@@ -66,9 +67,9 @@ const ModernPurpleBackground = () => {
     .circle-1 {
       width: 45vmax;
       height: 45vmax;
-      top: -20vmax;
-      left: -20vmax;
-      background: radial-gradient(circle, rgba(174, 0, 255, 0.53) 0%, rgba(167, 139, 250, 0) 65%);
+      top: -12vmax;
+      left: -12vmax;
+      background: radial-gradient(circle, rgba(174, 0, 255, 0.65) 0%, rgba(167, 139, 250, 0) 65%);
       animation-name: move-pulse-1;
       animation-duration: 20s;
       animation-delay: 0s;
@@ -77,31 +78,31 @@ const ModernPurpleBackground = () => {
     .circle-2 {
       width: 55vmax;
       height: 55vmax;
-      bottom: -25vmax;
-      right: -25vmax;
-      background: radial-gradient(circle, rgba(147, 112, 219, 0.4) 0%, rgba(147, 112, 219, 0) 65%);
+      bottom: -12vmax;
+      right: -12vmax;
+      background: radial-gradient(circle, rgba(147, 112, 219, 0.55) 0%, rgba(147, 112, 219, 0) 65%);
       animation-name: move-pulse-2;
       animation-duration: 25s;
       animation-delay: -5s;
     }
 
     .circle-3 {
-      width: 40vmax;
-      height: 40vmax;
-      bottom: 10vh;
-      left: 20vw;
-      background: radial-gradient(circle, rgba(191, 172, 250, 0.35) 0%, rgba(191, 172, 250, 0) 65%);
+      width: 42vmax;
+      height: 42vmax;
+      bottom: 8vh;
+      left: 18vw;
+      background: radial-gradient(circle, rgba(191, 172, 250, 0.5) 0%, rgba(191, 172, 250, 0) 65%);
       animation-name: move-pulse-3;
       animation-duration: 30s;
       animation-delay: -10s;
     }
     
     .circle-4 {
-      width: 30vmax;
-      height: 30vmax;
-      top: 15vh;
-      right: 10vw;
-      background: radial-gradient(circle, rgba(167, 139, 250, 0.4) 0%, rgba(167, 139, 250, 0) 65%);
+      width: 34vmax;
+      height: 34vmax;
+      top: 12vh;
+      right: 12vw;
+      background: radial-gradient(circle, rgba(167, 139, 250, 0.55) 0%, rgba(167, 139, 250, 0) 65%);
       animation-name: move-pulse-2;
       animation-duration: 22s;
       animation-delay: -15s;
@@ -110,23 +111,46 @@ const ModernPurpleBackground = () => {
     .circle-5 {
       width: 50vmax;
       height: 50vmax;
-      top: 50vh;
-      left: -25vmax;
-      background: radial-gradient(circle, rgba(147, 112, 219, 0.3) 0%, rgba(147, 112, 219, 0) 65%);
+      top: 46vh;
+      left: -15vmax;
+      background: radial-gradient(circle, rgba(147, 112, 219, 0.5) 0%, rgba(147, 112, 219, 0) 65%);
       animation-name: move-pulse-1;
       animation-duration: 28s;
       animation-delay: -2s;
     }
 
     .circle-6 {
-      width: 35vmax;
-      height: 35vmax;
-      top: -10vh;
-      right: 30vw;
-      background: radial-gradient(circle, rgba(191, 172, 250, 0.4) 0%, rgba(191, 172, 250, 0) 65%);
+      width: 36vmax;
+      height: 36vmax;
+      top: -6vh;
+      right: 26vw;
+      background: radial-gradient(circle, rgba(191, 172, 250, 0.55) 0%, rgba(191, 172, 250, 0) 65%);
       animation-name: move-pulse-3;
       animation-duration: 26s;
       animation-delay: -8s;
+    }
+
+    /* Additional circles to keep purple presence consistent */
+    .circle-7 {
+      width: 38vmax;
+      height: 38vmax;
+      top: 30vh;
+      right: -10vmax;
+      background: radial-gradient(circle, rgba(174, 0, 255, 0.45) 0%, rgba(174, 0, 255, 0) 65%);
+      animation-name: move-pulse-2;
+      animation-duration: 24s;
+      animation-delay: -6s;
+    }
+
+    .circle-8 {
+      width: 32vmax;
+      height: 32vmax;
+      bottom: -8vmax;
+      left: 10vw;
+      background: radial-gradient(circle, rgba(147, 112, 219, 0.5) 0%, rgba(147, 112, 219, 0) 65%);
+      animation-name: move-pulse-1;
+      animation-duration: 27s;
+      animation-delay: -12s;
     }
   `;
 
@@ -134,12 +158,14 @@ const ModernPurpleBackground = () => {
     <>
       <style>{styles}</style>
       <div className="background-container">
-        <div className="circle circle-1"></div>
+      <div className="circle circle-1"></div>
         <div className="circle circle-2"></div>
         <div className="circle circle-3"></div>
         <div className="circle circle-4"></div>
         <div className="circle circle-5"></div>
         <div className="circle circle-6"></div>
+        <div className="circle circle-7"></div>
+        <div className="circle circle-8"></div>
       </div>
     </>
   );

@@ -11,7 +11,6 @@ import Experience from './content/ExperienceContent';
 import Projects from './content/ProjectsContent';
 import FooterComponent from './other/Footer';
 import ModernPurpleBackground from './animations/ModernPurpleBackground';
-import NinetiesPatternBackground from './animations/NinetiesPatternBackground';
 import GlowingHeaderAnimation from './animations/GlowingHeaderAnimation';
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
@@ -336,7 +335,7 @@ function App() {
 
   return (
     <Layout>
-      <Header style={{ background: '#4D04A0', padding: '0 20px' }}>
+      <Header style={{ background: '#4D04A0', padding: 0 }}>
         <Menu
           theme="dark"
           mode="horizontal"
@@ -362,44 +361,42 @@ function App() {
       {/* Use the Banner Component */}
       <Banner />
 
-      {/* Add the Header and Background animations components */}
-      <NinetiesPatternBackground /> 
+      {/* Add the Header and Background animations components (squiggles moved into Banner) */}
       <ModernPurpleBackground />
 
       <Content
         style={{
-          padding: '0 50px',
+          padding: 0,
           backgroundColor: '#f3e8f9',
           cursor: 'default',
         }}
       >
         <motion.div
           className="site-layout-content"
-          style={{ padding: '24px 0' }}
+          style={{ padding: 0 }}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5 }}
         >
           {sections.map((section, index) => (
             <div key={section.id} id={section.id}>
-              <br />
-              <FloatingCard
-                title={section.cardTitle}
-                style={{
-                  // Mobile styles
-                  width: '100%',
-                  margin: '0 auto',
-                  borderRadius: '10px',
-                  background: 'rgba(255, 255, 255, 0.85)', // Slight transparency
-                  boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
-                }}
-              >
-                <FloatingText className="text-animation">
-                  {section.content}
-                </FloatingText>
-              </FloatingCard>
-              <br />
-              <br />
+              <div className="content-wrap" style={{ margin: '24px 0' }}>
+                <FloatingCard
+                  title={section.cardTitle}
+                  style={{
+                    // Mobile styles
+                    width: '100%',
+                    margin: '0 auto',
+                    borderRadius: '10px',
+                    background: 'rgba(255, 255, 255, 0.85)', // Slight transparency
+                    boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
+                  }}
+                >
+                  <FloatingText className="text-animation">
+                    {section.content}
+                  </FloatingText>
+                </FloatingCard>
+              </div>
             </div>
           ))}
         </motion.div>
@@ -413,7 +410,9 @@ function App() {
         fontSize: '14px', 
         borderTop: '1px solid #444',
         zIndex: 1,
+        position: 'relative',
       }}>
+        <GlowingHeaderAnimation />
         <FooterComponent />
       </Footer>
     </Layout>

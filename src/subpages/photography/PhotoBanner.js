@@ -37,7 +37,7 @@ const PhotoBanner = ({ photoObjects }) => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout className="photo-banner-layout" style={{ minHeight: '100vh' }}>
       {/* Sticky Header */}
       <Header
         style={{

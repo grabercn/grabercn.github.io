@@ -8,54 +8,54 @@ const GlowingHeaderAnimation = () => {
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef(null);
 
-  // Effect to handle global mouse movement
+  // Effect to handle global mouse movement (throttled and capped)
   useEffect(() => {
+    let lastEmit = 0;
+    const MAX_SPARKLES = 60;
+
     const handleGlobalMouseMove = (e) => {
       if (!containerRef.current) return;
 
       const rect = containerRef.current.getBoundingClientRect();
-      // Check if the mouse is inside the component's bounds
-      const isInside = e.clientX >= rect.left && e.clientX <= rect.right &&
-                       e.clientY >= rect.top && e.clientY <= rect.bottom;
+      const isInside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
 
       setIsVisible(isInside);
 
-      if (isInside) {
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        setPosition({ x, y });
+      const now = performance.now();
+      if (!isInside || now - lastEmit < 40) {
+        return; // throttle to ~25fps
+      }
+      lastEmit = now;
 
-        // Add a new sparkle on mouse move
-        setSparkles(currentSparkles => [
-          ...currentSparkles,
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      setPosition({ x, y });
+
+      setSparkles((current) => {
+        const next = [
+          ...current,
           {
             id: Date.now() + Math.random(),
-            x: x,
-            y: y,
+            x,
+            y,
             size: Math.random() * 4 + 2,
-            color: ['#8A2BE2', '#00CED1', '#DA70D6', '#9370DB'][Math.floor(Math.random() * 4)]
-          }
-        ]);
-      }
+            color: ['#8A2BE2', '#00CED1', '#DA70D6', '#9370DB'][Math.floor(Math.random() * 4)],
+          },
+        ];
+        // cap the array to prevent growth between cleanups
+        return next.length > MAX_SPARKLES ? next.slice(-MAX_SPARKLES) : next;
+      });
     };
 
     window.addEventListener('mousemove', handleGlobalMouseMove);
-
     return () => {
       window.removeEventListener('mousemove', handleGlobalMouseMove);
     };
   }, []); // Empty dependency array ensures this runs only once
-
-  // Effect to clean up sparkles to prevent performance degradation
-  useEffect(() => {
-    const sparkleCleanup = setInterval(() => {
-      setSparkles(currentSparkles => 
-        currentSparkles.slice(-50) // Keep only the last 50 sparkles
-      );
-    }, 1000);
-
-    return () => clearInterval(sparkleCleanup);
-  }, []);
 
   const styles = `
     @keyframes fade-out {

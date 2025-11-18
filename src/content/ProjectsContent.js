@@ -10,7 +10,7 @@ const Projects = () => {
       description:
         "Developed a dynamic React-based forum website hosted on Azure, featuring a modern architecture and interface. Implemented pagination and efficient rendering of hundreds of posts, comments, and reactions. This project focused on scalability and performance for handling large user interactions.",
       link: "https://github.com/grabercn/ForumHub",
-      liveLink: "https://theforumhub.com", // Live link for "See it in action"
+      //liveLink: "https://theforumhub.com", // Live link for "See it in action"
       icon: <RocketOutlined style={{ marginRight: '8px', color: '#1890ff' }} />,
       gallery: [
         "/images/project1.png"

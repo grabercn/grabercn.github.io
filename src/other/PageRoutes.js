@@ -5,20 +5,22 @@ import App from '../App';
 import PhotoHome from '../subpages/photography/PhotoHome';
 import MusicHome from '../subpages/music/MusicHome';
 import DesktopLauncher from '../subpages/desktop/DesktopLauncher';
-import LanguageMapHome from '../subpages/photo-map/PhotoMapHome'
 import UIHome from '../subpages/ui-class/UIHome';
+import CookieClicker from '../subpages/cookie/Cookie';
+import CustomCursor from './CustomCursor';
 
 const PageRoutes = () => {
   return (
     <Router>
+      <CustomCursor />
       <Routes>
         {/* Fallback route for 404 */}
         <Route path='/' element={<App />} />
         <Route path="/photo" element={<PhotoHome />} />
         <Route path='/music' element={<MusicHome />} />
         <Route path='/desktop' element={<DesktopLauncher />} />
-        <Route path='/map' element={<LanguageMapHome />} />
         <Route path='/ui' element={<UIHome />} />
+        <Route path='/cookie' element={<CookieClicker />} />
         {/* Add more routes as needed */}
 
         {/* Catch-all route for 404 errors */}

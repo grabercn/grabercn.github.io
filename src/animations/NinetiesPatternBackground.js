@@ -35,6 +35,7 @@ const NinetiesPatternBackground = () => {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
+      observer.disconnect();
     };
   }, []);
 

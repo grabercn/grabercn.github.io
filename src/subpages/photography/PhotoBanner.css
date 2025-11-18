@@ -5,8 +5,9 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.0);
   }
   
-  .ant-layout-header {
-    padding: 0 50px;
+  /* Scope header padding to the photo banner layout only (avoid global override) */
+  .photo-banner-layout .ant-layout-header {
+    padding: 0;
   }
   
   .ant-menu-dark .ant-menu-item-selected {
