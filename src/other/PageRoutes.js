@@ -5,8 +5,8 @@ import App from '../App';
 import PhotoHome from '../subpages/photography/PhotoHome';
 import MusicHome from '../subpages/music/MusicHome';
 import DesktopLauncher from '../subpages/desktop/DesktopLauncher';
-import UIHome from '../subpages/ui-class/UIHome';
 import CookieClicker from '../subpages/cookie/Cookie';
+import DataVisHome from '../subpages/data-vis/DataVisHome';
 import CustomCursor from './CustomCursor';
 
 const PageRoutes = () => {
@@ -19,7 +19,7 @@ const PageRoutes = () => {
         <Route path="/photo" element={<PhotoHome />} />
         <Route path='/music' element={<MusicHome />} />
         <Route path='/desktop' element={<DesktopLauncher />} />
-        <Route path='/ui' element={<UIHome />} />
+        <Route path='/datavis' element={<DataVisHome />} />
         <Route path='/cookie' element={<CookieClicker />} />
         {/* Add more routes as needed */}
 

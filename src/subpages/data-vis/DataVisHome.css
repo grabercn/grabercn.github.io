@@ -1,0 +1,104 @@
+/* --- Global Styles & Variables --- */
+:root {
+  --primary-bg: #f0f4f8; /* Light, airy background */
+  --card-bg: #ffffff;
+  --text-primary: #1e293b; /* Dark slate for high contrast */
+  --text-secondary: #475569;
+  --accent-color: #3b82f6; /* A nice blue for accents */
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --border-radius: 12px;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primary-bg);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to the top */
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* --- Main Container --- */
+.ui-home-container {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* --- Headings and Text --- */
+.ui-home-container h1 {
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.ui-home-container h2 {
+  font-size: 1.75rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.ui-home-container p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+/* --- "About Me" Section Card --- */
+.about-me-section {
+  background-color: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 25px -5px var(--shadow-color);
+  margin-top: 2rem;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-me-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.12);
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Responsive Design for smaller screens --- */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  .ui-home-container h1 {
+    font-size: 2rem;
+  }
+
+  .ui-home-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .about-me-section {
+    padding: 1.5rem;
+  }
+}
