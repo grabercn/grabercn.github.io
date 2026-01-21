@@ -1,28 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 
 // JumpingText Component
 const JumpingText = ({ children }) => {
-  const [time, setTime] = useState(0); // Time state to control animation
-  const rafRef = useRef(null);
-
-  useEffect(() => {
-    // Start continuous animation
-    const animateMovement = () => {
-      setTime(prevTime => prevTime + 0.01); // Increment time for smooth animation
-      rafRef.current = requestAnimationFrame(animateMovement); // Keep animation going smoothly
-    };
-
-    rafRef.current = requestAnimationFrame(animateMovement);
-
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
-  // Vertical bounce effect with a spring-based transition
-  const yMovement = Math.sin(time * 2) * 15;  // Up-and-down movement (bounce)
-
   return (
     <motion.div
       style={{
@@ -31,15 +11,16 @@ const JumpingText = ({ children }) => {
         fontWeight: 'bold', // Optional styling
       }}
       animate={{
-        y: yMovement, // Vertical bounce movement
-        opacity: [1, 0.95, 1], // Slight fade effect for added smoothness
+        y: [0, -15, 0], // Keyframes for up and down movement
+        opacity: [1, 0.95, 1],
       }}
       transition={{
-        type: 'spring',
-        stiffness: 150,   // High stiffness for more bounce
-        damping: 10,      // Controls the settling of the bounce
-        duration: 1,      // Bounce duration
-        ease: 'easeOut',  // Smooth easing for the bounce
+        duration: 2, // Equivalent to period of sin(time * 2) roughly if time increment was 0.01 per frame (60fps) -> 0.6 rad/s.
+        // The original logic: sin(time * 2) where time += 0.01 per frame.
+        // Actually, let's just make it a nice smooth bounce.
+        repeat: Infinity,
+        ease: "easeInOut",
+        times: [0, 0.5, 1]
       }}
     >
       {children}

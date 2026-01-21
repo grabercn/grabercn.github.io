@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDownOutlined, DownloadOutlined } from '@ant-design/icons';
-import { Row, Col, Button, Typography, Image } from 'antd';
+import { Row, Col, Button, Typography } from 'antd';
 import JumpingText from '../animations/JumpingText';
 import NinetiesPatternBackground from '../animations/NinetiesPatternBackground';
 
@@ -13,7 +13,19 @@ const Banner = () => {
     blur: 0,
   });
 
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const { scrollY } = useScroll();
+
+  // Parallax effect: translate Y based on scroll
+  const y = useTransform(scrollY, (value) => -value * 0.2);
+  
+  // Blur effect: increase blur with scroll, capped at 15px
+  // Note: changing filter dynamically can be expensive, but useTransform 
+  // allows us to update it directly on the DOM element without React re-renders.
+  const blurValue = useTransform(scrollY, (value) => Math.min(value / 10, 15));
+  
+  // Combine brightness (from state) and blur (from scroll) into a single filter string
+  // We need to use useTransform to combine them because one is a motion value
+  const filter = useTransform(blurValue, (b) => `brightness(${glowSettings.brightness}) blur(${b.toFixed(2)}px)`);
 
   const generateRandomGlow = () => {
     setGlowSettings({
@@ -26,23 +38,6 @@ const Banner = () => {
     const interval = setInterval(generateRandomGlow, 1500);
     return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const parallaxEffect = (scrollPosition) => {
-    const translateY = scrollPosition * 0.2;
-    return {
-      // Slight scale prevents subpixel seams along edges
-      transform: `translateY(-${translateY}px) scale(1.03)`,
-    };
-  };
-  const scrollBlur = Math.min(scrollPosition / 10, 15);
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -67,11 +62,11 @@ const Banner = () => {
             width: '100%',
             height: '100%',
             zIndex: 1,
-            transform: 'translateZ(0)',
-            transition: 'filter 1.5s ease-in-out',
-            // No blur at top; blur increases only with scroll
-            filter: `brightness(${glowSettings.brightness}) blur(${scrollBlur.toFixed(2)}px)`,
-            ...parallaxEffect(scrollPosition),
+            // Use motion values directly
+            y,
+            scale: 1.03, // Fixed scale to prevent seams
+            filter, // Combined filter
+            willChange: 'transform, filter', // Hint to browser
           }}
         >
           {/* Squiggles sit inside the blurred layer */}
@@ -88,7 +83,11 @@ const Banner = () => {
               height: '100%',
               objectFit: 'cover',
               borderRadius: 0,
-              filter: 'url(#chromatic)', // Chromatic aberration effect
+              // We can't easily apply the chromatic aberration SVG filter *and* the dynamic blur/brightness 
+              // on the same element cleanly if we are already setting 'filter' style above.
+              // The original code had `filter: 'url(#chromatic)'` on the IMG, and `filter: brightness...` on the DIV wrapper.
+              // So we keep the IMG style as is.
+              filter: 'url(#chromatic)', 
               opacity: 0.6,
               zIndex: 0,
             }}

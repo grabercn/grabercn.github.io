@@ -1,47 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 // FloatingText Component
 const FloatingText = ({ children, className, context }) => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-
-  useEffect(() => {
-    // Listen to scroll events to move the text
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    // Cleanup listener
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const { scrollY } = useScroll();
 
   // Introduce a random speed multiplier for each piece of text
-  const speedMultiplier = Math.random() * 2 + 0.5; // Random multiplier between 0.5 and 2
-  const range = context === 'card' ? 8 : 5; // Larger range for card
+  // We use a fixed value based on a stable random seed if we wanted it deterministic, 
+  // but here we just want it calculated once per mount.
+  // Using useMemo to keep the multiplier stable across renders if the component re-renders.
+  const speedMultiplier = React.useMemo(() => Math.random() * 2 + 0.5, []);
+  const range = context === 'card' ? 8 : 5;
 
-  // Circular movement calculation with speed variation
-  const xMovement = Math.sin(scrollPosition / (200 * speedMultiplier)) * range;
-  const yMovement = Math.cos(scrollPosition / (200 * speedMultiplier)) * range;
+  const x = useTransform(scrollY, (value) => Math.sin(value / (200 * speedMultiplier)) * range);
+  const y = useTransform(scrollY, (value) => Math.cos(value / (200 * speedMultiplier)) * range);
+  const opacity = useTransform(scrollY, (value) => {
+     // Approximate the original [1, 0.8, 1] effect based on scroll.
+     // Since the original was using keyframes based on the *animation* prop which updates on every render,
+     // we can simulate a subtle pulse or just keep it simple.
+     // The original code passed `scrollPosition` to the animate prop, effectively continuously re-animating.
+     // A simple scroll-mapped opacity might be less jittery.
+     // Let's create a subtle oscillation.
+     const cycle = Math.sin(value / 100); 
+     return 0.8 + (0.2 * Math.abs(cycle));
+  });
 
   return (
     <motion.div
       className={className}
-      animate={{
-        x: xMovement,
-        y: yMovement,
-        opacity: [1, 0.8, 1], // Fade in-out effect on scroll
+      style={{
+        x,
+        y,
+        opacity,
       }}
       transition={{
         type: 'spring',
-        stiffness: 50,   // Controls the bounce of the movement
-        damping: 15,     // Controls the "settling" behavior
-        duration: 2,     // Duration of the transition effect
-      }}
-      style={{
+        stiffness: 50,
+        damping: 15,
       }}
     >
       {children}

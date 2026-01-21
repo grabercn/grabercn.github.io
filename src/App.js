@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Layout, Menu, Typography, Row, Col, Card } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
@@ -298,23 +298,37 @@ const sections = [
 
 function App() {
   const [activeSection, setActiveSection] = useState('home'); // Track the active section
+  const observerRef = useRef(null);
 
-  const handleScroll = () => {
-    const sections = ['about', 'experience', 'projects', 'coursework', 'skills', 'testimonials', 'contact'];
-    let currentSection = ''; // Default section
+  useEffect(() => {
+    // IntersectionObserver options
+    const options = {
+      root: null, // viewport
+      rootMargin: '-50% 0px -50% 0px', // trigger when element crosses the middle of the viewport
+      threshold: 0
+    };
 
-    sections.forEach((section, index) => {
-      const sectionElement = document.getElementById(section);
-      if (sectionElement) {
-        const rect = sectionElement.getBoundingClientRect();
-        if (rect.top <= window.innerHeight / 2 && rect.bottom > window.innerHeight / 2) {
-          currentSection = section; // Use section id as the active section key
+    observerRef.current = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
         }
-      }
+      });
+    }, options);
+
+    // Observe all sections
+    const sectionIds = ['about', 'experience', 'projects', 'coursework', 'skills', 'testimonials', 'contact'];
+    sectionIds.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) observerRef.current.observe(element);
     });
 
-    setActiveSection(currentSection); // Update the active section state
-  };
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
 
   // handleMenuClick function to scroll to the right section
   const handleMenuClick = (id) => {
@@ -323,15 +337,6 @@ function App() {
       sectionElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  useEffect(() => {
-    // Attach the scroll event listener when component mounts
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      // Clean up the scroll event listener on unmount
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   return (
     <Layout>

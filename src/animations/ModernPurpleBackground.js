@@ -61,6 +61,7 @@ const ModernPurpleBackground = () => {
       /* The animation is now a combination of pulsing and moving */
       animation-iteration-count: infinite;
       animation-timing-function: ease-in-out;
+      will-change: transform;
     }
     
     /* Each circle has a unique size, position, color, and animation to create a more organic and lively feel */

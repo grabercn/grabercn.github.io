@@ -3,10 +3,10 @@ import React, { useState, useEffect, useRef } from 'react';
 // This component creates an interactive, glowing animation for a header bar.
 // A glowing orb follows the mouse, leaving a trail of fading sparkles.
 const GlowingHeaderAnimation = () => {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
   const [sparkles, setSparkles] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef(null);
+  const orbRef = useRef(null);
 
   // Effect to handle global mouse movement (throttled and capped)
   useEffect(() => {
@@ -25,15 +25,21 @@ const GlowingHeaderAnimation = () => {
 
       setIsVisible(isInside);
 
-      const now = performance.now();
-      if (!isInside || now - lastEmit < 40) {
-        return; // throttle to ~25fps
-      }
-      lastEmit = now;
-
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      setPosition({ x, y });
+
+      // Update orb position directly to avoid re-renders
+      if (orbRef.current) {
+         orbRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+         orbRef.current.style.opacity = isInside ? '1' : '0';
+      }
+
+      const now = performance.now();
+      // Throttle sparkle generation to ~20fps (50ms) to reduce React renders
+      if (!isInside || now - lastEmit < 50) {
+        return; 
+      }
+      lastEmit = now;
 
       setSparkles((current) => {
         const next = [
@@ -86,14 +92,12 @@ const GlowingHeaderAnimation = () => {
       border-radius: 50%;
       background-color: #fff;
       filter: blur(20px);
-      transform: translate3d(var(--x, -100px), var(--y, -100px), 0);
+      /* Initial position off-screen or 0,0 */
+      transform: translate3d(-100px, -100px, 0);
       pointer-events: none;
-      transition: transform 0.1s ease-out, opacity 0.4s ease-out; /* Added opacity transition */
-      opacity: 0; /* Start hidden */
-    }
-
-    .glowing-orb.visible {
-      opacity: 1; /* Fade in when mouse is over the container */
+      transition: opacity 0.4s ease-out; /* Only animate opacity via CSS transition */
+      will-change: transform;
+      opacity: 0; 
     }
 
     .sparkle {
@@ -107,6 +111,7 @@ const GlowingHeaderAnimation = () => {
       top: 0;
       transform: translate3d(var(--x, 0), var(--y, 0), 0);
       pointer-events: none;
+      will-change: transform, opacity;
       animation: fade-out 1s forwards;
     }
   `;
@@ -116,8 +121,9 @@ const GlowingHeaderAnimation = () => {
       <style>{styles}</style>
       <div ref={containerRef} className="header-animation-container">
         <div 
-          className={`glowing-orb ${isVisible ? 'visible' : ''}`}
-          style={{ '--x': `${position.x}px`, '--y': `${position.y}px` }}
+          ref={orbRef}
+          className="glowing-orb"
+          // Style for position removed here, handled in JS directly
         />
         {isVisible && sparkles.map(sparkle => (
           <div
