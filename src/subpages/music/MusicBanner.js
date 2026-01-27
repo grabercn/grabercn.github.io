@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Button, Typography } from 'antd';
-import { HomeOutlined, LoadingOutlined } from '@ant-design/icons'; // For the Home icon
+import { Typography } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import LazyLoad from 'react-lazyload'; // For lazy loading the image
 import './MusicBanner.css'; // Optional for custom styling
 
-const { Header, Content } = Layout;
 const { Title } = Typography;
 
 const MusicBanner = ({ photoPath, artistName, albumName }) => {
@@ -28,43 +27,7 @@ const MusicBanner = ({ photoPath, artistName, albumName }) => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      {/* Sticky Header */}
-      <Header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1,
-          background: 'linear-gradient(to right,rgb(101, 0, 121),rgb(117, 0, 111))', // Gradient from black to gray
-          padding: 0,
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            height: '100%',
-            marginRight: "16px"
-          }}
-        >
-          <Button
-            type="link"
-            icon={<HomeOutlined />}
-            href="/"
-            style={{ color: '#fff', marginLeft: '16px' }}
-          >
-            Go Home
-          </Button>
-          {/* Display artist and album name */}
-          <Typography.Text style={{ color: '#fff', marginLeft: '16px', textAlign: 'center' }}>
-            {artistName} - {albumName}
-          </Typography.Text>
-        </div>
-      </Header>
-
-      {/* Main Content */}
-      <Content style={{ padding: 0, marginTop: '0px' }}>
+    <div style={{ padding: 0, marginTop: '0px', position: 'relative', overflow: 'hidden' }}>
         {/* Parallax Background */}
         <LazyLoad
           height={500} // Define a height for the LazyLoad wrapper
@@ -79,12 +42,13 @@ const MusicBanner = ({ photoPath, artistName, albumName }) => {
             className="parallax-banner"
             style={{
               position: 'relative',
-              height: '100vh',
+              height: '60vh',
+              minHeight: '400px',
               overflow: 'hidden',
-              backgroundImage: `url(${photoPath || '/images/default-banner.jpg'})`, // Default to a fallback image if no photoPath is provided
+              backgroundImage: `url(${photoPath || '/images/default-banner.jpg'})`, 
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              ...parallaxEffect(scrollPosition), // Apply parallax effect
+              ...parallaxEffect(scrollPosition), 
             }}
           >
             <div
@@ -100,20 +64,19 @@ const MusicBanner = ({ photoPath, artistName, albumName }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 color: '#fff',
-                background: 'rgba(255, 255, 255, 0.5)', // Semi-transparent overlay for better readability
+                background: 'rgba(0, 0, 0, 0.4)', // Darker overlay for readability
               }}
             >
-              <div style={{ textAlign: 'center' }}>
-                <Title level={1}>Welcome to my Music Site</Title>
-                <h1 style={{ color: '#333' }}>
-                  Get Updates and More from {artistName}!
-                </h1>
+              <div style={{ textAlign: 'center', padding: '20px', background: 'rgba(255, 255, 255, 0.9)', borderRadius: '8px', maxWidth: '80%' }}>
+                <Title level={1} style={{ margin: 0 }}>{artistName}</Title>
+                <Typography.Text strong style={{ fontSize: '1.2em', display: 'block', marginTop: '10px' }}>
+                  {albumName} - New Release
+                </Typography.Text>
               </div>
             </div>
           </div>
         </LazyLoad>
-      </Content>
-    </Layout>
+    </div>
   );
 };
 

@@ -1,60 +1,90 @@
 /* PhotoHome.css */
-.photo-gallery {
-  position: relative;
-  padding: 20px;
-}
 
 /* react-masonry-css grid container */
 .gallery-grid {
   display: flex;
-  margin-left: -16px; /* offset for gutter */
+  margin-left: -8px; /* Tighter gutter offset */
   width: auto;
 }
 
 /* Each column in the masonry grid */
 .gallery-column {
-  padding-left: 16px; /* gutter size */
+  padding-left: 8px; /* Tighter gutter size */
   background-clip: padding-box;
 }
 
 /* Each gallery item */
 .gallery-item {
-  margin-bottom: 16px;
+  margin-bottom: 12px; /* Slightly more vertical spacing */
   overflow: hidden;
-  border-radius: 8px; /* rounded corners */
-  position: relative; /* needed for overlay positioning */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 16px; /* Softer corners */
+  position: relative; 
+  transform: translateZ(0); /* Hardware acceleration */
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Image styling */
-.gallery-item img {
-  width: 100%;
-  display: block;
-  object-fit: cover;
-  border-radius: 8px;
+/* Placeholder for loading state */
+.gallery-placeholder {
+    height: 300px; /* Fixed height for uniformity while loading */
+    width: 100%;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+}
+
+/* While loading: absolute, invisible, but present for browser to detect */
+.gallery-image-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+/* Loaded: normal flow */
+.gallery-image-loaded {
+    display: block;
+    width: 100%;
+    height: auto;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    border-radius: 16px;
+    background-color: #eee;
 }
 
 /* Hover effect */
 .gallery-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-/* Overlay for full screen view */
+.gallery-item:hover img {
+    transform: scale(1.05);
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Overlay for full screen view - Liquid Glass Style */
 .overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.3); 
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   opacity: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.3s ease;
-  border-radius: 8px;
+  transition: opacity 0.4s ease;
+  border-radius: 16px;
+  cursor: pointer;
 }
 
 .gallery-item:hover .overlay {
@@ -62,17 +92,29 @@
 }
 
 .overlay-icon {
-  color: #fff;
-  font-size: 2rem;
-  cursor: pointer;
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 2px 4px rgba(255,255,255,0.3));
+  transform: scale(0.7);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* New styling for the photo description on hover */
+.gallery-item:hover .overlay-icon {
+    transform: scale(1);
+}
+
+/* Photo description on hover */
 .overlay-description {
-  margin-top: 10px;
-  color: #fff;
-  font-size: 14px;
+  color: #1a1a1a;
+  font-size: 15px;
+  font-weight: 600;
   text-align: center;
-  padding: 0 10px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+  padding: 0 15px;
+  transform: translateY(15px);
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover .overlay-description {
+    transform: translateY(0);
 }

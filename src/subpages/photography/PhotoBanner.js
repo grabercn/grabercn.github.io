@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Button, Typography } from 'antd';
-import { HomeOutlined, LoadingOutlined } from '@ant-design/icons'; // For the Home icon
+import { Typography } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import LazyLoad from 'react-lazyload'; // Import the LazyLoad library
 import './PhotoBanner.css'; // Optional, for custom styling
 
-const { Header, Content } = Layout;
 const { Title } = Typography;
 
 const PhotoBanner = ({ photoObjects }) => {
@@ -37,53 +36,14 @@ const PhotoBanner = ({ photoObjects }) => {
   };
 
   return (
-    <Layout className="photo-banner-layout" style={{ minHeight: '100vh' }}>
-      {/* Sticky Header */}
-      <Header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1,
-          background: 'linear-gradient(to right,rgb(101, 0, 121),rgb(117, 0, 111))', // Gradient from black to gray
-          padding: 0,
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            height: '100%',
-          }}
-        >
-          <Button
-            type="link"
-            icon={<HomeOutlined />}
-            href="/"
-            style={{ color: '#fff', marginLeft: '16px' }}
-          >
-            Go Home
-          </Button>
-          {/* Display photo count */}
-          <Typography.Text style={{ color: '#fff', marginLeft: '16px', textAlign: 'center' }}>
-            {photoObjects.length} Photos
-          </Typography.Text>
-          {/* Pentax tag right aligned */}
-          <Typography.Text level={3} style={{ color: '#fff', textAlign: 'right', flexGrow: 1, marginRight: '16px' }}>
-            All Photos Taken on Pentax K3 Mk II
-          </Typography.Text>
-        </div>
-      </Header>
-
-      {/* Main Content */}
-      <Content style={{ padding: 0, marginTop: '0px' }}>
+    <div style={{ padding: 0, marginTop: '0px', position: 'relative', overflow: 'hidden' }}>
         {/* Parallax Background */}
         <LazyLoad
           height={500} // Define a height for the LazyLoad wrapper
           offset={100} // Trigger load 100px before it comes into view
           placeholder={
-            <div className="image-placeholder" style={{ height: '100%', backgroundColor: '#f0f0f0' }}>
-              <LoadingOutlined />
+            <div className="image-placeholder" style={{ height: '100vh', backgroundColor: '#f0f0f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <LoadingOutlined style={{ fontSize: 24 }} />
             </div>
           }
         >
@@ -91,7 +51,8 @@ const PhotoBanner = ({ photoObjects }) => {
             className="parallax-banner"
             style={{
               position: 'relative',
-              height: '100vh',
+              height: '60vh', // Reduced from 100vh to be more like a banner
+              minHeight: '400px',
               overflow: 'hidden',
               backgroundImage: `url(${randomPhoto ? randomPhoto.path : '/images/default-banner.jpg'})`, // Random photo or fallback
               backgroundSize: 'cover',
@@ -111,31 +72,29 @@ const PhotoBanner = ({ photoObjects }) => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                color: '#fff',
-                background: 'rgba(255, 255, 255, 0.5)', // Semi-transparent overlay for better readability
+                background: 'rgba(0, 0, 0, 0.25)', 
+                flexDirection: 'column'
               }}
             >
-              <div style={{ textAlign: 'center' }}>
-                <Title level={1}>Welcome to my Photography Gallery</Title>
-                <h1 style={{ color: '#333' }}>
-                  Browse through the stunning collection of photos!
-                </h1>
-                <h2 style={{ color: '#333' }}>
-                  Contact{' '}
-                  <a
-                    href="mailto:grabercn@mail.uc.edu"
-                    style={{ color: '#333' }}
-                  >
-                    grabercn
-                  </a>{' '}
-                  for watermark-free and full-res versions!
-                </h2>
+              <div className="glass-panel" style={{ 
+                  textAlign: 'center', 
+                  padding: '40px', 
+                  maxWidth: '80%',
+                  background: 'rgba(255, 255, 255, 0.45) !important', // More transparent for better glass effect
+                  backdropFilter: 'blur(40px) saturate(200%) !important' // Increased blur
+              }}>
+                <Title level={1} style={{ margin: 0, color: '#1a1a1a', textShadow: '0 0 10px rgba(255,255,255,0.5)' }}>Photography Gallery</Title>
+                <Typography.Text strong style={{ fontSize: '1.2em', display: 'block', marginTop: '10px', color: '#333' }}>
+                  {photoObjects.length} Photos Captured on Pentax K3 Mk II
+                </Typography.Text>
+                 <Typography.Text style={{ display: 'block', marginTop: '5px', color: '#555' }}>
+                  Contact <a href="mailto:grabercn@mail.uc.edu" style={{ color: '#4D04A0', textDecoration: 'underline' }}>grabercn</a> for full-res versions.
+                </Typography.Text>
               </div>
             </div>
           </div>
         </LazyLoad>
-      </Content>
-    </Layout>
+    </div>
   );
 };
 

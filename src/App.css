@@ -1,3 +1,18 @@
+/* Global Glass Theme */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(30px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07) !important;
+  border-radius: 24px !important;
+  /* Fix for background glitching/flashing */
+  transform: translate3d(0,0,0);
+  z-index: 1;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
 /* Banner section */
 .banner {
   position: relative;
@@ -14,20 +29,7 @@
 }
 
 body {
-  background: linear-gradient(135deg, #f3f4f7, #e6f7ff);
-  animation: backgroundAnimation 15s ease infinite;
-}
-
-@keyframes backgroundAnimation {
-  0% {
-    background: linear-gradient(135deg, #f3f4f7, #e6f7ff);
-  }
-  50% {
-    background: linear-gradient(135deg, #dff9fc, #e4f7fd);
-  }
-  100% {
-    background: linear-gradient(135deg, #f3f4f7, #e6f7ff);
-  }
+  background: #f3e8f9;
 }
 
 html {
@@ -40,26 +42,58 @@ html {
   padding: 0 !important;
 }
 
-/* Set the background color for buttons */
+/* Set the background color for buttons - Glassy Buttons */
 .ant-btn {
-  background-color: rgb(193, 117, 255) ;
-  border-color: rgb(240, 221, 255) ;
+  background-color: rgba(193, 117, 255, 0.15) !important;
+  color: #4D04A0 !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(193, 117, 255, 0.3) !important;
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.3s ease !important;
 }
 
-/* Set the color for Menu items */
+.ant-btn:hover {
+  background-color: rgba(193, 117, 255, 0.3) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Set the color for Menu items - Light for dark header */
 .ant-menu-item {
+  color: rgb(220, 176, 255) !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+}
+
+.ant-menu-item a {
   color: rgb(220, 176, 255) !important;
 }
 
-/* Set the background color for selected Menu items */
+/* Set the background color for selected Menu items - Prominent */
 .ant-menu-item-selected {
-  background-color: rgb(106, 38, 122) !important;
+  background-color: #d850e1 !important; 
   color: #fff !important;
+  box-shadow: 0 0 15px rgba(216, 80, 225, 0.6) !important;
+}
+
+.ant-menu-item-selected a {
+  color: #fff !important;
+}
+
+/* Highlight active menu items (hover) */
+.ant-menu-item:hover, .ant-menu-item-active {
+  background-color: rgba(216, 80, 225, 0.4) !important; /* Glassy highlight */
+  color: #fff !important;
+  border-radius: 8px !important;
 }
 
 /* Set the color for links inside Ant Design components */
 .ant-link {
-  color: rgb(37, 0, 68) !important;
+  color: #4D04A0 !important;
 }
 
 /* Set the color for progress bars */
@@ -67,19 +101,22 @@ html {
   color: rgb(193, 117, 255) !important;
 }
 
-/* Set the background color for cards */
+/* Set the background color for cards - TRANSPARENT default to allow glass class */
 .ant-card {
-  background-color: rgb(255, 255, 255) !important;
+  background: transparent !important;
 }
 
-/* Make the header sticky */
+/* Make the header sticky with a deep tinted purple */
 .ant-layout-header {
   position: sticky;
   top: 0;
-  z-index: 9999; /* Ensure it stays on top */
-  background-color: #3A0268;
-  padding: 0 !important; /* Remove default horizontal padding */
-  padding-inline: 0 !important; /* AntD v5 uses logical padding */
+  z-index: 9999;
+  background: linear-gradient(90deg, #3A0268 0%, #4D04A0 100%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 0 !important;
+  padding-inline: 0 !important;
+  height: 64px !important;
+  line-height: 64px !important;
 }
 
 /* Ensure no stray spacing on root and layout */
@@ -103,12 +140,7 @@ html, body, #root {
   padding: 0 !important;
   padding-inline: 0 !important;
   border-bottom: none !important;
-}
-
-/* Highlight active menu items */
-.ant-menu-item-active {
-  background-color: #d850e1 !important; /* Highlight active menu with same purple color */
-  color: #fff !important;
+  background: transparent !important; /* Ensure menu doesn't block header glass */
 }
 
 /* Responsive horizontal gutters for main content boxes only */
@@ -132,9 +164,7 @@ html, body, #root {
   .floating-card {
     width: 100% !important; /* Force full width */
     margin: 0 !important; /* Remove margin */
-    background: rgba(255, 255, 255, 0.85) !important; /* Slight transparency */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-    border-radius: 10px !important;
+    /* Mobile glass override if needed, but standard glass class should work */
   }
 
   /* Adjust Card inside FloatingCard */

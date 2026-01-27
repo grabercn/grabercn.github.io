@@ -7,12 +7,12 @@ import MusicHome from '../subpages/music/MusicHome';
 import DesktopLauncher from '../subpages/desktop/DesktopLauncher';
 import CookieClicker from '../subpages/cookie/Cookie';
 import DataVisHome from '../subpages/data-vis/DataVisHome';
-import CustomCursor from './CustomCursor';
+import GlobalCursorGlow from '../animations/GlobalCursorGlow';
 
 const PageRoutes = () => {
   return (
     <Router>
-      <CustomCursor />
+      <GlobalCursorGlow />
       <Routes>
         {/* Fallback route for 404 */}
         <Route path='/' element={<App />} />

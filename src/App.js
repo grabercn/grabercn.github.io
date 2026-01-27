@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Layout, Menu, Typography, Row, Col, Card } from 'antd';
+import { Layout, Menu, Typography, Row, Col, Card, Spin } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
-import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined } from '@ant-design/icons';
+import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined } from '@ant-design/icons';
 import Banner from './other/Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
@@ -298,9 +298,20 @@ const sections = [
 
 function App() {
   const [activeSection, setActiveSection] = useState('home'); // Track the active section
+  const [loading, setLoading] = useState(true); // Loading state
   const observerRef = useRef(null);
 
   useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (loading) return; // Don't observe if loading
+
     // IntersectionObserver options
     const options = {
       root: null, // viewport
@@ -328,7 +339,7 @@ function App() {
         observerRef.current.disconnect();
       }
     };
-  }, []);
+  }, [loading]); // Re-run when loading finishes
 
   // handleMenuClick function to scroll to the right section
   const handleMenuClick = (id) => {
@@ -338,89 +349,107 @@ function App() {
     }
   };
 
+  if (loading) {
+    return (
+      <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f3e8f9' }}>
+         <Spin indicator={<LoadingOutlined style={{ fontSize: 48, color: '#4D04A0' }} spin />} tip="Loading..." />
+      </div>
+    );
+  }
+
   return (
-    <Layout>
-      <Header style={{ background: '#4D04A0', padding: 0 }}>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={[activeSection]}
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
+      <Layout>
+        <Header style={{ background: 'transparent', padding: 0 }}>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            selectedKeys={[activeSection]}
+            style={{
+              lineHeight: '64px',
+              backgroundColor: 'transparent', // Let header gradient show through
+              borderBottom: 'none', // Optional: remove border to blend with the header
+              display: 'flex',
+              width: '100%'
+            }}
+          >
+            {sections.map((section) => (
+              <Menu.Item
+                key={section.id}
+                onClick={() => handleMenuClick(section.id)}
+              >
+                {section.title}
+              </Menu.Item>
+            ))}
+            {/* Right aligned items */}
+            <Menu.Item key="photography" icon={<CameraOutlined />} style={{ marginLeft: 'auto' }}>
+              <a href="/#/photo">Photography</a>
+            </Menu.Item>
+            <Menu.Item key="music" icon={<CustomerServiceOutlined />}>
+              <a href="/#/music">Music</a>
+            </Menu.Item>
+          </Menu>
+        </Header>
+
+        {/* Use the Banner Component */}
+        <Banner />
+
+        {/* Add the Header and Background animations components (squiggles moved into Banner) */}
+        <ModernPurpleBackground />
+
+        <Content
           style={{
-            lineHeight: '64px',
-            backgroundColor: '#4D04A0', // Set background to purple
-            borderBottom: 'none', // Optional: remove border to blend with the header
+            padding: 0,
+            backgroundColor: '#f3e8f9',
+            cursor: 'default',
           }}
         >
-          <GlowingHeaderAnimation/>
-          {sections.map((section) => (
-            <Menu.Item
-              key={section.id}
-              onClick={() => handleMenuClick(section.id)}
-            >
-              {section.title}
-            </Menu.Item>
-          ))}
-        </Menu>
-      </Header>
-
-      {/* Use the Banner Component */}
-      <Banner />
-
-      {/* Add the Header and Background animations components (squiggles moved into Banner) */}
-      <ModernPurpleBackground />
-
-      <Content
-        style={{
-          padding: 0,
-          backgroundColor: '#f3e8f9',
-          cursor: 'default',
-        }}
-      >
-        <motion.div
-          className="site-layout-content"
-          style={{ padding: 0 }}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5 }}
-        >
-          {sections.map((section, index) => (
-            <div key={section.id} id={section.id}>
-              <div className="content-wrap" style={{ margin: '24px 0' }}>
-                <FloatingCard
-                  title={section.cardTitle}
-                  style={{
-                    // Mobile styles
-                    width: '100%',
-                    margin: '0 auto',
-                    borderRadius: '10px',
-                    background: 'rgba(255, 255, 255, 0.85)', // Slight transparency
-                    boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
-                  }}
-                >
-                  <FloatingText className="text-animation">
-                    {section.content}
-                  </FloatingText>
-                </FloatingCard>
+          <motion.div
+            className="site-layout-content"
+            style={{ padding: 0 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5 }}
+          >
+            {sections.map((section, index) => (
+              <div key={section.id} id={section.id}>
+                <div className="content-wrap" style={{ margin: '24px 0' }}>
+                  <FloatingCard
+                    title={section.cardTitle}
+                    style={{
+                      // Mobile styles
+                      width: '100%',
+                      margin: '0 auto',
+                      borderRadius: '10px',
+                      background: 'rgba(255, 255, 255, 0.85)', // Slight transparency
+                      boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
+                    }}
+                  >
+                    <FloatingText className="text-animation">
+                      {section.content}
+                    </FloatingText>
+                  </FloatingCard>
+                </div>
               </div>
-            </div>
-          ))}
-        </motion.div>
-      </Content>
+            ))}
+          </motion.div>
+        </Content>
 
-      <Footer style={{
-        textAlign: 'center', 
-        background: '#001529', 
-        color: '#fff', 
-        padding: '20px 0', 
-        fontSize: '14px', 
-        borderTop: '1px solid #444',
-        zIndex: 1,
-        position: 'relative',
-      }}>
-        <GlowingHeaderAnimation />
-        <FooterComponent />
-      </Footer>
-    </Layout>
+        <Footer style={{
+          textAlign: 'center', 
+          background: '#001529', 
+          color: '#fff', 
+          padding: '20px 0', 
+          fontSize: '14px', 
+          borderTop: '1px solid #444',
+          zIndex: 1,
+          position: 'relative',
+        }}>
+          <GlowingHeaderAnimation />
+          <FooterComponent />
+        </Footer>
+      </Layout>
+    </motion.div>
   );
 }
 

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDownOutlined, DownloadOutlined } from '@ant-design/icons';
 import { Row, Col, Button, Typography } from 'antd';
-import JumpingText from '../animations/JumpingText';
 import NinetiesPatternBackground from '../animations/NinetiesPatternBackground';
 
 const { Title, Paragraph } = Typography;
 
 const Banner = () => {
-  const [glowSettings, setGlowSettings] = useState({
-    brightness: 1,
+  // Static settings for a stable, non-choppy look
+  const glowSettings = {
+    brightness: 1.1,
     blur: 0,
-  });
+  };
 
   const { scrollY } = useScroll();
 
@@ -19,25 +19,10 @@ const Banner = () => {
   const y = useTransform(scrollY, (value) => -value * 0.2);
   
   // Blur effect: increase blur with scroll, capped at 15px
-  // Note: changing filter dynamically can be expensive, but useTransform 
-  // allows us to update it directly on the DOM element without React re-renders.
   const blurValue = useTransform(scrollY, (value) => Math.min(value / 10, 15));
   
-  // Combine brightness (from state) and blur (from scroll) into a single filter string
-  // We need to use useTransform to combine them because one is a motion value
+  // Combine brightness (static) and blur (dynamic from scroll) into a single filter string
   const filter = useTransform(blurValue, (b) => `brightness(${glowSettings.brightness}) blur(${b.toFixed(2)}px)`);
-
-  const generateRandomGlow = () => {
-    setGlowSettings({
-      brightness: Math.random() * 1.5 + 1,
-      blur: Math.random() * 2 + 1,
-    });
-  };
-
-  useEffect(() => {
-    const interval = setInterval(generateRandomGlow, 1500);
-    return () => clearInterval(interval);
-  }, []);
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -53,8 +38,9 @@ const Banner = () => {
         {/* Animated Background Image with Parallax and Blur Effect */}
         <motion.div
           className="background-image"
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse' }}
+          transition={{ duration: 1.5 }}
           style={{
             position: 'absolute',
             top: 0,
@@ -64,7 +50,7 @@ const Banner = () => {
             zIndex: 1,
             // Use motion values directly
             y,
-            scale: 1.03, // Fixed scale to prevent seams
+            scale: 1.05, // Fixed scale to prevent seams
             filter, // Combined filter
             willChange: 'transform, filter', // Hint to browser
           }}
@@ -122,7 +108,12 @@ const Banner = () => {
               padding: 0, // Ensure no internal spacing in the Row
             }}
           >
-            <JumpingText>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              style={{ width: '100%' }}
+            >
               <Col
                 span={24} // Full width to avoid padding issues
                 style={{ padding: 0 }} // Ensure no padding on Col
@@ -151,14 +142,30 @@ const Banner = () => {
                 >
                   A glimpse into my journey, my work, and my passion.
                 </Paragraph>
-                <Button type="primary" size="large" onClick={scrollToContact}>
+                <Button 
+                  type="primary" 
+                  size="large" 
+                  onClick={scrollToContact}
+                  style={{
+                    background: 'rgba(77, 4, 160, 0.8)',
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    color: '#fff',
+                    backdropFilter: 'blur(10px)',
+                    fontWeight: '600',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)'
+                  }}
+                >
                   Get in Touch
                 </Button>
                 <div style={{ marginTop: '20px' }}/>
                 <Button
                   style={{
-                    color: '#fff', // White text
-                    backgroundColor: '#4B0082', // Dark purple background
+                    color: '#fff', 
+                    backgroundColor: 'rgba(45, 0, 77, 0.8)',
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    backdropFilter: 'blur(10px)',
+                    fontWeight: '600',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)'
                   }}
                   type="default"
                   size="large"
@@ -170,19 +177,23 @@ const Banner = () => {
                 <div style={{ marginTop: '20px' }}>
                   {/* eslint-disable-next-line */}
                   <a onClick={scrollToContact}>
-                    <ArrowDownOutlined
-                      style={{
-                        fontSize: '36px',
-                        color: '#fff',
-                        marginTop: '20px',
-                        cursor: 'pointer',
-                        animation: 'bounce 1.5s infinite',
-                      }}
-                    />
+                    <motion.div
+                      animate={{ y: [0, 10, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <ArrowDownOutlined
+                        style={{
+                          fontSize: '36px',
+                          color: '#fff',
+                          marginTop: '20px',
+                          cursor: 'pointer',
+                        }}
+                      />
+                    </motion.div>
                   </a>
                 </div>
               </Col>
-            </JumpingText>
+            </motion.div>
           </Row>
         </div>
       </div>

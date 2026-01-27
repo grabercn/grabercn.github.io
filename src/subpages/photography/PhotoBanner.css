@@ -1,16 +1,15 @@
-.photo-banner {
-    background-color: rgba(0, 0, 0, 0.0);
-    border-radius: 8px;
-    padding: 50px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.0);
-  }
-  
-  /* Scope header padding to the photo banner layout only (avoid global override) */
-  .photo-banner-layout .ant-layout-header {
-    padding: 0;
-  }
-  
-  .ant-menu-dark .ant-menu-item-selected {
-    background-color: #1890ff;
-  }
-  
+/* PhotoBanner.css */
+.image-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+/* Ensure the parallax container doesn't overflow */
+.parallax-banner {
+    width: 100%;
+    background-repeat: no-repeat;
+    will-change: transform; /* Hint for browser optimization */
+}
+

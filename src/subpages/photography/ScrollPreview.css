@@ -1,0 +1,91 @@
+.scroll-preview-container {
+    position: fixed;
+    top: 64px; /* Below header */
+    bottom: 0;
+    right: 0;
+    width: 60px; /* Wider to show thumbnails */
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2); /* Slight darkening for contrast */
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    transition: width 0.3s ease;
+}
+
+.scroll-preview-container:hover {
+    width: 80px; /* Expand slightly on hover */
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.scroll-preview-bar {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden; /* Clip images */
+}
+
+.scroll-track {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* Remove previous line styles */
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+.scroll-thumb {
+    width: 100%;
+    flex: 1; /* Distribute height evenly */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    /* border-bottom: 1px solid rgba(0,0,0,0.1); Optional separator */
+}
+
+.scroll-preview-container:hover .scroll-thumb {
+    opacity: 1;
+}
+
+.scroll-preview-tooltip {
+    position: fixed;
+    right: 90px; /* To the left of the bar (80px max width + margin) */
+    pointer-events: none; /* Let clicks pass through */
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+}
+
+.preview-image-container {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 8px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.preview-image-container img {
+    width: 200px; /* Larger preview */
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+    display: block;
+}
+
+.preview-arrow {
+    width: 0; 
+    height: 0; 
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid rgba(255, 255, 255, 0.9);
+    margin-left: -1px; /* Overlap slightly */
+}
