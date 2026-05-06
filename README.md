@@ -8,6 +8,7 @@ A modern, full-featured portfolio website built with React, featuring travel pho
 ![Ant Design](https://img.shields.io/badge/Ant%20Design-5-0170FE?logo=antdesign)
 ![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite)
 ![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-222?logo=github)
+![Last Updated](https://img.shields.io/badge/Updated-2026-05-06-green)
 
 ## Features
 
@@ -21,7 +22,7 @@ A modern, full-featured portfolio website built with React, featuring travel pho
 - Responsive hamburger menu on mobile
 
 ### Photography Gallery (`/#/photo`)
-- **531 photos** across 8 countries (Prague, London, Switzerland, Italy, Barcelona, Ireland, Japan, and more)
+- **1062 photos** across 8 countries (Prague, London, Switzerland, Italy, Barcelona, Ireland, Japan, and more)
 - Masonry grid layout with virtualized lazy-loading (IntersectionObserver)
 - **Location filter pills** + debounced search
 - **World map view** with interactive pins (pigeon-maps)
@@ -64,6 +65,15 @@ A modern, full-featured portfolio website built with React, featuring travel pho
 | **Deployment** | GitHub Pages (auto-deploy on push) |
 | **PWA** | Service worker with network-first caching |
 
+## Project Stats
+
+| Metric | Count |
+|--------|-------|
+| Source files | 52 |
+| Components | 37 |
+| Photos | 1062 |
+| Routes | `/,/photo,/music,/desktop,/datavis,/cookie,/resume,/*` |
+
 ## Getting Started
 
 ```bash
@@ -101,6 +111,19 @@ All photos include multi-layer protection against AI training:
 - `<meta name="robots" content="noai, noimageai">`
 - XMP metadata with PLUS DataMining prohibition
 - HTTP headers via `_headers` file
+
+## Recent Changes
+
+- CI: Deploy to GitHub Pages & auto-update README
+- Add photography assets and update gallery
+- Add SEO tags, AI-block headers, and photo processing
+- Add low-resolution favicon image for improved loading times
+- Revamp music home with album/single modals and tracklists
+- Add new photography images and update photo gallery
+- Refactor scroll-based animations to use Framer Motion hooks
+- Add DataVisHome component and styles; update routing
+- Update Graber Christian Resume PDF
+- Update Graber_Christian_Resume_2025.pdf
 
 ## Easter Eggs
 
