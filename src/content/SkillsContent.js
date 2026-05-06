@@ -45,7 +45,7 @@ const Skills = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <h3 style={{ display: 'flex', alignItems: 'center' }}><GlobalOutlined style={{ marginRight: '10px' }} />Technologies</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '10px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(clamp(100px, 25vw, 150px), 1fr))', gap: '10px' }}>
         {technologies.map((tech, index) => (
           <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
             <AppstoreAddOutlined style={{ marginRight: '10px' }} />
@@ -57,7 +57,7 @@ const Skills = () => {
       <br />
 
       <h3 style={{ display: 'flex', alignItems: 'center' }}><EditOutlined style={{ marginRight: '10px' }} />Concepts</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '10px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(clamp(100px, 25vw, 150px), 1fr))', gap: '10px' }}>
         {concepts.map((concept, index) => (
           <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
             <PlusOutlined style={{ marginRight: '10px' }} />
@@ -69,13 +69,13 @@ const Skills = () => {
       <br />
 
       <h3 style={{ display: 'flex', alignItems: 'center' }}><SearchOutlined style={{ marginRight: '10px' }} />Languages</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '15px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(clamp(130px, 30vw, 200px), 1fr))', gap: '15px' }}>
         {skills.map((skill, index) => (
           <div key={index} style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center' }}>
             <img
               src={skill.icon}
               alt={skill.name}
-              style={{ width: '40px', height: '40px', marginBottom: '10px' }}
+              style={{ width: 'clamp(28px, 8vw, 40px)', height: 'clamp(28px, 8vw, 40px)', marginBottom: '10px' }}
               onError={(e) => { e.target.style.display = 'none'; }}
             />
             <strong>{skill.name}</strong>
@@ -85,7 +85,7 @@ const Skills = () => {
               percent={skill.proficiency}
               strokeWidth={10}
               strokeColor={getSkillLevelColor(skill.proficiency)} // Apply the custom color based on proficiency
-              style={{ width: '35%', marginTop: '10px', marginBottom: '10px' }}
+              style={{ width: 'clamp(60px, 35%, 120px)', marginTop: '10px', marginBottom: '10px' }}
               showInfo={false} // This will remove the percentage display
             />
           </div>

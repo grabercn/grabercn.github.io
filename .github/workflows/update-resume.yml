@@ -1,0 +1,178 @@
+name: Auto-Update Interactive Resume from PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/docs/*.pdf'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  models: read
+
+jobs:
+  update-resume:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Find latest resume PDF
+        id: find-pdf
+        run: |
+          # Find the most recently modified PDF in public/docs/
+          PDF=$(ls -t public/docs/*.pdf 2>/dev/null | head -1)
+          if [ -z "$PDF" ]; then
+            echo "No PDF found in public/docs/"
+            exit 0
+          fi
+          echo "pdf_path=$PDF" >> $GITHUB_OUTPUT
+          echo "pdf_name=$(basename $PDF)" >> $GITHUB_OUTPUT
+          echo "Found: $PDF"
+
+      - name: Extract text from PDF
+        if: steps.find-pdf.outputs.pdf_path
+        id: extract
+        run: |
+          # Install pdf text extraction tool
+          npm install -g pdf-parse 2>/dev/null || true
+
+          # Extract text using node
+          node -e "
+            const fs = require('fs');
+            const pdf = require('pdf-parse');
+            const buffer = fs.readFileSync('${{ steps.find-pdf.outputs.pdf_path }}');
+            pdf(buffer).then(data => {
+              fs.writeFileSync('/tmp/resume_text.txt', data.text);
+              console.log('Extracted ' + data.text.length + ' characters');
+            });
+          " || {
+            # Fallback: use pdftotext if available
+            apt-get update -qq && apt-get install -y -qq poppler-utils 2>/dev/null
+            pdftotext "${{ steps.find-pdf.outputs.pdf_path }}" /tmp/resume_text.txt
+          }
+
+      - name: Update ResumePage.js via GitHub Copilot
+        if: steps.find-pdf.outputs.pdf_path
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            const fs = require('fs');
+
+            // Read extracted resume text
+            const resumeText = fs.readFileSync('/tmp/resume_text.txt', 'utf8');
+
+            // Read current ResumePage.js
+            const currentResume = fs.readFileSync('src/subpages/resume/ResumePage.js', 'utf8');
+
+            // Use GitHub Models API (Copilot) to generate updated data
+            const response = await fetch('https://models.github.ai/inference/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model: 'openai/gpt-4o',
+                messages: [
+                  {
+                    role: 'system',
+                    content: `You are a code generator. You will be given resume text extracted from a PDF and the current ResumePage.js React component. Your job is to output ONLY the updated JavaScript data sections (experienceData, skillCategories, coursework arrays) with the new resume data. Keep the exact same data structure format. Output ONLY valid JavaScript - no markdown, no explanation, no backticks. The output should be directly pasteable into the file.`
+                  },
+                  {
+                    role: 'user',
+                    content: `Here is the extracted resume text:\n\n${resumeText}\n\n---\n\nHere are the current data sections from ResumePage.js that need updating. Output the COMPLETE updated versions of these three constants (experienceData, skillCategories, coursework) using the same format but with data from the new resume:\n\n${currentResume.match(/\/\/ ── Experience data[\s\S]*?(?=\/\/ ── Animation)/)?.[0] || 'Could not extract data sections'}`
+                  }
+                ],
+                temperature: 0.1,
+                max_tokens: 4000,
+              }),
+            });
+
+            if (!response.ok) {
+              const err = await response.text();
+              console.log('GitHub Models API error:', response.status, err);
+              console.log('Falling back to simple PDF path update only.');
+
+              // At minimum, update the PDF download path
+              const pdfName = '${{ steps.find-pdf.outputs.pdf_name }}';
+              let updated = currentResume.replace(
+                /\/docs\/[^'"]+\.pdf/g,
+                `/docs/${pdfName}`
+              );
+              fs.writeFileSync('src/subpages/resume/ResumePage.js', updated);
+              console.log('Updated PDF path to: /docs/' + pdfName);
+              return;
+            }
+
+            const data = await response.json();
+            const generatedCode = data.choices?.[0]?.message?.content;
+
+            if (!generatedCode) {
+              console.log('No response from model, skipping data update.');
+              return;
+            }
+
+            console.log('Got updated data from Copilot (' + generatedCode.length + ' chars)');
+
+            // Replace the data sections in ResumePage.js
+            let updated = currentResume;
+
+            // Try to replace experienceData
+            const expMatch = generatedCode.match(/const experienceData = \[[\s\S]*?\n\];/);
+            if (expMatch) {
+              updated = updated.replace(/const experienceData = \[[\s\S]*?\n\];/, expMatch[0]);
+              console.log('Updated experienceData');
+            }
+
+            // Try to replace skillCategories
+            const skillMatch = generatedCode.match(/const skillCategories = \[[\s\S]*?\n\];/);
+            if (skillMatch) {
+              updated = updated.replace(/const skillCategories = \[[\s\S]*?\n\];/, skillMatch[0]);
+              console.log('Updated skillCategories');
+            }
+
+            // Try to replace coursework
+            const courseMatch = generatedCode.match(/const coursework = \[[\s\S]*?\n\];/);
+            if (courseMatch) {
+              updated = updated.replace(/const coursework = \[[\s\S]*?\n\];/, courseMatch[0]);
+              console.log('Updated coursework');
+            }
+
+            // Always update PDF download path
+            const pdfName = '${{ steps.find-pdf.outputs.pdf_name }}';
+            updated = updated.replace(/\/docs\/[^'"]+\.pdf/g, `/docs/${pdfName}`);
+
+            fs.writeFileSync('src/subpages/resume/ResumePage.js', updated);
+            console.log('ResumePage.js updated successfully');
+
+      - name: Also update Banner.js PDF path
+        if: steps.find-pdf.outputs.pdf_path
+        run: |
+          PDF_NAME="${{ steps.find-pdf.outputs.pdf_name }}"
+          # Update any references to the old PDF filename in Banner.js
+          sed -i "s|/docs/[^'\"]*\.pdf|/docs/${PDF_NAME}|g" src/other/Banner.js
+          echo "Updated Banner.js PDF path to: /docs/${PDF_NAME}"
+
+      - name: Verify build
+        if: steps.find-pdf.outputs.pdf_path
+        run: |
+          npm ci
+          npx vite build
+
+      - name: Commit changes
+        if: steps.find-pdf.outputs.pdf_path
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/subpages/resume/ResumePage.js src/other/Banner.js
+          git diff --staged --quiet || git commit -m "docs: auto-update interactive resume from ${{ steps.find-pdf.outputs.pdf_name }} [skip ci]"
+          git push

@@ -307,9 +307,9 @@ const PhotoHome = () => {
 
       <ModernPurpleBackground />
 
-      <Content style={{ padding: 0, backgroundColor: '#f3e8f9', position: 'relative' }}>
+      <Content style={{ padding: 0, position: 'relative' }} className="photo-content">
         {loading ? (
-          <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Spin indicator={<LoadingOutlined style={{ fontSize: 48, color: '#4D04A0' }} spin />} tip="Loading Gallery..." />
           </div>
         ) : (
@@ -433,7 +433,7 @@ const PhotoHome = () => {
         onCancel={closeModal}
         centered
         width="100%"
-        style={{ top: 0, padding: 0, maxWidth: '100vw', margin: 0 }}
+        style={{ top: 0, padding: 0, maxWidth: '100%', margin: 0 }}
         styles={{
             content: { background: 'transparent', boxShadow: 'none', padding: 0 },
             mask: { backgroundColor: 'rgba(0, 0, 0, 0.95)', backdropFilter: 'blur(5px)' }
@@ -452,7 +452,8 @@ const PhotoHome = () => {
                 onDragEnd={handleDragEnd}
                 style={{
                     width: '100%',
-                    height: '100vh',
+                    minHeight: '100vh',
+                    height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',

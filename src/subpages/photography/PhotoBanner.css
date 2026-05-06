@@ -13,3 +13,17 @@
     will-change: transform; /* Hint for browser optimization */
 }
 
+/* Responsive banner text on mobile */
+@media (max-width: 767px) {
+    .glass-panel {
+        padding: 20px !important;
+        max-width: 90% !important;
+    }
+    .glass-panel h1 {
+        font-size: 1.5rem !important;
+    }
+    .glass-panel .ant-typography {
+        font-size: 0.95em !important;
+    }
+}
+

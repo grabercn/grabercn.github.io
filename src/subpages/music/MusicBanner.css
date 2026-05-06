@@ -72,8 +72,9 @@
   }
 
   .music-hero-album-art {
-    width: 250px;
-    height: 250px;
+    width: clamp(120px, 50vw, 250px);
+    height: auto;
+    aspect-ratio: 1;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     margin-bottom: 20px;
@@ -87,13 +88,14 @@
     }
 
     .music-hero-album-art {
-      width: 150px;
-      height: 150px;
+      width: clamp(120px, 50vw, 180px);
+      height: auto;
+      aspect-ratio: 1;
     }
 
     .music-hero .ant-typography h1,
     .music-hero-title {
-      font-size: 1.3rem !important;
+      font-size: clamp(1rem, 4vw, 1.3rem) !important;
     }
 
     /* Hide desktop menu on mobile */
@@ -144,5 +146,47 @@
     border-radius: 2px;
     transition: width 0.3s linear;
     margin-top: 4px;
+  }
+
+  /* === Dark mode overrides for Music page === */
+
+  /* Error state text - uses classes instead of hardcoded colors */
+  .error-title {
+    color: #333;
+  }
+  .error-subtitle {
+    color: #666;
+  }
+  .demo-title {
+    color: #333;
+  }
+
+  [data-theme="dark"] .error-title {
+    color: #e0e0e0 !important;
+  }
+  [data-theme="dark"] .error-subtitle {
+    color: #bbb !important;
+  }
+  [data-theme="dark"] .demo-title {
+    color: #e0e0e0 !important;
+  }
+
+  /* Track play button in dark mode */
+  [data-theme="dark"] .track-play-btn {
+    color: #d0b3ff;
+  }
+  [data-theme="dark"] .track-play-btn:hover {
+    color: #E0AAFF;
+  }
+  [data-theme="dark"] .track-play-btn.playing {
+    color: #E0AAFF;
+  }
+
+  /* Music modal list items */
+  [data-theme="dark"] .ant-list-item-meta-title {
+    color: #e0e0e0 !important;
+  }
+  [data-theme="dark"] .ant-list-item-meta-description {
+    color: #aaa !important;
   }
   

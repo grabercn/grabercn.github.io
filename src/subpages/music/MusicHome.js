@@ -231,12 +231,12 @@ const MusicHome = () => {
 
       <Content style={{ padding: 0, position: 'relative' }}>
         {loading ? (
-            <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Spin indicator={<LoadingOutlined style={{ fontSize: 48, color: '#A020F0' }} spin />} tip="Loading Beats..." />
             </div>
         ) : error ? (
             <div style={{ 
-                height: '80vh', 
+                minHeight: '80vh',
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignItems: 'center', 
@@ -253,10 +253,10 @@ const MusicHome = () => {
                 >
                     <Result
                         icon={<WarningOutlined style={{ color: '#ff4d4f' }} />}
-                        title={<span style={{ color: '#333' }}>Connection Failed</span>}
-                        subTitle={<span style={{ color: '#666' }}>{error}</span>}
+                        title={<span className="error-title">Connection Failed</span>}
+                        subTitle={<span className="error-subtitle">{error}</span>}
                         extra={
-                            <Button type="primary" shape="round" size="large" onClick={() => fetchMusicData()} style={{ background: '#A020F0', borderColor: '#A020F0' }}>
+                            <Button type="primary" shape="round" size="large" onClick={() => fetchMusicData()} style={{ background: '#A020F0', borderColor: '#A020F0', minHeight: '44px' }}>
                                 Try Again
                             </Button>
                         }
@@ -285,10 +285,10 @@ const MusicHome = () => {
                         <Text style={{ color: '#ccc', fontSize: isMobile ? '14px' : '18px', marginBottom: '20px' }}>{latestReleaseType} Out Now</Text>
 
                         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                            <Button className="spotify-btn" type="primary" shape="round" icon={<SpotifyFilled />} size={isMobile ? 'middle' : 'large'} style={{ fontWeight: 'bold' }} href={`https://open.spotify.com/search/${encodeURIComponent('Chrismslist ' + (latestRelease?.title || ''))}`} target="_blank">
+                            <Button className="spotify-btn" type="primary" shape="round" icon={<SpotifyFilled />} size={isMobile ? 'middle' : 'large'} style={{ fontWeight: 'bold', minHeight: '44px' }} href={`https://open.spotify.com/search/${encodeURIComponent('Chrismslist ' + (latestRelease?.title || ''))}`} target="_blank">
                                 Listen on Spotify
                             </Button>
-                             <Button className="apple-btn" type="primary" shape="round" icon={<AppleFilled />} size={isMobile ? 'middle' : 'large'} style={{ fontWeight: 'bold' }} href={`https://music.apple.com/us/search?term=${encodeURIComponent('Chrismslist ' + (latestRelease?.title || ''))}`} target="_blank">
+                             <Button className="apple-btn" type="primary" shape="round" icon={<AppleFilled />} size={isMobile ? 'middle' : 'large'} style={{ fontWeight: 'bold', minHeight: '44px' }} href={`https://music.apple.com/us/search?term=${encodeURIComponent('Chrismslist ' + (latestRelease?.title || ''))}`} target="_blank">
                                 Listen on Apple Music
                             </Button>
                         </div>
@@ -337,7 +337,7 @@ const MusicHome = () => {
                                             </div>
                                         </Col>
                                         <Col flex="auto">
-                                            <Text strong style={{ color: '#333', fontSize: '16px', display: 'block' }}>{demo.title}</Text>
+                                            <Text strong style={{ fontSize: '16px', display: 'block' }} className="demo-title">{demo.title}</Text>
                                             <audio controls style={{ width: '100%', marginTop: '8px', height: '30px' }}>
                                                 <source src={demo.audioUrl} type="audio/mp3" />
                                             </audio>
@@ -404,10 +404,10 @@ const MusicHome = () => {
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <Button className="spotify-btn" block size="large" icon={<SpotifyFilled />} href={`https://open.spotify.com/search/${encodeURIComponent(selectedAlbum.title + ' Chrismslist')}`} target="_blank" style={{ fontWeight: 'bold' }}>
+                      <Button className="spotify-btn" block size="large" icon={<SpotifyFilled />} href={`https://open.spotify.com/search/${encodeURIComponent(selectedAlbum.title + ' Chrismslist')}`} target="_blank" style={{ fontWeight: 'bold', minHeight: '44px' }}>
                           Listen on Spotify
                       </Button>
-                      <Button className="apple-btn" block size="large" icon={<AppleFilled />} href={`https://music.apple.com/us/search?term=${encodeURIComponent(selectedAlbum.title + ' Chrismslist')}`} target="_blank" style={{ fontWeight: 'bold' }}>
+                      <Button className="apple-btn" block size="large" icon={<AppleFilled />} href={`https://music.apple.com/us/search?term=${encodeURIComponent(selectedAlbum.title + ' Chrismslist')}`} target="_blank" style={{ fontWeight: 'bold', minHeight: '44px' }}>
                           Listen on Apple Music
                       </Button>
                   </div>
@@ -424,10 +424,10 @@ const MusicHome = () => {
                               <div key={item.id}>
                                 <List.Item
                                   actions={[
-                                      <a href={`https://open.spotify.com/search/${encodeURIComponent('Chrismslist ' + item.title)}`} target="_blank" rel="noreferrer" style={{ fontSize: '20px', color: '#1DB954', marginLeft: '10px' }} title="Play on Spotify">
+                                      <a href={`https://open.spotify.com/search/${encodeURIComponent('Chrismslist ' + item.title)}`} target="_blank" rel="noreferrer" style={{ fontSize: '20px', color: '#1DB954', marginLeft: '10px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '44px', minHeight: '44px', padding: '8px' }} title="Play on Spotify">
                                           <SpotifyFilled />
                                       </a>,
-                                      <a href={`https://music.apple.com/us/search?term=${encodeURIComponent('Chrismslist ' + item.title)}`} target="_blank" rel="noreferrer" style={{ fontSize: '20px', color: '#FA243C', marginLeft: '10px' }} title="Play on Apple Music">
+                                      <a href={`https://music.apple.com/us/search?term=${encodeURIComponent('Chrismslist ' + item.title)}`} target="_blank" rel="noreferrer" style={{ fontSize: '20px', color: '#FA243C', marginLeft: '10px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '44px', minHeight: '44px', padding: '8px' }} title="Play on Apple Music">
                                           <AppleFilled />
                                       </a>
                                   ]}
@@ -438,6 +438,7 @@ const MusicHome = () => {
                                                 <span
                                                     className={`track-play-btn${playingTrack === item.id ? ' playing' : ''}`}
                                                     onClick={() => togglePlay(item)}
+                                                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '44px', minHeight: '44px', padding: '8px' }}
                                                 >
                                                     {playingTrack === item.id ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
                                                 </span>

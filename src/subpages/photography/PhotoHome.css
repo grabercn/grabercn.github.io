@@ -1,5 +1,14 @@
 /* PhotoHome.css */
 
+/* Photo page content background */
+.photo-content {
+  background-color: #f3e8f9;
+}
+
+[data-theme="dark"] .photo-content {
+  background-color: #0d0221 !important;
+}
+
 /* react-masonry-css grid container */
 .gallery-grid {
   display: flex;
@@ -61,6 +70,12 @@
     transition: opacity 0.5s ease;
     border-radius: 16px;
     background-color: #eee;
+}
+
+/* Ensure gallery images never overflow their container */
+.gallery-item img {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Hover effect */
@@ -341,6 +356,7 @@
     display: flex;
     gap: 8px;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
     padding-bottom: 2px;
@@ -436,4 +452,43 @@
   background: rgba(30, 15, 60, 0.6);
   color: #d0b3ff;
   border-color: rgba(100, 60, 160, 0.4);
+}
+
+[data-theme="dark"] .stat-number {
+  color: #E0AAFF;
+}
+
+[data-theme="dark"] .filter-count {
+  color: rgba(208, 179, 255, 0.6);
+}
+
+[data-theme="dark"] .gallery-placeholder {
+  background: rgba(30, 15, 60, 0.5);
+}
+
+[data-theme="dark"] .gallery-image-loaded {
+  background-color: rgba(30, 15, 60, 0.3);
+}
+
+[data-theme="dark"] .overlay {
+  background: rgba(13, 2, 33, 0.4);
+  border-color: rgba(100, 60, 160, 0.3);
+}
+
+[data-theme="dark"] .overlay-icon {
+  color: #d0b3ff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+[data-theme="dark"] .gallery-item {
+  border-color: rgba(100, 60, 160, 0.2);
+}
+
+[data-theme="dark"] .gallery-item:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .filter-tag:hover {
+  background: rgba(100, 60, 160, 0.3);
+  border-color: rgba(100, 60, 160, 0.6);
 }

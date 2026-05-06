@@ -158,6 +158,9 @@ const sections = [
                   onClick={() => setActiveYear(group.year)}
                   style={{
                     padding: '8px 16px',
+                    minHeight: '44px',
+                    display: 'flex',
+                    alignItems: 'center',
                     borderRadius: '20px',
                     border: activeYear === group.year ? '2px solid #4D04A0' : '2px solid rgba(77,4,160,0.2)',
                     background: activeYear === group.year ? '#4D04A0' : 'rgba(255,255,255,0.7)',
@@ -347,7 +350,7 @@ const sections = [
           Feel free to reach out to me through the following methods:
         </Paragraph>
         <ul style={{ listStyleType: 'none', paddingLeft: 0, margin: '0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '14px 16px', minHeight: '48px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
+          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '14px 16px', minHeight: '48px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', maxWidth: '100%', cursor: 'pointer', wordBreak: 'break-word', flexWrap: 'wrap' }}>
             <MailOutlined style={{ marginRight: '12px', fontSize: '28px', color: '#007BFF', transition: 'color 0.3s ease, transform 0.3s ease' }} />
             <a
               href="mailto:grabercn@mail.uc.edu"
@@ -358,7 +361,7 @@ const sections = [
               grabercn@mail.uc.edu
             </a>
           </li>
-          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '14px 16px', minHeight: '48px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
+          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '14px 16px', minHeight: '48px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', maxWidth: '100%', cursor: 'pointer', wordBreak: 'break-word', flexWrap: 'wrap' }}>
             <LinkedinOutlined style={{ marginRight: '12px', fontSize: '28px', color: '#0077b5', transition: 'color 0.3s ease, transform 0.3s ease' }} />
             <a
               href="https://www.linkedin.com/in/christian-graber"
@@ -371,7 +374,7 @@ const sections = [
               christian-graber
             </a>
           </li>
-          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '14px 16px', minHeight: '48px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
+          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '14px 16px', minHeight: '48px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', maxWidth: '100%', cursor: 'pointer', wordBreak: 'break-word', flexWrap: 'wrap' }}>
             <GithubOutlined style={{ marginRight: '12px', fontSize: '28px', color: '#0077b5', transition: 'color 0.3s ease, transform 0.3s ease' }} />
             <a
               href="https://github.com/grabercn/"
@@ -446,7 +449,7 @@ function App() {
 
   if (loading) {
     return (
-      <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f3e8f9' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f3e8f9' }}>
          <Spin indicator={<LoadingOutlined style={{ fontSize: 48, color: '#4D04A0' }} spin />} tip="Loading..." />
       </div>
     );

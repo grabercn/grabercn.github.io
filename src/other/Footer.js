@@ -27,12 +27,12 @@ const FooterComponent = () => {
     <>
       <Row justify="center" style={{ marginBottom: '16px' }}>
         <Col>
-          <Space size="large">
+          <Space size="middle" wrap>
             <Link to="/photo">
-              <Text style={{ color: '#fff', fontSize: '16px' }}>Photography</Text>
+              <Text style={{ color: '#fff', fontSize: 'clamp(14px, 3.5vw, 16px)' }}>Photography</Text>
             </Link>
             <Link to="/music">
-              <Text style={{ color: '#fff', fontSize: '16px' }}>Music</Text>
+              <Text style={{ color: '#fff', fontSize: 'clamp(14px, 3.5vw, 16px)' }}>Music</Text>
             </Link>
           </Space>
         </Col>
@@ -40,7 +40,7 @@ const FooterComponent = () => {
 
       <Row justify="center" style={{ marginBottom: '20px' }}>
         <Col>
-          <Space size="large">
+          <Space size="middle" wrap>
             <a
               href="https://github.com/grabercn"
               target="_blank"
@@ -77,7 +77,7 @@ const FooterComponent = () => {
 
       <Row justify="center" style={{ marginBottom: '8px' }}>
         <Col>
-          <Text style={{ fontSize: '13px', color: '#999', letterSpacing: '0.3px' }}>
+          <Text style={{ fontSize: 'clamp(11px, 3vw, 13px)', color: '#999', letterSpacing: '0.3px', wordBreak: 'break-word' }}>
             Built with <span style={{ color: '#b07dff' }}>React</span> &amp; <span style={{ color: '#b07dff' }}>Ant Design</span>
           </Text>
         </Col>
@@ -85,7 +85,7 @@ const FooterComponent = () => {
 
       <Row justify="center">
         <Col>
-          <Text style={{ fontSize: '14px', color: '#bbb' }}>
+          <Text style={{ fontSize: 'clamp(12px, 3vw, 14px)', color: '#bbb', wordBreak: 'break-word' }}>
             &copy; 2025 Christian Graber. All rights reserved.
           </Text>
         </Col>

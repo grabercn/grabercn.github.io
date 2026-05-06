@@ -50,6 +50,10 @@ body {
   background: var(--bg-primary);
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -214,7 +218,7 @@ html, body, #root {
   .ant-card {
     width: 100% !important; /* Make sure the card itself takes full width */
     margin: 0 !important; /* Ensure no margin overrides */
-    padding: 20px !important; /* Set the padding to the value you want */
+    padding: clamp(12px, 3vw, 20px) !important; /* Responsive padding for mobile */
   }
 
   /* Optionally, if you need to tweak any title margins */
@@ -419,6 +423,53 @@ button:focus-visible,
   background-color: #FA243C !important;
   color: white !important;
   border-color: #FA243C !important;
+}
+
+[data-theme="dark"] .ant-divider {
+  border-color: rgba(100, 60, 160, 0.3) !important;
+}
+
+[data-theme="dark"] .ant-list-item {
+  border-bottom-color: rgba(100, 60, 160, 0.2) !important;
+  color: #d0d0d0 !important;
+}
+
+[data-theme="dark"] .ant-list-item-meta-title {
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .ant-list-item-meta-description {
+  color: #aaa !important;
+}
+
+[data-theme="dark"] .ant-tag {
+  background: rgba(100, 60, 160, 0.3) !important;
+  color: #d0b3ff !important;
+  border-color: rgba(100, 60, 160, 0.4) !important;
+}
+
+[data-theme="dark"] .ant-tabs-tab {
+  color: #aaa !important;
+}
+
+[data-theme="dark"] .ant-tabs-tab-active {
+  color: #E0AAFF !important;
+}
+
+[data-theme="dark"] .ant-tabs-ink-bar {
+  background: #E0AAFF !important;
+}
+
+/* Dark mode cards on mobile - prevent excessive padding */
+@media (max-width: 768px) {
+  [data-theme="dark"] .ant-card {
+    padding: clamp(12px, 3vw, 20px) !important;
+  }
+
+  [data-theme="dark"] .ant-card-body {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
 }
 
 /* Respect reduced motion preferences */

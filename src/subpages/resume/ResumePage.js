@@ -226,6 +226,7 @@ const ResumePage = () => {
                   background: 'rgba(77, 4, 160, 0.85)',
                   borderColor: 'rgba(255, 255, 255, 0.2)',
                   fontWeight: 600,
+                  minHeight: '44px',
                 }}
               >
                 Download PDF

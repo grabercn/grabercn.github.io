@@ -52,7 +52,7 @@ const PhotoBanner = ({ photoObjects }) => {
             style={{
               position: 'relative',
               height: '60vh', // Reduced from 100vh to be more like a banner
-              minHeight: '400px',
+              minHeight: 'clamp(250px, 45vh, 400px)',
               overflow: 'hidden',
               backgroundImage: `url(${randomPhoto ? randomPhoto.path : '/images/default-banner.jpg'})`, // Random photo or fallback
               backgroundSize: 'cover',

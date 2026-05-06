@@ -185,6 +185,7 @@ const Experience = () => {
                       fontWeight: 600,
                       fontSize: "13px",
                       letterSpacing: "0.3px",
+                      wordBreak: "break-word",
                     }}
                   >
                     {experience.date}
@@ -209,11 +210,21 @@ const Experience = () => {
                 e.currentTarget.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.1)";
                 e.currentTarget.style.borderLeftColor = "transparent";
               }}
+              onTouchStart={(e) => {
+                e.currentTarget.style.transform = "translateY(-3px)";
+                e.currentTarget.style.boxShadow = "0 6px 18px rgba(0, 0, 0, 0.15)";
+                e.currentTarget.style.borderLeftColor = "#4D04A0";
+              }}
+              onTouchEnd={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.1)";
+                e.currentTarget.style.borderLeftColor = "transparent";
+              }}
             >
               <Paragraph>{experience.description}</Paragraph>
               <ul style={{ paddingLeft: "20px" }}>
                 {experience.responsibilities.map((task, idx) => (
-                  <li key={idx} style={{ marginBottom: "6px", lineHeight: "1.6" }}>{task}</li>
+                  <li key={idx} style={{ marginBottom: "8px", lineHeight: "1.7", fontSize: "clamp(13px, 2.5vw, 14px)" }}>{task}</li>
                 ))}
               </ul>
               <div>

@@ -73,7 +73,7 @@
 }
 
 .preview-image-container img {
-    width: 200px; /* Larger preview */
+    width: clamp(120px, 60vw, 200px);
     height: auto;
     max-height: 200px;
     object-fit: contain;

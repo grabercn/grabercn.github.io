@@ -112,13 +112,23 @@ const Projects = () => {
                 e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
                 e.currentTarget.style.borderLeftColor = 'transparent';
               }}
+              onTouchStart={(e) => {
+                e.currentTarget.style.transform = 'translateY(-4px)';
+                e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.25)';
+                e.currentTarget.style.borderLeftColor = '#4D04A0';
+              }}
+              onTouchEnd={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                e.currentTarget.style.borderLeftColor = 'transparent';
+              }}
               cover={
                 <Row gutter={[0, 0]}>
                   {project.gallery.slice(0, 1).map((imageUrl, imgIndex) => (
                     <Col key={imgIndex} span={24}>
                       <Image
                         width="100%"
-                        height={200}
+                        height="auto"
                         src={imageUrl}
                         preview={false}
                         alt={`${project.title} screenshot`}
@@ -126,6 +136,7 @@ const Projects = () => {
                         style={{
                           borderRadius: '8px',
                           objectFit: 'cover',
+                          aspectRatio: '16/9',
                         }}
                         fallback="/images/banner.jpg"
                       />
@@ -138,12 +149,15 @@ const Projects = () => {
                 <Title level={4} style={{ marginBottom: '8px' }}>
                   <span style={{ fontWeight: 'bold' }}>{project.icon}{project.title}</span>
                 </Title>
-                <Paragraph style={{ marginBottom: '16px' }}>
+                <Paragraph style={{ marginBottom: '16px', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
                   {displayText}
                   {needsTruncation && (
                     <span
                       onClick={() => toggleExpand(index)}
-                      style={{ color: '#4D04A0', cursor: 'pointer', marginLeft: '4px', fontWeight: 500 }}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleExpand(index); }}
+                      style={{ color: '#4D04A0', cursor: 'pointer', marginLeft: '4px', fontWeight: 500, display: 'inline-block', minHeight: '44px', lineHeight: '44px' }}
                     >
                       {isExpanded ? ' Show less' : ' Read more'}
                     </span>
@@ -159,7 +173,7 @@ const Projects = () => {
                 </div>
 
                 {/* View Project on GitHub Link */}
-                <a href={project.link} target="_blank" rel="noopener noreferrer">
+                <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ wordBreak: 'break-word' }}>
                   <strong>View Project on GitHub</strong>
                 </a>
 

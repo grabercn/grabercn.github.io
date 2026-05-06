@@ -15,14 +15,14 @@ const NotFound = () => {
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
         color: '#fff',
         textAlign: 'center',
-        padding: '2rem',
+        padding: 'clamp(16px, 5vw, 40px)',
       }}
     >
       <motion.div
         animate={{ y: [0, -12, 0] }}
         transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         style={{
-          fontSize: 'clamp(6rem, 15vw, 10rem)',
+          fontSize: 'clamp(4rem, 12vw, 8rem)',
           fontWeight: 900,
           letterSpacing: '-0.04em',
           lineHeight: 1,

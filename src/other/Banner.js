@@ -49,7 +49,7 @@ const Banner = () => {
   return (
     <div style={{ backgroundColor: '#2c1e7d', overflow: 'hidden' }}>
       {/* Full-Page Parallax Banner */}
-      <div id="hero-banner" className="banner" style={{ position: 'relative', height: '100svh' }}>
+      <div id="hero-banner" className="banner" style={{ position: 'relative', height: 'auto', minHeight: '100svh' }}>
         {/* Animated Background Image with Parallax and Blur Effect */}
         <motion.div
           className="background-image"
@@ -134,13 +134,13 @@ const Banner = () => {
                 style={{ padding: 0 }} // Ensure no padding on Col
               >
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                  <div style={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden',  border: '4px solid purple' }}>
+                  <div style={{ width: 'clamp(100px, 35vw, 150px)', height: 'clamp(100px, 35vw, 150px)', borderRadius: '50%', overflow: 'hidden',  border: '4px solid purple' }}>
                     <img src="/images/profile.jpg" alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                   </div>
                 </div>
                 <Title
                   style={{
-                    fontSize: '48px',
+                    fontSize: 'clamp(1.8rem, 7vw, 3rem)',
                     fontWeight: 'bold',
                     color: '#fff',
                     textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
@@ -150,7 +150,7 @@ const Banner = () => {
                 </Title>
                 <Paragraph
                   style={{
-                    fontSize: '24px',
+                    fontSize: 'clamp(1rem, 3.5vw, 1.5rem)',
                     color: '#fff',
                     textShadow: '1px 1px 4px rgba(0, 0, 0, 0.6)',
                   }}

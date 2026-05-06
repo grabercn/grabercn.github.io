@@ -16,6 +16,8 @@ const FloatingCard = ({ children, title }) => {
           backgroundColor: 'rgba(255, 255, 255, 0.98)',
           borderRadius: '20px',
           overflowY: 'auto',
+          overflow: 'hidden',
+          maxWidth: '100%',
           border: '1px solid rgba(255, 255, 255, 0.8)',
         }}
       >

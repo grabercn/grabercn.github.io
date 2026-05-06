@@ -160,9 +160,9 @@
 
 .resume-timeline-skills .ant-tag {
   margin: 3px;
-  background: rgba(123, 47, 190, 0.25);
-  border: 1px solid rgba(224, 170, 255, 0.3);
-  color: #E0AAFF;
+  background: rgba(123, 47, 190, 0.25) !important;
+  border: 1px solid rgba(224, 170, 255, 0.3) !important;
+  color: #E0AAFF !important;
   border-radius: 4px;
   font-size: 12px;
 }
@@ -186,9 +186,9 @@
 }
 
 .resume-skill-tags .ant-tag {
-  background: rgba(123, 47, 190, 0.2);
-  border: 1px solid rgba(224, 170, 255, 0.25);
-  color: #E0AAFF;
+  background: rgba(123, 47, 190, 0.2) !important;
+  border: 1px solid rgba(224, 170, 255, 0.25) !important;
+  color: #E0AAFF !important;
   border-radius: 6px;
   padding: 4px 12px;
   font-size: 13px;
@@ -233,7 +233,7 @@
 /* ---------- Coursework ---------- */
 .resume-coursework-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(clamp(130px, 30vw, 200px), 1fr));
   gap: 10px;
 }
 
@@ -264,19 +264,25 @@
 /* ---------- Responsive ---------- */
 @media (max-width: 767px) {
   .resume-container {
-    padding: 24px 16px 40px;
+    padding: 24px 12px 40px;
   }
 
   .resume-header h1 {
-    font-size: 30px;
+    font-size: clamp(22px, 6vw, 30px);
   }
 
   .resume-header .resume-title {
-    font-size: 16px;
+    font-size: clamp(13px, 3.5vw, 16px);
   }
 
   .resume-contact-row {
-    gap: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .resume-contact-row a {
+    font-size: clamp(12px, 3vw, 14px);
   }
 
   .resume-section-title {
@@ -284,7 +290,32 @@
   }
 
   .resume-coursework-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(clamp(120px, 28vw, 150px), 1fr));
+  }
+
+  .resume-skill-bar-container {
+    flex-wrap: nowrap;
+  }
+
+  .resume-skill-bar-label {
+    min-width: 70px;
+    font-size: 12px;
+  }
+
+  .resume-skill-bar-track {
+    min-width: 0;
+  }
+
+  .resume-timeline-card .ant-card-body {
+    padding: 14px 12px;
+  }
+
+  .resume-timeline-company {
+    font-size: 15px;
+  }
+
+  .resume-timeline-bullets li {
+    font-size: 13px;
   }
 
   .resume-desktop-menu {
@@ -294,6 +325,94 @@
   .resume-hamburger-btn {
     display: flex !important;
   }
+}
+
+/* ---------- Dark Mode Overrides ---------- */
+/* Resume page is always on a dark background, but global dark mode
+   rules from App.css can interfere. These ensure text stays legible. */
+
+[data-theme="dark"] .resume-container {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .resume-header h1 {
+  color: #E0AAFF !important;
+}
+
+[data-theme="dark"] .resume-header p,
+[data-theme="dark"] .resume-header span {
+  color: #ccc !important;
+}
+
+[data-theme="dark"] .resume-section-title {
+  color: #E0AAFF !important;
+  border-left-color: #E0AAFF !important;
+}
+
+[data-theme="dark"] .resume-education-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .resume-education-card h4 {
+  color: #fff !important;
+}
+
+[data-theme="dark"] .resume-education-card p,
+[data-theme="dark"] .resume-education-card .ant-typography {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="dark"] .resume-timeline .ant-timeline-item-content {
+  color: #d0d0d0 !important;
+}
+
+[data-theme="dark"] .ant-timeline-item-tail {
+  border-left-color: rgba(176, 125, 255, 0.3) !important;
+}
+
+[data-theme="dark"] .ant-timeline-item-head {
+  border-color: #E0AAFF !important;
+  background: #7B2FBE !important;
+}
+
+[data-theme="dark"] .resume-timeline-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .resume-timeline-company {
+  color: #fff !important;
+}
+
+[data-theme="dark"] .resume-timeline-role {
+  color: #E0AAFF !important;
+}
+
+[data-theme="dark"] .resume-timeline-date {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+[data-theme="dark"] .resume-timeline-bullets li {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+[data-theme="dark"] .resume-skills-group-title {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="dark"] .resume-skill-bar-label {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+[data-theme="dark"] .resume-skill-bar-track {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .resume-coursework-item {
+  color: rgba(255, 255, 255, 0.75) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
 }
 
 /* ---------- Print Styles ---------- */

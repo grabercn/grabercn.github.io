@@ -68,10 +68,7 @@
 /* Popup overlay */
 .map-popup-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 1500;
   display: flex;
@@ -83,8 +80,8 @@
   background: #fff;
   border-radius: 16px;
   padding: 20px;
-  max-width: 420px;
-  width: 90vw;
+  max-width: 600px;
+  width: calc(100% - 32px);
   max-height: 80vh;
   overflow-y: auto;
   box-shadow: 0 12px 40px rgba(77, 4, 160, 0.3);
@@ -142,6 +139,12 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
+}
+
+@media (max-width: 400px) {
+  .map-popup-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .map-popup-thumb {
