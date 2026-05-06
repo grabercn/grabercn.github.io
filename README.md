@@ -69,8 +69,8 @@ A modern, full-featured portfolio website built with React, featuring travel pho
 
 | Metric | Count |
 |--------|-------|
-| Source files | 52 |
-| Components | 37 |
+| Source files | 53 |
+| Components | 38 |
 | Photos | 1062 |
 | Routes | `/,/photo,/music,/desktop,/datavis,/cookie,/resume,/*` |
 
@@ -114,16 +114,16 @@ All photos include multi-layer protection against AI training:
 
 ## Recent Changes
 
+- Dark theme styles, backgrounds & coursework UI
+- Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
+- Infer GPS country, strip EXIF & update gallery UI
+- docs: auto-update README [skip ci]
 - CI: Deploy to GitHub Pages & auto-update README
 - Add photography assets and update gallery
 - Add SEO tags, AI-block headers, and photo processing
 - Add low-resolution favicon image for improved loading times
 - Revamp music home with album/single modals and tracklists
 - Add new photography images and update photo gallery
-- Refactor scroll-based animations to use Framer Motion hooks
-- Add DataVisHome component and styles; update routing
-- Update Graber Christian Resume PDF
-- Update Graber_Christian_Resume_2025.pdf
 
 ## Easter Eggs
 
