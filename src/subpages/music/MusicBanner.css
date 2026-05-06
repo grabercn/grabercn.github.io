@@ -53,13 +53,64 @@
     .music-banner {
       height: 200px; /* Reduce height for mobile screens */
     }
-  
+
     .music-banner-title {
       font-size: 1.8rem; /* Adjust title size for mobile */
     }
-  
+
     .music-banner-subtitle {
       font-size: 1rem; /* Adjust subtitle size for mobile */
+    }
+  }
+
+  /* Music hero section responsive */
+  .music-hero {
+    position: relative;
+    height: 60vh;
+    min-height: 400px;
+    overflow: hidden;
+  }
+
+  .music-hero-album-art {
+    width: 250px;
+    height: 250px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .music-hero {
+      min-height: 220px;
+      height: auto;
+      padding: 30px 0;
+    }
+
+    .music-hero-album-art {
+      width: 150px;
+      height: 150px;
+    }
+
+    .music-hero .ant-typography h1,
+    .music-hero-title {
+      font-size: 1.3rem !important;
+    }
+
+    /* Hide desktop menu on mobile */
+    .music-desktop-menu {
+      display: none !important;
+    }
+
+    /* Show hamburger on mobile */
+    .music-hamburger-btn {
+      display: flex !important;
+    }
+  }
+
+  @media (min-width: 769px) {
+    /* Hide hamburger on desktop */
+    .music-hamburger-btn {
+      display: none !important;
     }
   }
   

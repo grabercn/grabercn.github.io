@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Typography, Divider, Spin, Button, Layout, Menu, Modal, Result, List, Avatar } from 'antd';
-import { HomeOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined, InfoCircleOutlined, PlayCircleOutlined, WarningOutlined, AppleFilled, SpotifyFilled, RightOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Typography, Divider, Spin, Button, Layout, Menu, Modal, Drawer, Result, List, Avatar } from 'antd';
+import { HomeOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined, InfoCircleOutlined, PlayCircleOutlined, WarningOutlined, AppleFilled, SpotifyFilled, RightOutlined, MenuOutlined } from '@ant-design/icons';
 import MusicBanner from './MusicBanner';
 import FooterComponent from '../../other/Footer';
 import ModernPurpleBackground from '../../animations/ModernPurpleBackground';
@@ -23,6 +23,10 @@ const MusicHome = () => {
   const [albumModalOpen, setAlbumModalOpen] = useState(false);
   const [tracklist, setTracklist] = useState([]);
   const [loadingTracks, setLoadingTracks] = useState(false);
+
+  // Mobile drawer state
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const artistId = '111349822'; 
   const corsProxy = 'https://api.cors.lol/?url=';
@@ -103,6 +107,9 @@ const MusicHome = () => {
 
   useEffect(() => {
     fetchMusicData();
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Use the latest release (album or single) for the banner
@@ -111,12 +118,11 @@ const MusicHome = () => {
 
   const renderDiscographyItem = (item) => (
       <Col xs={12} sm={8} md={6} lg={4} key={item.id}>
-        <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }} onClick={() => handleAlbumClick(item)} style={{ cursor: 'pointer' }}>
-            {/* Removed glass-panel class, used solid background for visibility */}
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }} onClick={() => handleAlbumClick(item)} style={{ cursor: 'pointer' }}>
             <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.3)', background: '#2a1a4a' }}>
                 <img src={item.cover_medium} alt={item.title} style={{ width: '100%', display: 'block' }} />
-                <div style={{ padding: '10px', background: '#2a1a4a' }}>
-                    <Text style={{ color: 'white', display: 'block', fontSize: '13px', fontWeight: 'bold' }} ellipsis>{item.title}</Text>
+                <div style={{ padding: '10px', background: '#2a1a4a', overflow: 'hidden' }}>
+                    <Text style={{ color: 'white', display: 'block', fontSize: '13px', fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} ellipsis>{item.title}</Text>
                     <Text style={{ color: '#aaa', fontSize: '11px' }}>{new Date(item.release_date).getFullYear()}</Text>
                 </div>
             </div>
@@ -126,8 +132,10 @@ const MusicHome = () => {
 
   return (
     <Layout style={{ minHeight: '100vh', background: '#120338' }}>
-      <Header style={{ background: 'transparent', padding: 0, position: 'sticky', top: 0, zIndex: 1000, width: '100%' }}>
+      <Header style={{ padding: 0, position: 'sticky', top: 0, zIndex: 1000, width: '100%' }}>
+        {/* Desktop Menu */}
         <Menu
+          className="music-desktop-menu"
           theme="dark"
           mode="horizontal"
           selectedKeys={['music']}
@@ -138,23 +146,39 @@ const MusicHome = () => {
             display: 'flex',
             width: '100%'
           }}
-        >
-          <Menu.Item key="home" icon={<HomeOutlined />}>
-            <a href="/">Home</a>
-          </Menu.Item>
-          
-          <Menu.Item key="about" icon={<InfoCircleOutlined />} onClick={() => setShowAbout(true)}>
-             About Music
-          </Menu.Item>
+          items={[
+            { key: 'home', icon: <HomeOutlined />, label: <a href="/">Home</a> },
+            { key: 'about', icon: <InfoCircleOutlined />, label: 'About Music', onClick: () => setShowAbout(true) },
+            { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a>, style: { marginLeft: 'auto' } },
+            { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
+          ]}
+        />
 
-           <Menu.Item key="photography" icon={<CameraOutlined />} style={{ marginLeft: 'auto' }}>
-            <a href="/#/photo">Photography</a>
-          </Menu.Item>
-          <Menu.Item key="music" icon={<CustomerServiceOutlined />}>
-            <a href="/#/music">Music</a>
-          </Menu.Item>
-        </Menu>
+        {/* Mobile Hamburger */}
+        <div className="music-hamburger-btn" style={{ display: 'none', alignItems: 'center', height: '64px', padding: '0 16px' }}>
+          <MenuOutlined style={{ fontSize: '22px', color: '#E0AAFF', cursor: 'pointer' }} onClick={() => setDrawerOpen(true)} />
+        </div>
       </Header>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        title="Navigation"
+        placement="right"
+        onClose={() => setDrawerOpen(false)}
+        open={drawerOpen}
+      >
+        <Menu
+          mode="vertical"
+          selectedKeys={['music']}
+          style={{ border: 'none' }}
+          items={[
+            { key: 'home', icon: <HomeOutlined />, label: <a href="/">Home</a>, onClick: () => setDrawerOpen(false) },
+            { key: 'about', icon: <InfoCircleOutlined />, label: 'About Music', onClick: () => { setShowAbout(true); setDrawerOpen(false); } },
+            { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a>, onClick: () => setDrawerOpen(false) },
+            { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a>, onClick: () => setDrawerOpen(false) },
+          ]}
+        />
+      </Drawer>
 
       <ModernPurpleBackground />
 
@@ -196,28 +220,28 @@ const MusicHome = () => {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
                 
                 {/* Hero Section */}
-                <div style={{ position: 'relative', height: '60vh', minHeight: '400px', overflow: 'hidden' }}>
-                    <motion.div style={{ 
-                        position: 'absolute', inset: 0, 
+                <div className="music-hero">
+                    <motion.div style={{
+                        position: 'absolute', inset: 0,
                         backgroundImage: `url(${latestRelease?.cover_xl || '/images/banner.jpg'})`,
-                        backgroundSize: 'cover', backgroundPosition: 'center', filter: 'blur(20px) brightness(0.4)', 
-                        y: y, // Parallax Effect
-                        scale: 1.2 // Scale up slightly to avoid white edges during parallax
+                        backgroundSize: 'cover', backgroundPosition: 'center', filter: 'blur(20px) brightness(0.4)',
+                        y: y,
+                        scale: 1.2
                     }} />
                     <div style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', zIndex: 1, padding: '0 20px' }}>
-                        <img 
-                            src={latestRelease?.cover_xl} 
-                            alt="Latest Release" 
-                            style={{ width: '250px', height: '250px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', marginBottom: '20px' }} 
+                        <img
+                            className="music-hero-album-art"
+                            src={latestRelease?.cover_xl}
+                            alt="Latest Release"
                         />
-                        <Title level={1} style={{ color: 'white', margin: 0, textShadow: '0 2px 10px black', textAlign: 'center' }}>{latestRelease?.title || 'Latest Release'}</Title>
-                        <Text style={{ color: '#ccc', fontSize: '18px', marginBottom: '20px' }}>{latestReleaseType} Out Now</Text>
-                        
+                        <Title className="music-hero-title" level={isMobile ? 3 : 1} style={{ color: 'white', margin: 0, textShadow: '0 2px 10px black', textAlign: 'center' }}>{latestRelease?.title || 'Latest Release'}</Title>
+                        <Text style={{ color: '#ccc', fontSize: isMobile ? '14px' : '18px', marginBottom: '20px' }}>{latestReleaseType} Out Now</Text>
+
                         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                            <Button type="primary" shape="round" icon={<SpotifyFilled />} size="large" style={{ backgroundColor: '#1DB954', color: 'white', borderColor: '#1DB954', fontWeight: 'bold' }} href={`https://open.spotify.com/search/${encodeURIComponent('Chrismslist ' + (latestRelease?.title || ''))}`} target="_blank">
+                            <Button className="spotify-btn" type="primary" shape="round" icon={<SpotifyFilled />} size={isMobile ? 'middle' : 'large'} style={{ fontWeight: 'bold' }} href={`https://open.spotify.com/search/${encodeURIComponent('Chrismslist ' + (latestRelease?.title || ''))}`} target="_blank">
                                 Listen on Spotify
                             </Button>
-                             <Button type="primary" shape="round" icon={<AppleFilled />} size="large" style={{ backgroundColor: '#FA243C', color: 'white', borderColor: '#FA243C', fontWeight: 'bold' }} href={`https://music.apple.com/us/search?term=${encodeURIComponent('Chrismslist ' + (latestRelease?.title || ''))}`} target="_blank">
+                             <Button className="apple-btn" type="primary" shape="round" icon={<AppleFilled />} size={isMobile ? 'middle' : 'large'} style={{ fontWeight: 'bold' }} href={`https://music.apple.com/us/search?term=${encodeURIComponent('Chrismslist ' + (latestRelease?.title || ''))}`} target="_blank">
                                 Listen on Apple Music
                             </Button>
                         </div>
@@ -333,10 +357,10 @@ const MusicHome = () => {
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <Button block size="large" icon={<SpotifyFilled />} href={`https://open.spotify.com/search/${encodeURIComponent(selectedAlbum.title + ' Chrismslist')}`} target="_blank" style={{ background: '#1DB954', color: '#fff', borderColor: '#1DB954' }}>
+                      <Button className="spotify-btn" block size="large" icon={<SpotifyFilled />} href={`https://open.spotify.com/search/${encodeURIComponent(selectedAlbum.title + ' Chrismslist')}`} target="_blank" style={{ fontWeight: 'bold' }}>
                           Listen on Spotify
                       </Button>
-                      <Button block size="large" icon={<AppleFilled />} href={`https://music.apple.com/us/search?term=${encodeURIComponent(selectedAlbum.title + ' Chrismslist')}`} target="_blank" style={{ background: '#FA243C', color: '#fff', borderColor: '#FA243C' }}>
+                      <Button className="apple-btn" block size="large" icon={<AppleFilled />} href={`https://music.apple.com/us/search?term=${encodeURIComponent(selectedAlbum.title + ' Chrismslist')}`} target="_blank" style={{ fontWeight: 'bold' }}>
                           Listen on Apple Music
                       </Button>
                   </div>

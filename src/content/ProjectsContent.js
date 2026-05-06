@@ -1,7 +1,10 @@
+import React, { useState } from "react";
 import { RocketOutlined, CarOutlined, ShoppingCartOutlined, DiscordOutlined, StockOutlined, BookOutlined } from "@ant-design/icons";
 import { Image, Row, Col, Card, Typography, Tag } from "antd";
 
 const { Title, Paragraph } = Typography;
+
+const MAX_DESC_LENGTH = 150;
 
 const Projects = () => {
   const projectData = [
@@ -73,17 +76,41 @@ const Projects = () => {
     }
   ];
 
+  const [expandedCards, setExpandedCards] = useState({});
+
+  const toggleExpand = (index) => {
+    setExpandedCards((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
   return (
     <Row gutter={[16, 24]} justify="start">
       {projectData.map((project, index) => {
+        const isExpanded = expandedCards[index];
+        const needsTruncation = project.description.length > MAX_DESC_LENGTH;
+        const displayText = needsTruncation && !isExpanded
+          ? project.description.slice(0, MAX_DESC_LENGTH) + '...'
+          : project.description;
 
         return (
           <Col key={index} xs={24} sm={12} md={8} lg={6}>
             <Card
               style={{
                 width: '100%',
+                height: '100%',
                 borderRadius: '8px',
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                borderLeft: '3px solid transparent',
+                transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-4px)';
+                e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.25)';
+                e.currentTarget.style.borderLeftColor = '#4D04A0';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                e.currentTarget.style.borderLeftColor = 'transparent';
               }}
               cover={
                 <Row gutter={[0, 0]}>
@@ -94,7 +121,8 @@ const Projects = () => {
                         height={200}
                         src={imageUrl}
                         preview={false}
-                        alt={`Project ${index + 1} Image ${imgIndex + 1}`}
+                        alt={`${project.title} screenshot`}
+                        loading="lazy"
                         style={{
                           borderRadius: '8px',
                           objectFit: 'cover',
@@ -106,12 +134,20 @@ const Projects = () => {
                 </Row>
               }
             >
-              <div style={{  }}>
+              <div>
                 <Title level={4} style={{ marginBottom: '8px' }}>
                   <span style={{ fontWeight: 'bold' }}>{project.icon}{project.title}</span>
                 </Title>
                 <Paragraph style={{ marginBottom: '16px' }}>
-                  {project.description}
+                  {displayText}
+                  {needsTruncation && (
+                    <span
+                      onClick={() => toggleExpand(index)}
+                      style={{ color: '#4D04A0', cursor: 'pointer', marginLeft: '4px', fontWeight: 500 }}
+                    >
+                      {isExpanded ? ' Show less' : ' Read more'}
+                    </span>
+                  )}
                 </Paragraph>
 
                 <div style={{ marginBottom: '16px' }}>
@@ -132,7 +168,7 @@ const Projects = () => {
                   <div style={{ marginTop: '16px' }}>
                     <a href={project.liveLink} style={{color: 'purple'}} target="_blank" rel="noopener noreferrer">
                       <strong>See it in Action</strong>
-                      </a>
+                    </a>
                   </div>
                 )}
               </div>

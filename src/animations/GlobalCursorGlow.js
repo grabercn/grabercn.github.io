@@ -8,8 +8,20 @@ const GlobalCursorGlow = () => {
   const mouseRef = useRef({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
   const [isOnNavbar, setIsOnNavbar] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Check for prefers-reduced-motion
+  useEffect(() => {
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mql.matches);
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
+
     const animate = () => {
       if (glowRef.current) {
         const { x, y } = mouseRef.current;
@@ -17,21 +29,44 @@ const GlobalCursorGlow = () => {
       }
       requestRef.current = requestAnimationFrame(animate);
     };
-    
-    requestRef.current = requestAnimationFrame(animate);
+
+    const startLoop = () => {
+      if (!requestRef.current) {
+        requestRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    const stopLoop = () => {
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+        requestRef.current = null;
+      }
+    };
+
+    // Pause animation when tab is hidden, restart when visible
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopLoop();
+      } else {
+        startLoop();
+      }
+    };
+
+    startLoop();
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     const handleMouseMove = (e) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
-      
+
       const target = e.target;
-      
+
       // Check if hovering interactive element
       const isInteractive = target && (
-        target.closest('a') || 
-        target.closest('button') || 
+        target.closest('a') ||
+        target.closest('button') ||
         target.closest('.ant-menu-item') ||
         target.closest('.ant-btn') ||
-        target.closest('.gallery-item') 
+        target.closest('.gallery-item')
         // Removed .ant-card to prevent big cursor on text sections
       );
       setIsHovering(!!isInteractive);
@@ -45,9 +80,13 @@ const GlobalCursorGlow = () => {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      stopLoop();
     };
-  }, []);
+  }, [prefersReducedMotion]);
+
+  // Don't render glow at all if user prefers reduced motion
+  if (prefersReducedMotion) return null;
 
   const styles = `
     .global-cursor-container {

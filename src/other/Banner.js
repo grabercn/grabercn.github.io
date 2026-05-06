@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDownOutlined, DownloadOutlined } from '@ant-design/icons';
 import { Row, Col, Button, Typography } from 'antd';
@@ -7,6 +7,21 @@ import NinetiesPatternBackground from '../animations/NinetiesPatternBackground';
 const { Title, Paragraph } = Typography;
 
 const Banner = () => {
+  const prefersReducedMotion = useMemo(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    []
+  );
+
+  // Hide arrow after scrolling 200px
+  const [arrowVisible, setArrowVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setArrowVisible(window.scrollY <= 200);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   // Static settings for a stable, non-choppy look
   const glowSettings = {
     brightness: 1.1,
@@ -174,23 +189,38 @@ const Banner = () => {
                   <DownloadOutlined style={{ marginRight: '8px' }} />
                   View Resume
                 </Button>
-                <div style={{ marginTop: '20px' }}>
-                  {/* eslint-disable-next-line */}
-                  <a onClick={scrollToContact}>
+                <div style={{
+                  marginTop: '20px',
+                  opacity: arrowVisible ? 1 : 0,
+                  transition: 'opacity 0.4s ease',
+                  pointerEvents: arrowVisible ? 'auto' : 'none',
+                }}>
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Scroll to content"
+                    onClick={scrollToContact}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        scrollToContact();
+                      }
+                    }}
+                    style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                  >
                     <motion.div
-                      animate={{ y: [0, 10, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                      animate={prefersReducedMotion ? {} : { y: [0, 10, 0] }}
+                      transition={prefersReducedMotion ? {} : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                     >
                       <ArrowDownOutlined
                         style={{
                           fontSize: '36px',
                           color: '#fff',
                           marginTop: '20px',
-                          cursor: 'pointer',
                         }}
                       />
                     </motion.div>
-                  </a>
+                  </div>
                 </div>
               </Col>
             </motion.div>

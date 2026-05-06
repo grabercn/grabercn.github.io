@@ -8,10 +8,9 @@ const ModernPurpleBackground = () => {
   const styles = `
     .background-container {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       /* Cleaner, whiter base */
       background: linear-gradient(135deg, #ffffff 0%, #fdfaff 100%);
       z-index: 0; 

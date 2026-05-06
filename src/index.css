@@ -11,3 +11,49 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Responsive Typography */
+h1, .ant-typography h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem) !important;
+}
+
+h2, .ant-typography h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem) !important;
+}
+
+h3, .ant-typography h3 {
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem) !important;
+}
+
+h4, .ant-typography h4 {
+  font-size: clamp(1rem, 2vw, 1.25rem) !important;
+}
+
+p, .ant-typography p, .ant-typography {
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  line-height: 1.7;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3e8f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4D04A0, #8b2cff);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #3A0268, #4D04A0);
+}
+
+/* Text selection */
+::selection {
+  background: rgba(77, 4, 160, 0.3);
+  color: #1a1a1a;
+}

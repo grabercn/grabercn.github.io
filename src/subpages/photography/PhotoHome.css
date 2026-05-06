@@ -118,3 +118,134 @@
 .gallery-item:hover .overlay-description {
     transform: translateY(0);
 }
+
+/* === Desktop: add right padding so gallery doesn't render behind ScrollPreview === */
+@media (min-width: 768px) {
+    .photo-gallery {
+        padding-right: 70px !important;
+    }
+}
+
+/* === Mobile: tap-to-reveal overlay === */
+@media (max-width: 767px) {
+    /* Always show a semi-transparent bar at the bottom with description */
+    .overlay {
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border: none !important;
+        top: auto !important;
+        bottom: 0 !important;
+        height: auto !important;
+        justify-content: flex-end !important;
+        padding: 8px !important;
+    }
+    .overlay-icon {
+        display: none;
+    }
+    .overlay-description {
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff !important;
+        font-size: 12px !important;
+        padding: 6px 10px;
+        border-radius: 8px;
+        transform: none !important;
+        max-width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    /* Hide desktop menu on mobile */
+    .desktop-menu {
+        display: none !important;
+    }
+    .mobile-menu-btn {
+        display: flex !important;
+    }
+}
+
+/* Desktop: show menu, hide hamburger */
+@media (min-width: 768px) {
+    .mobile-menu-btn {
+        display: none !important;
+    }
+}
+
+/* === Back to Top button === */
+.back-to-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 90px;
+    z-index: 999;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #4D04A0;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 14px rgba(77, 4, 160, 0.4);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.back-to-top-btn:hover {
+    background: #6a1fd0;
+    box-shadow: 0 6px 20px rgba(77, 4, 160, 0.6);
+}
+
+@media (max-width: 767px) {
+    .back-to-top-btn {
+        right: 20px;
+        bottom: 20px;
+    }
+}
+
+/* === Photo modal navigation arrows === */
+.modal-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2001;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.2s;
+    backdrop-filter: blur(8px);
+}
+.modal-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+.modal-nav-prev {
+    left: 20px;
+}
+.modal-nav-next {
+    right: 20px;
+}
+
+@media (max-width: 767px) {
+    .modal-nav-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+    .modal-nav-prev {
+        left: 8px;
+    }
+    .modal-nav-next {
+        right: 8px;
+    }
+}

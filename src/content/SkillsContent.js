@@ -76,14 +76,14 @@ const Skills = () => {
               src={skill.icon}
               alt={skill.name}
               style={{ width: '40px', height: '40px', marginBottom: '10px' }}
+              onError={(e) => { e.target.style.display = 'none'; }}
             />
             <strong>{skill.name}</strong>
 
             {/* Progress bar to display proficiency */}
-            <Progress 
-              percent={skill.proficiency} 
-              status={getSkillLevelColor(skill.proficiency)} 
-              strokeWidth={10} 
+            <Progress
+              percent={skill.proficiency}
+              strokeWidth={10}
               strokeColor={getSkillLevelColor(skill.proficiency)} // Apply the custom color based on proficiency
               style={{ width: '35%', marginTop: '10px', marginBottom: '10px' }}
               showInfo={false} // This will remove the percentage display

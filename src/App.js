@@ -105,54 +105,70 @@ const sections = [
   
         {/* Year Row: Display years horizontally */}
         <Row gutter={[16, 16]} justify="center">
-          {['2021-2022', '2022-2023', '2023-2024'].map((year, index) => (
-            <Col key={index} xs={24} sm={12} md={8} style={{ textAlign: 'center' }}>
-              <Card 
-                title={year}
+          {[
+            { year: '2021-2022', courses: [
+              'Computer Science 1',
+              'Data Structures',
+              'Introduction to Computer Systems',
+              'Python Programming',
+              'Information Security & Assurance'
+            ]},
+            { year: '2022-2023', courses: [
+              'Discrete Computational Structures',
+              'Programming Languages',
+              'Database Design and Development',
+              'Design and Analysis of Algorithms',
+              'Operating Systems & Systems Programming',
+              'Software Engineering'
+            ]},
+            { year: '2023-2024', courses: [
+              'Principles of Artificial Intelligence',
+              'Communication Networks 1',
+              'Principles of the IoT',
+              'Digital Image Processing 1',
+              'Software and Application Security'
+            ]},
+          ].map((group, index) => (
+            <Col key={index} xs={24} sm={24} md={8} style={{ textAlign: 'center' }}>
+              <Card
+                title={group.year}
                 bordered={false}
                 style={{
-                  backgroundColor: '#f0f0f0', 
-                  padding: '0px', 
-                  fontWeight: 'bold', 
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                  background: 'rgba(255, 255, 255, 0.7)',
+                  backdropFilter: 'blur(6px)',
+                  WebkitBackdropFilter: 'blur(6px)',
+                  padding: '0px',
+                  fontWeight: 'bold',
+                  borderRadius: '10px',
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
+                  borderLeft: '3px solid transparent',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease',
+                  height: '100%',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.2)';
+                  e.currentTarget.style.borderLeftColor = '#4D04A0';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15)';
+                  e.currentTarget.style.borderLeftColor = 'transparent';
                 }}
               >
                 <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
-                  {[
-                    index === 0 ? [
-                      'Computer Science 1',
-                      'Data Structures',
-                      'Introduction to Computer Systems',
-                      'Python Programming',
-                      'Information Security & Assurance'
-                    ] : index === 1 ? [
-                      'Discrete Computational Structures',
-                      'Programming Languages',
-                      'Database Design and Development',
-                      'Design and Analysis of Algorithms',
-                      'Operating Systems & Systems Programming',
-                      'Software Engineering'
-                    ] : index === 2 ? [
-                      'Principles of Artificial Intelligence',
-                      'Communication Networks 1',
-                      'Principles of the IoT',
-                      'Digital Image Processing 1',
-                      'Software and Application Security'
-                    ] : []
-                  ].map((courses, courseIndex) => (
-                    <div key={courseIndex} style={{ marginBottom: '0px' }}>
-                      {courses.map((course, courseIdx) => (
-                        <Paragraph key={courseIdx} style={{
-                          backgroundColor: '#f5f5f5', // Light grey
-                          padding: '10px',
-                          borderRadius: '8px',
-                          marginBottom: '10px',
-                          color: '#333',
-                        }}>
-                          {course}
-                        </Paragraph>
-                      ))}
-                    </div>
+                  {group.courses.map((course, courseIdx) => (
+                    <Paragraph key={courseIdx} style={{
+                      background: 'rgba(255, 255, 255, 0.55)',
+                      backdropFilter: 'blur(4px)',
+                      WebkitBackdropFilter: 'blur(4px)',
+                      padding: '10px',
+                      borderRadius: '8px',
+                      marginBottom: '10px',
+                      color: '#333',
+                    }}>
+                      {course}
+                    </Paragraph>
                   ))}
                 </ul>
               </Card>
@@ -182,20 +198,37 @@ const sections = [
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       >
         <Row gutter={[16, 16]} justify="start">
-          <Col span={24} md={12} lg={8}>
-            <Card title="Owen" style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',}}>
+          <Col xs={24} sm={24} md={12} lg={8}>
+            <Card title="Owen" style={{
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+              height: '100%',
+              borderLeft: '3px solid transparent',
+              transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-3px)';
+              e.currentTarget.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.2)';
+              e.currentTarget.style.borderLeftColor = '#4D04A0';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+              e.currentTarget.style.borderLeftColor = 'transparent';
+            }}
+            >
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ marginRight: '10px' }}>
-                  <img 
-                    src="https://media.licdn.com/dms/image/v2/D4E03AQHrN7gfXX9daA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1721495508580?e=2147483647&v=beta&t=i6iz4Rpd5hAf5MU_smNskOajmxtY2dVXdOCZbf-RRBU" 
-                    alt="Client 1" 
+                  <img
+                    src="https://media.licdn.com/dms/image/v2/D4E03AQHrN7gfXX9daA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1721495508580?e=2147483647&v=beta&t=i6iz4Rpd5hAf5MU_smNskOajmxtY2dVXdOCZbf-RRBU"
+                    alt="Owen Edwards"
+                    loading="lazy"
                     style={{
                       width: '40px',
                       height: '40px',
                       borderRadius: '50%',
                       objectFit: 'cover',
                       marginRight: '10px'
-                    }} 
+                    }}
                   />
                 </div>
                 <div>
@@ -205,25 +238,42 @@ const sections = [
                 </div>
               </div>
               <FloatingText className="text-animation">
-                <Paragraph>"I met Christian in my computer science classes at the University of Cincinnati. I've worked with him on several projects in classes such as Operating Systems and Database Design and he's been a huge help. Additionally, l've been thoroughly impressed by his technical knowledge in C#, NET, and robotics, which he is on the executive board for at our school's robotics program. I've always felt welcome in his presence and I believe he would make a great teammate and collaborator for any future employer looking to hire Christian."</Paragraph>
+                <Paragraph style={{ fontStyle: 'italic', fontSize: '13.5px', color: '#555', lineHeight: '1.7', marginTop: '12px' }}>"I met Christian in my computer science classes at the University of Cincinnati. I've worked with him on several projects in classes such as Operating Systems and Database Design and he's been a huge help. Additionally, l've been thoroughly impressed by his technical knowledge in C#, NET, and robotics, which he is on the executive board for at our school's robotics program. I've always felt welcome in his presence and I believe he would make a great teammate and collaborator for any future employer looking to hire Christian."</Paragraph>
               </FloatingText>
             </Card>
           </Col>
 
-          <Col span={24} md={12} lg={8}>
-            <Card title="John" style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',}} >
+          <Col xs={24} sm={24} md={12} lg={8}>
+            <Card title="John" style={{
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+              height: '100%',
+              borderLeft: '3px solid transparent',
+              transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-3px)';
+              e.currentTarget.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.2)';
+              e.currentTarget.style.borderLeftColor = '#4D04A0';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+              e.currentTarget.style.borderLeftColor = 'transparent';
+            }}
+            >
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ marginRight: '10px' }}>
-                  <img 
-                    src="https://media.licdn.com/dms/image/v2/D5603AQEIAZMu19CBPw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1708389019802?e=2147483647&v=beta&t=NSxyIz3zlmi7OL8_bjKsp_0Q6yy7fPA7X_O1z5WYsg8" 
-                    alt="Client 2" 
+                  <img
+                    src="https://media.licdn.com/dms/image/v2/D5603AQEIAZMu19CBPw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1708389019802?e=2147483647&v=beta&t=NSxyIz3zlmi7OL8_bjKsp_0Q6yy7fPA7X_O1z5WYsg8"
+                    alt="John Ferrigan"
+                    loading="lazy"
                     style={{
                       width: '40px',
                       height: '40px',
                       borderRadius: '50%',
                       objectFit: 'cover',
                       marginRight: '10px'
-                    }} 
+                    }}
                   />
                 </div>
                 <div>
@@ -233,7 +283,7 @@ const sections = [
                 </div>
               </div>
               <FloatingText className="text-animation">
-                <Paragraph>"Christian was a co-op on one of my teams recently. In the short time he was with us, he got up to speed very quickly, understood our codebase and CI/CD processes, and delivered a ton of value over his rotation. He grew a lot while he was with us and by the time he left to return to school he'd helped us reach an important product launch milestone.
+                <Paragraph style={{ fontStyle: 'italic', fontSize: '13.5px', color: '#555', lineHeight: '1.7', marginTop: '12px' }}>"Christian was a co-op on one of my teams recently. In the short time he was with us, he got up to speed very quickly, understood our codebase and CI/CD processes, and delivered a ton of value over his rotation. He grew a lot while he was with us and by the time he left to return to school he'd helped us reach an important product launch milestone.
                             I highly recommend Christian, and know he'll be a great addition to any team lucky enough to have him."</Paragraph>
               </FloatingText>
             </Card>
@@ -252,10 +302,10 @@ const sections = [
           Feel free to reach out to me through the following methods:
         </Paragraph>
         <ul style={{ listStyleType: 'none', paddingLeft: 0, margin: '0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '10px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
+          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '14px 16px', minHeight: '48px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
             <MailOutlined style={{ marginRight: '12px', fontSize: '28px', color: '#007BFF', transition: 'color 0.3s ease, transform 0.3s ease' }} />
-            <a 
-              href="mailto:grabercn@mail.uc.edu" 
+            <a
+              href="mailto:grabercn@mail.uc.edu"
               style={{ fontSize: '18px', color: '#007BFF', textDecoration: 'none', transition: 'color 0.3s ease, transform 0.3s ease' }}
               onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} // Slight scaling effect on hover
               onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} // Reset scale
@@ -263,12 +313,12 @@ const sections = [
               grabercn@mail.uc.edu
             </a>
           </li>
-          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '10px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
+          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '14px 16px', minHeight: '48px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
             <LinkedinOutlined style={{ marginRight: '12px', fontSize: '28px', color: '#0077b5', transition: 'color 0.3s ease, transform 0.3s ease' }} />
-            <a 
-              href="https://www.linkedin.com/in/christian-graber" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://www.linkedin.com/in/christian-graber"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ fontSize: '18px', color: '#0077b5', textDecoration: 'none', transition: 'color 0.3s ease, transform 0.3s ease' }}
               onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} // Slight scaling effect on hover
               onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} // Reset scale
@@ -276,12 +326,12 @@ const sections = [
               christian-graber
             </a>
           </li>
-          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '10px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
+          <li style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', transition: 'transform 0.3s', padding: '14px 16px', minHeight: '48px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', width: 'auto', cursor: 'pointer' }}>
             <GithubOutlined style={{ marginRight: '12px', fontSize: '28px', color: '#0077b5', transition: 'color 0.3s ease, transform 0.3s ease' }} />
-            <a 
-              href="https://github.com/grabercn/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://github.com/grabercn/"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ fontSize: '18px', color: '#0077b5', textDecoration: 'none', transition: 'color 0.3s ease, transform 0.3s ease' }}
               onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} // Slight scaling effect on hover
               onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} // Reset scale
@@ -359,6 +409,7 @@ function App() {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
+      <a href="#about" className="skip-to-main">Skip to main content</a>
       <Layout>
         <Header style={{ background: 'transparent', padding: 0 }}>
           <Menu
@@ -372,23 +423,16 @@ function App() {
               display: 'flex',
               width: '100%'
             }}
-          >
-            {sections.map((section) => (
-              <Menu.Item
-                key={section.id}
-                onClick={() => handleMenuClick(section.id)}
-              >
-                {section.title}
-              </Menu.Item>
-            ))}
-            {/* Right aligned items */}
-            <Menu.Item key="photography" icon={<CameraOutlined />} style={{ marginLeft: 'auto' }}>
-              <a href="/#/photo">Photography</a>
-            </Menu.Item>
-            <Menu.Item key="music" icon={<CustomerServiceOutlined />}>
-              <a href="/#/music">Music</a>
-            </Menu.Item>
-          </Menu>
+            items={[
+              ...sections.map((section) => ({
+                key: section.id,
+                label: section.title,
+                onClick: () => handleMenuClick(section.id),
+              })),
+              { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a>, style: { marginLeft: 'auto' } },
+              { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
+            ]}
+          />
         </Header>
 
         {/* Use the Banner Component */}
@@ -398,6 +442,7 @@ function App() {
         <ModernPurpleBackground />
 
         <Content
+          id="main-content"
           style={{
             padding: 0,
             backgroundColor: '#f3e8f9',

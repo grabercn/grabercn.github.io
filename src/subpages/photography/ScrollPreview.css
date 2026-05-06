@@ -82,10 +82,17 @@
 }
 
 .preview-arrow {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-left: 10px solid rgba(255, 255, 255, 0.9);
     margin-left: -1px; /* Overlap slightly */
+}
+
+/* Hide ScrollPreview on mobile - hover interactions don't work on touch */
+@media (max-width: 767px) {
+    .scroll-preview-container {
+        display: none !important;
+    }
 }

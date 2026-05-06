@@ -161,7 +161,11 @@ const Experience = () => {
                       src={experience.avatarSrc}
                       size={40}
                       style={{ marginRight: "12px" }}
-                    />
+                      alt={`${experience.title} logo`}
+                      onError={() => true}
+                    >
+                      {experience.title.charAt(0)}
+                    </Avatar>
                     <span
                       style={{
                         wordWrap: "break-word",
@@ -177,7 +181,10 @@ const Experience = () => {
                     style={{
                       display: "block",
                       marginTop: "5px",
-                      color: "grey",
+                      color: "#888",
+                      fontWeight: 600,
+                      fontSize: "13px",
+                      letterSpacing: "0.3px",
                     }}
                   >
                     {experience.date}
@@ -187,20 +194,33 @@ const Experience = () => {
               style={{
                 width: "100%",
                 marginBottom: "20px",
+                borderRadius: "8px",
+                borderLeft: "3px solid transparent",
                 boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                transition: "transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-3px)";
+                e.currentTarget.style.boxShadow = "0 6px 18px rgba(0, 0, 0, 0.15)";
+                e.currentTarget.style.borderLeftColor = "#4D04A0";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.1)";
+                e.currentTarget.style.borderLeftColor = "transparent";
               }}
             >
               <Paragraph>{experience.description}</Paragraph>
-              <ul>
+              <ul style={{ paddingLeft: "20px" }}>
                 {experience.responsibilities.map((task, idx) => (
-                  <li key={idx}>{task}</li>
+                  <li key={idx} style={{ marginBottom: "6px", lineHeight: "1.6" }}>{task}</li>
                 ))}
               </ul>
               <div>
                 <strong>Relevant Skills: </strong>
                 <div style={{ marginTop: "8px" }}>
-                  {experience.skills.map((skill, index) => (
-                    <Tag key={index} color="geekblue" style={{ margin: "4px" }}>
+                  {experience.skills.map((skill, skillIdx) => (
+                    <Tag key={skillIdx} color="geekblue" style={{ margin: "4px" }}>
                       {skill}
                     </Tag>
                   ))}

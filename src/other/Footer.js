@@ -5,58 +5,88 @@ import { GithubOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icon
 
 const { Text } = Typography;
 
+const iconLinkStyle = {
+  color: '#fff',
+  fontSize: '28px',
+  transition: 'color 0.3s ease, transform 0.3s ease',
+  display: 'inline-block',
+};
+
 const FooterComponent = () => {
+  const handleMouseEnter = (e) => {
+    e.currentTarget.style.color = '#b07dff';
+    e.currentTarget.style.transform = 'scale(1.2)';
+  };
+
+  const handleMouseLeave = (e) => {
+    e.currentTarget.style.color = '#fff';
+    e.currentTarget.style.transform = 'scale(1)';
+  };
+
   return (
     <>
-      <Row justify="center" style={{ marginBottom: '20px' }}>
-        <Col span={24}>
-          <Text style={{ fontSize: '18px', color: '#fff' }}>&copy; 2025 Christian Graber. All rights reserved.</Text>
-        </Col>
-      </Row>
-      <Row justify="center" style={{ marginBottom: '30px' }}>
+      <Row justify="center" style={{ marginBottom: '16px' }}>
         <Col>
           <Space size="large">
             <Link to="/photo">
-              <Text style={{ color: '#fff', fontSize: '18px' }}>Photography</Text>
+              <Text style={{ color: '#fff', fontSize: '16px' }}>Photography</Text>
             </Link>
             <Link to="/music">
-              <Text style={{ color: '#fff', fontSize: '18px' }}>Music</Text>
+              <Text style={{ color: '#fff', fontSize: '16px' }}>Music</Text>
             </Link>
           </Space>
         </Col>
       </Row>
-      <Row justify="center" style={{ marginTop: '20px' }}>
+
+      <Row justify="center" style={{ marginBottom: '20px' }}>
         <Col>
           <Space size="large">
             <a
-              href="https://github.com/grabercn/"
+              href="https://github.com/grabercn"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: '#fff' }}
+              style={iconLinkStyle}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
-              <GithubOutlined style={{ fontSize: '30px' }} />
+              <GithubOutlined />
             </a>
             <a
               href="https://www.linkedin.com/in/christian-graber"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: '#fff' }}
+              style={iconLinkStyle}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
-              <LinkedinOutlined style={{ fontSize: '30px' }} />
+              <LinkedinOutlined />
             </a>
             <a
               href="mailto:grabercn@mail.uc.edu"
-              style={{ color: '#fff' }}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={iconLinkStyle}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
-              <MailOutlined style={{ fontSize: '30px' }} />
+              <MailOutlined />
             </a>
           </Space>
         </Col>
       </Row>
-      <Row justify="center" style={{ marginTop: '20px' }}>
-        <Col span={24}>
+
+      <Row justify="center" style={{ marginBottom: '8px' }}>
+        <Col>
+          <Text style={{ fontSize: '13px', color: '#999', letterSpacing: '0.3px' }}>
+            Built with <span style={{ color: '#b07dff' }}>React</span> &amp; <span style={{ color: '#b07dff' }}>Ant Design</span>
+          </Text>
+        </Col>
+      </Row>
+
+      <Row justify="center">
+        <Col>
           <Text style={{ fontSize: '14px', color: '#bbb' }}>
-            Built with <span style={{ color: '#61DAFB' }}>React</span> and <span style={{ color: '#F7DF1E' }}>JavaScript</span> by Christian Graber
+            &copy; 2025 Christian Graber. All rights reserved.
           </Text>
         </Col>
       </Row>
