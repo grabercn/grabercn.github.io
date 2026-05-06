@@ -8,44 +8,91 @@
  * We fight back with high-specificity selectors scoped to .resume-page.
  */
 
-/* Force dark background on the resume layout regardless of theme */
+/* ── Light mode: clean white/purple resume ── */
 .resume-page,
 .resume-page .ant-layout,
 .resume-page .ant-layout-content {
-  background: #120338 !important;
+  background: #f3e8f9 !important;
 }
 
-/* Override global card/typography rules for resume page */
 .resume-page .ant-card {
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: rgba(255, 255, 255, 0.85) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: #333 !important;
+  border: 1px solid rgba(77, 4, 160, 0.1) !important;
 }
 
 .resume-page .ant-typography,
 .resume-page p,
 .resume-page span,
 .resume-page li {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: #444 !important;
 }
 
 .resume-page h1.ant-typography,
+.resume-page .ant-typography h1 {
+  color: #2c0a5a !important;
+}
+
 .resume-page h2.ant-typography,
 .resume-page h3.ant-typography,
 .resume-page h4.ant-typography,
-.resume-page .ant-typography h1,
 .resume-page .ant-typography h2,
 .resume-page .ant-typography h3,
 .resume-page .ant-typography h4 {
-  color: #fff !important;
+  color: #4D04A0 !important;
 }
 
 .resume-page .ant-btn {
+  background-color: #4D04A0 !important;
+  color: #fff !important;
+  border-color: #4D04A0 !important;
+}
+
+.resume-page .ant-btn:hover {
+  background-color: #6a1fd0 !important;
+}
+
+/* ── Dark mode: deep purple resume ── */
+[data-theme="dark"] .resume-page,
+[data-theme="dark"] .resume-page .ant-layout,
+[data-theme="dark"] .resume-page .ant-layout-content {
+  background: #120338 !important;
+}
+
+[data-theme="dark"] .resume-page .ant-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .resume-page .ant-typography,
+[data-theme="dark"] .resume-page p,
+[data-theme="dark"] .resume-page span,
+[data-theme="dark"] .resume-page li {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+[data-theme="dark"] .resume-page h1.ant-typography,
+[data-theme="dark"] .resume-page .ant-typography h1 {
+  color: #fff !important;
+}
+
+[data-theme="dark"] .resume-page h2.ant-typography,
+[data-theme="dark"] .resume-page h3.ant-typography,
+[data-theme="dark"] .resume-page h4.ant-typography,
+[data-theme="dark"] .resume-page .ant-typography h2,
+[data-theme="dark"] .resume-page .ant-typography h3,
+[data-theme="dark"] .resume-page .ant-typography h4 {
+  color: #E0AAFF !important;
+}
+
+[data-theme="dark"] .resume-page .ant-btn {
   background-color: rgba(77, 4, 160, 0.85) !important;
   color: #fff !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-.resume-page .ant-btn:hover {
+[data-theme="dark"] .resume-page .ant-btn:hover {
   background-color: rgba(100, 20, 180, 0.9) !important;
 }
 
@@ -66,20 +113,36 @@
 }
 
 .resume-header h1 {
-  color: #fff !important;
+  color: #2c0a5a !important;
   font-size: 42px;
   font-weight: 700;
   margin-bottom: 4px !important;
   letter-spacing: -0.5px;
 }
 
+[data-theme="dark"] .resume-header h1 {
+  color: #fff !important;
+}
+
 .resume-header .resume-title {
-  color: #E0AAFF;
+  color: #4D04A0;
   font-size: 20px;
   font-weight: 400;
   margin-bottom: 20px;
   letter-spacing: 1px;
   text-transform: uppercase;
+}
+
+[data-theme="dark"] .resume-header .resume-title {
+  color: #E0AAFF;
+}
+
+.resume-header {
+  border-bottom: 1px solid rgba(77, 4, 160, 0.15);
+}
+
+[data-theme="dark"] .resume-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .resume-contact-row {
@@ -92,7 +155,7 @@
 }
 
 .resume-contact-row a {
-  color: rgba(255, 255, 255, 0.8);
+  color: #666 !important;
   font-size: 14px;
   text-decoration: none;
   display: flex;
@@ -102,7 +165,15 @@
 }
 
 .resume-contact-row a:hover {
-  color: #E0AAFF;
+  color: #4D04A0 !important;
+}
+
+[data-theme="dark"] .resume-contact-row a {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+[data-theme="dark"] .resume-contact-row a:hover {
+  color: #E0AAFF !important;
 }
 
 .resume-header-buttons {
@@ -118,55 +189,59 @@
 }
 
 .resume-section-title {
-  color: #E0AAFF !important;
+  color: #4D04A0 !important;
   font-size: 22px !important;
   font-weight: 600 !important;
   padding-left: 16px;
-  border-left: 4px solid #E0AAFF;
+  border-left: 4px solid #4D04A0;
   margin-bottom: 24px !important;
   letter-spacing: 0.3px;
 }
 
+[data-theme="dark"] .resume-section-title {
+  color: #E0AAFF !important;
+  border-left-color: #E0AAFF;
+}
+
 /* ---------- Education ---------- */
 .resume-education-card {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 10px !important;
-  color: #fff;
 }
 
 .resume-education-card .ant-card-body {
   padding: 24px;
 }
 
-.resume-education-card h4 {
-  color: #fff !important;
-  margin-bottom: 4px !important;
-}
-
-.resume-education-card p,
-.resume-education-card .ant-typography {
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
 /* ---------- Timeline ---------- */
 .resume-timeline .ant-timeline-item-head {
+  background: #4D04A0 !important;
+  border-color: #4D04A0 !important;
+}
+
+[data-theme="dark"] .resume-timeline .ant-timeline-item-head {
   background: #7B2FBE !important;
   border-color: #E0AAFF !important;
 }
 
 .resume-timeline .ant-timeline-item-tail {
+  border-inline-start: 2px solid rgba(77, 4, 160, 0.2) !important;
+}
+
+[data-theme="dark"] .resume-timeline .ant-timeline-item-tail {
   border-inline-start: 2px solid rgba(224, 170, 255, 0.25) !important;
 }
 
 .resume-timeline-card {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 10px !important;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .resume-timeline-card:hover {
+  border-color: rgba(77, 4, 160, 0.3) !important;
+  box-shadow: 0 4px 20px rgba(77, 4, 160, 0.1);
+}
+
+[data-theme="dark"] .resume-timeline-card:hover {
   border-color: rgba(224, 170, 255, 0.3) !important;
   box-shadow: 0 4px 20px rgba(123, 47, 190, 0.15);
 }
@@ -176,21 +251,33 @@
 }
 
 .resume-timeline-company {
-  color: #fff;
+  color: #1a1a1a;
   font-size: 17px;
   font-weight: 600;
 }
 
+[data-theme="dark"] .resume-timeline-company {
+  color: #fff;
+}
+
 .resume-timeline-role {
-  color: #E0AAFF;
+  color: #4D04A0;
   font-size: 14px;
   font-weight: 500;
 }
 
+[data-theme="dark"] .resume-timeline-role {
+  color: #E0AAFF;
+}
+
 .resume-timeline-date {
-  color: rgba(255, 255, 255, 0.5);
+  color: #888;
   font-size: 13px;
   font-weight: 400;
+}
+
+[data-theme="dark"] .resume-timeline-date {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .resume-timeline-bullets {
@@ -199,19 +286,29 @@
 }
 
 .resume-timeline-bullets li {
-  color: rgba(255, 255, 255, 0.75);
+  color: #555 !important;
   font-size: 14px;
   line-height: 1.7;
   margin-bottom: 4px;
 }
 
+[data-theme="dark"] .resume-timeline-bullets li {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
 .resume-timeline-skills .ant-tag {
   margin: 3px;
+  background: rgba(77, 4, 160, 0.1) !important;
+  border: 1px solid rgba(77, 4, 160, 0.2) !important;
+  color: #4D04A0 !important;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+[data-theme="dark"] .resume-timeline-skills .ant-tag {
   background: rgba(123, 47, 190, 0.25) !important;
   border: 1px solid rgba(224, 170, 255, 0.3) !important;
   color: #E0AAFF !important;
-  border-radius: 4px;
-  font-size: 12px;
 }
 
 /* ---------- Skills Section ---------- */
@@ -220,10 +317,14 @@
 }
 
 .resume-skills-group-title {
-  color: rgba(255, 255, 255, 0.9) !important;
+  color: #333 !important;
   font-size: 16px !important;
   font-weight: 600 !important;
   margin-bottom: 12px !important;
+}
+
+[data-theme="dark"] .resume-skills-group-title {
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .resume-skill-tags {
@@ -233,9 +334,9 @@
 }
 
 .resume-skill-tags .ant-tag {
-  background: rgba(123, 47, 190, 0.2) !important;
-  border: 1px solid rgba(224, 170, 255, 0.25) !important;
-  color: #E0AAFF !important;
+  background: rgba(77, 4, 160, 0.08) !important;
+  border: 1px solid rgba(77, 4, 160, 0.15) !important;
+  color: #4D04A0 !important;
   border-radius: 6px;
   padding: 4px 12px;
   font-size: 13px;
@@ -243,6 +344,17 @@
 }
 
 .resume-skill-tags .ant-tag:hover {
+  background: rgba(77, 4, 160, 0.15);
+  border-color: rgba(77, 4, 160, 0.3);
+}
+
+[data-theme="dark"] .resume-skill-tags .ant-tag {
+  background: rgba(123, 47, 190, 0.2) !important;
+  border: 1px solid rgba(224, 170, 255, 0.25) !important;
+  color: #E0AAFF !important;
+}
+
+[data-theme="dark"] .resume-skill-tags .ant-tag:hover {
   background: rgba(123, 47, 190, 0.4);
   border-color: rgba(224, 170, 255, 0.5);
 }
@@ -256,18 +368,26 @@
 }
 
 .resume-skill-bar-label {
-  color: rgba(255, 255, 255, 0.85);
+  color: #555;
   font-size: 13px;
   min-width: 90px;
   text-align: right;
 }
 
+[data-theme="dark"] .resume-skill-bar-label {
+  color: rgba(255, 255, 255, 0.85);
+}
+
 .resume-skill-bar-track {
   flex: 1;
   height: 8px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(77, 4, 160, 0.1);
   border-radius: 4px;
   overflow: hidden;
+}
+
+[data-theme="dark"] .resume-skill-bar-track {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .resume-skill-bar-fill {

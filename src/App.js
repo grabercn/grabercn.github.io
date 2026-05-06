@@ -3,6 +3,7 @@ import { Layout, Menu, Typography, Row, Col, Card, Spin } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
 import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined, FileTextOutlined } from '@ant-design/icons';
+import { useTheme } from './other/ThemeContext';
 import Banner from './other/Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
@@ -395,9 +396,10 @@ const sections = [
 ];
 
 function App() {
-  const [activeSection, setActiveSection] = useState('home'); // Track the active section
-  const [loading, setLoading] = useState(true); // Loading state
+  const [activeSection, setActiveSection] = useState('home');
+  const [loading, setLoading] = useState(true);
   const observerRef = useRef(null);
+  const { isDark } = useTheme();
 
   useEffect(() => {
     // Simulate loading
@@ -480,6 +482,7 @@ function App() {
               { key: 'resume', icon: <FileTextOutlined />, label: <a href="/#/resume">Resume</a>, style: { marginLeft: 'auto' } },
               { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a> },
               { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
+              { key: 'theme-indicator', className: 'theme-indicator', disabled: true, label: isDark ? '☾' : '☀', style: { minWidth: 'auto', padding: '0 8px', cursor: 'default' } },
             ]}
           />
         </Header>

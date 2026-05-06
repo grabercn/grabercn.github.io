@@ -108,9 +108,12 @@ const GalleryItem = ({ photo, openModal }) => {
         />
       </picture>
 
-      {/* Click overlay - fullscreen icon on desktop hover, tap anywhere on mobile */}
+      {/* Click overlay - icon + description on desktop hover, tap on mobile */}
       <div className="overlay" onClick={handleClick} style={{ visibility: isLoaded ? 'visible' : 'hidden' }}>
         <FullscreenOutlined className="overlay-icon" />
+        {photo.description && (
+          <div className="overlay-description">{photo.description}</div>
+        )}
       </div>
     </motion.div>
   );
@@ -317,36 +320,30 @@ const PhotoHome = () => {
 
             {photoObjects.length > 0 && <PhotoBanner photoObjects={photoObjects} />}
 
-            {/* Photo Stats Dashboard */}
-            {photoObjects.length > 0 && (() => {
-              const uniqueCountries = new Set(photoObjects.map(p => p.location).filter(l => l && l !== 'Other'));
-              const countryCount = uniqueCountries.size;
-              // Most photographed country
-              const countryCounts = {};
-              photoObjects.forEach(p => {
-                if (p.location && p.location !== 'Other') {
-                  countryCounts[p.location] = (countryCounts[p.location] || 0) + 1;
-                }
-              });
-              const topCountry = Object.entries(countryCounts).sort((a, b) => b[1] - a[1])[0];
-              return (
-                <Row gutter={16} style={{ padding: '20px', maxWidth: 800, margin: '0 auto' }}>
-                  <Col span={8}>
+            {/* Unified toolbar: stats + filters + view toggle */}
+            <div className="gallery-toolbar">
+              {/* Stats row */}
+              {photoObjects.length > 0 && (() => {
+                const uniqueCountries = new Set(photoObjects.map(p => p.location).filter(l => l && l !== 'Other'));
+                const countryCount = uniqueCountries.size;
+                const countryCounts = {};
+                photoObjects.forEach(p => {
+                  if (p.location && p.location !== 'Other') {
+                    countryCounts[p.location] = (countryCounts[p.location] || 0) + 1;
+                  }
+                });
+                const topCountry = Object.entries(countryCounts).sort((a, b) => b[1] - a[1])[0];
+                return (
+                  <div className="gallery-stats-row">
                     <AnimatedStat value={photoObjects.length} label="Photos" />
-                  </Col>
-                  <Col span={8}>
                     <AnimatedStat value={countryCount} label="Countries" />
-                  </Col>
-                  <Col span={8}>
-                    <AnimatedStat value={topCountry ? topCountry[1] : 0} label={topCountry ? `in ${topCountry[0]}` : 'Top Location'} />
-                  </Col>
-                </Row>
-              );
-            })()}
+                    <AnimatedStat value={topCountry ? topCountry[1] : 0} label={topCountry ? `in ${topCountry[0]}` : 'Top'} />
+                  </div>
+                );
+              })()}
 
-            {/* Filter bar - country tags only */}
-            <div className="filter-bar">
-              <div className="filter-bar-inner">
+              {/* Filter tags + view toggle in one row */}
+              <div className="gallery-controls-row">
                 <div className="filter-tags-row">
                   {LOCATION_CATEGORIES.map(loc => (
                     <button
@@ -357,27 +354,29 @@ const PhotoHome = () => {
                       {loc}
                     </button>
                   ))}
+                </div>
+                <div className="gallery-controls-right">
                   <span className="filter-count">
                     {filteredPhotos.length} photo{filteredPhotos.length !== 1 ? 's' : ''}
                   </span>
+                  <div className="view-toggle-group">
+                    <button
+                      className={`view-toggle-btn${viewMode === 'grid' ? ' active' : ''}`}
+                      onClick={() => setViewMode('grid')}
+                      title="Grid View"
+                    >
+                      <AppstoreOutlined />
+                    </button>
+                    <button
+                      className={`view-toggle-btn${viewMode === 'map' ? ' active' : ''}`}
+                      onClick={() => setViewMode('map')}
+                      title="Map View"
+                    >
+                      <GlobalOutlined />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* View toggle */}
-            <div className="view-toggle-bar">
-              <button
-                className={`view-toggle-btn${viewMode === 'grid' ? ' active' : ''}`}
-                onClick={() => setViewMode('grid')}
-              >
-                <AppstoreOutlined /> Grid View
-              </button>
-              <button
-                className={`view-toggle-btn${viewMode === 'map' ? ' active' : ''}`}
-                onClick={() => setViewMode('map')}
-              >
-                <GlobalOutlined /> Map View
-              </button>
             </div>
 
             {viewMode === 'grid' ? (

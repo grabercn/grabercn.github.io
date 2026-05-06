@@ -84,27 +84,30 @@ const ScrollPreview = ({ photoObjects }) => {
   if (!photoObjects || photoObjects.length === 0) return null;
 
   return (
-    <div className="scroll-preview-container">
-      <div 
-        className="scroll-preview-bar"
-        ref={barRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        onClick={handleClick}
-      >
-        <div className="scroll-track">
-            {sampledPhotos.map((photo, i) => (
-                <div key={i} className="scroll-thumb" style={{ backgroundImage: `url(${photo.thumbPath || photo.path})` }} />
-            ))}
+    <>
+      <div className="scroll-preview-container">
+        <div
+          className="scroll-preview-bar"
+          ref={barRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          onClick={handleClick}
+        >
+          <div className="scroll-track">
+              {sampledPhotos.map((photo, i) => (
+                  <div key={i} className="scroll-thumb" style={{ backgroundImage: `url(${photo.thumbPath || photo.path})` }} />
+              ))}
+          </div>
         </div>
       </div>
 
-      {isHovering && previewPhoto && (
-        <div 
+      {/* Portal the tooltip to body so it escapes any overflow:hidden ancestors */}
+      {isHovering && previewPhoto && createPortal(
+        <div
             className="scroll-preview-tooltip"
-            style={{ 
+            style={{
                 top: hoverY,
-                transform: 'translateY(-50%)' 
+                transform: 'translateY(-50%)'
             }}
         >
           <div className="preview-image-container">
@@ -112,15 +115,12 @@ const ScrollPreview = ({ photoObjects }) => {
                <source srcSet={previewPhoto.webpPath} type="image/webp" />
                <img src={previewPhoto.path} alt="preview" />
              </picture>
-             <div className="preview-date">
-                {/* If we had date, we'd show it. For now, show index/total or just the image */}
-                {/* {previewPhoto.date} */}
-             </div>
           </div>
           <div className="preview-arrow"></div>
-        </div>
+        </div>,
+        document.body
       )}
-    </div>
+    </>
   );
 };
 
