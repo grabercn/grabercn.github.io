@@ -115,15 +115,15 @@ All photos include multi-layer protection against AI training:
 ## Recent Changes
 
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
+- Update resume PDF to 2026
+- docs: auto-update README [skip ci]
+- Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 - Add resume auto-update workflow and UI tweaks
 - docs: auto-update README [skip ci]
 - Dark theme styles, backgrounds & coursework UI
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 - Infer GPS country, strip EXIF & update gallery UI
 - docs: auto-update README [skip ci]
-- CI: Deploy to GitHub Pages & auto-update README
-- Add photography assets and update gallery
-- Add SEO tags, AI-block headers, and photo processing
 
 ## Easter Eggs
 
