@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Layout, Menu, Typography, Row, Col, Card, Spin } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
-import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined, BulbOutlined, BulbFilled } from '@ant-design/icons';
-import { useTheme } from './other/ThemeContext';
+import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined } from '@ant-design/icons';
 import Banner from './other/Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
+import SectionBackground from './animations/SectionBackground';
 import Skills from './content/SkillsContent';
 import Experience from './content/ExperienceContent';
 import Projects from './content/ProjectsContent';
@@ -99,91 +99,129 @@ const sections = [
   },
   {
     id: 'coursework',
-    title: "Relevant Coursework",
-    content: (
-      <>
-        <Row gutter={[16, 16]} style={{ marginBottom: '20px' }}>
-          <Col span={24}>
-            <Paragraph>
-              Throughout my academic journey, I've completed a variety of courses that have helped me build a solid foundation in computer science and software engineering. Here are some of the key courses I have taken:
+    title: "Coursework",
+    content: (() => {
+      const courseworkData = [
+        { year: '2021-2022', label: 'Freshman', courses: [
+          { name: 'Computer Science 1', code: 'CS 1021' },
+          { name: 'Intro to Computer Science', code: 'CS 1100' },
+          { name: 'Engineering Design Thinking I & II', code: 'ENED 1100/1120' },
+          { name: 'Pre-Calculus', code: 'MATH 1026' },
+          { name: 'General Chemistry I & II', code: 'CHEM 1040/1041' },
+        ]},
+        { year: '2022-2023', label: 'Sophomore', courses: [
+          { name: 'Data Structures', code: 'CS 2028C' },
+          { name: 'Intro to Computer Systems', code: 'CS 2011' },
+          { name: 'Python Programming', code: 'CS 2023' },
+          { name: 'Information Security & Assurance', code: 'IT 2030C' },
+          { name: 'Discrete Structures', code: 'CS 2071' },
+          { name: 'Programming Languages', code: 'CS 3003' },
+        ]},
+        { year: '2023-2024', label: 'Junior', courses: [
+          { name: 'Database Design & Development', code: 'CS 4092' },
+          { name: 'Software Engineering', code: 'EECE 3093' },
+          { name: 'Operating Systems & Systems Programming', code: 'EECE 4029' },
+          { name: 'Probability & Statistics I', code: 'STAT 2037' },
+          { name: 'Linear Algebra', code: 'MATH 2076' },
+        ]},
+        { year: '2024-2025', label: 'Senior', courses: [
+          { name: 'International Exchange (Zurich)', code: 'MLTI 4015' },
+          { name: 'Special Studies', code: 'EECE 4005' },
+        ]},
+        { year: '2025-2026', label: 'Senior (Final)', courses: [
+          { name: 'CS Senior Design I & II', code: 'CS 5001/5002' },
+          { name: 'User Interface I', code: 'CS 5167' },
+          { name: 'Theory of Formal Languages & Automata', code: 'CS 5170' },
+          { name: 'Software Testing & Quality Assurance', code: 'EECE 5132' },
+          { name: 'Technical & Scientific Writing', code: 'ENGL 4092' },
+          { name: 'Computer Networks', code: 'CS 4065' },
+          { name: 'Design & Analysis of Algorithms', code: 'CS 4071' },
+          { name: 'Visual Interfaces & Data', code: 'CS 5124' },
+          { name: 'Network Security', code: 'CS 5153' },
+        ]},
+      ];
+
+      // Use a simple interactive component inline
+      const CourseworkTabs = () => {
+        const [activeYear, setActiveYear] = React.useState('2025-2026');
+        const activeGroup = courseworkData.find(g => g.year === activeYear);
+
+        return (
+          <>
+            <Paragraph style={{ marginBottom: '16px' }}>
+              University of Cincinnati — B.S. Computer Science, College of Engineering & Applied Science. Cumulative GPA: <strong>3.30</strong>. Dean's List recipient.
             </Paragraph>
-          </Col>
-        </Row>
-  
-        {/* Year Row: Display years horizontally */}
-        <Row gutter={[16, 16]} justify="center">
-          {[
-            { year: '2021-2022', courses: [
-              'Computer Science 1',
-              'Data Structures',
-              'Introduction to Computer Systems',
-              'Python Programming',
-              'Information Security & Assurance'
-            ]},
-            { year: '2022-2023', courses: [
-              'Discrete Computational Structures',
-              'Programming Languages',
-              'Database Design and Development',
-              'Design and Analysis of Algorithms',
-              'Operating Systems & Systems Programming',
-              'Software Engineering'
-            ]},
-            { year: '2023-2024', courses: [
-              'Principles of Artificial Intelligence',
-              'Communication Networks 1',
-              'Principles of the IoT',
-              'Digital Image Processing 1',
-              'Software and Application Security'
-            ]},
-          ].map((group, index) => (
-            <Col key={index} xs={24} sm={24} md={8} style={{ textAlign: 'center' }}>
-              <Card
-                title={group.year}
-                bordered={false}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.7)',
-                  backdropFilter: 'blur(6px)',
-                  WebkitBackdropFilter: 'blur(6px)',
-                  padding: '0px',
-                  fontWeight: 'bold',
-                  borderRadius: '10px',
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
-                  borderLeft: '3px solid transparent',
-                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease',
-                  height: '100%',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 8px 18px rgba(0, 0, 0, 0.2)';
-                  e.currentTarget.style.borderLeftColor = '#4D04A0';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15)';
-                  e.currentTarget.style.borderLeftColor = 'transparent';
-                }}
-              >
-                <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
-                  {group.courses.map((course, courseIdx) => (
-                    <Paragraph key={courseIdx} style={{
-                      background: 'rgba(255, 255, 255, 0.55)',
-                      backdropFilter: 'blur(4px)',
-                      WebkitBackdropFilter: 'blur(4px)',
-                      padding: '10px',
-                      borderRadius: '8px',
-                      marginBottom: '10px',
-                      color: '#333',
-                    }}>
-                      {course}
-                    </Paragraph>
-                  ))}
-                </ul>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </>
-    ),
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px', justifyContent: 'center' }}>
+              {courseworkData.map(group => (
+                <button
+                  key={group.year}
+                  onClick={() => setActiveYear(group.year)}
+                  style={{
+                    padding: '8px 16px',
+                    borderRadius: '20px',
+                    border: activeYear === group.year ? '2px solid #4D04A0' : '2px solid rgba(77,4,160,0.2)',
+                    background: activeYear === group.year ? '#4D04A0' : 'rgba(255,255,255,0.7)',
+                    color: activeYear === group.year ? '#fff' : '#4D04A0',
+                    fontWeight: 600,
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {group.label}
+                  <span style={{ opacity: 0.7, marginLeft: '4px', fontSize: '11px' }}>
+                    {group.year}
+                  </span>
+                </button>
+              ))}
+            </div>
+            {activeGroup && (
+              <Row gutter={[12, 12]}>
+                {activeGroup.courses.map((course, idx) => (
+                  <Col key={idx} xs={24} sm={12} md={8}>
+                    <div
+                      style={{
+                        background: 'rgba(255,255,255,0.6)',
+                        backdropFilter: 'blur(6px)',
+                        WebkitBackdropFilter: 'blur(6px)',
+                        padding: '14px 16px',
+                        borderRadius: '12px',
+                        borderLeft: '3px solid #4D04A0',
+                        height: '100%',
+                        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                        cursor: 'default',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 16px rgba(77,4,160,0.12)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      <div style={{ fontWeight: 600, color: '#1a1a1a', fontSize: '14px' }}>
+                        {course.name}
+                      </div>
+                      <div style={{ fontSize: '11px', color: '#888', marginTop: '4px' }}>
+                        {course.code}
+                      </div>
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            )}
+            <div style={{ textAlign: 'center', marginTop: '16px' }}>
+              <Paragraph type="secondary" style={{ fontSize: '13px' }}>
+                {courseworkData.reduce((sum, g) => sum + g.courses.length, 0)} courses across {courseworkData.length} years
+              </Paragraph>
+            </div>
+          </>
+        );
+      };
+      return <CourseworkTabs />;
+    })(),
     cardTitle: "Relevant Coursework",
   },   
   {
@@ -354,7 +392,6 @@ const sections = [
 ];
 
 function App() {
-  const { isDark, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState('home'); // Track the active section
   const [loading, setLoading] = useState(true); // Loading state
   const observerRef = useRef(null);
@@ -437,8 +474,7 @@ function App() {
                 label: section.title,
                 onClick: () => handleMenuClick(section.id),
               })),
-              { key: 'theme', icon: isDark ? <BulbFilled /> : <BulbOutlined />, label: '', onClick: toggleTheme, style: { marginLeft: 'auto' } },
-              { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a> },
+              { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a>, style: { marginLeft: 'auto' } },
               { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
             ]}
           />
@@ -466,25 +502,27 @@ function App() {
             transition={{ duration: 1.5 }}
           >
             {sections.map((section, index) => (
-              <div key={section.id} id={section.id}>
-                <div className="content-wrap" style={{ margin: '24px 0' }}>
-                  <FloatingCard
-                    title={section.cardTitle}
-                    style={{
-                      // Mobile styles
-                      width: '100%',
-                      margin: '0 auto',
-                      borderRadius: '10px',
-                      background: 'rgba(255, 255, 255, 0.85)', // Slight transparency
-                      boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
-                    }}
-                  >
-                    <FloatingText className="text-animation">
-                      {section.content}
-                    </FloatingText>
-                  </FloatingCard>
+              <SectionBackground key={section.id} index={index}>
+                <div id={section.id}>
+                  <div className="content-wrap" style={{ margin: '24px 0' }}>
+                    <FloatingCard
+                      title={section.cardTitle}
+                      style={{
+                        // Mobile styles
+                        width: '100%',
+                        margin: '0 auto',
+                        borderRadius: '10px',
+                        background: 'rgba(255, 255, 255, 0.85)', // Slight transparency
+                        boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
+                      }}
+                    >
+                      <FloatingText className="text-animation">
+                        {section.content}
+                      </FloatingText>
+                    </FloatingCard>
+                  </div>
                 </div>
-              </div>
+              </SectionBackground>
             ))}
           </motion.div>
         </Content>

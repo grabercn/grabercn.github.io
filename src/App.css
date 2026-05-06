@@ -295,19 +295,130 @@ button:focus-visible,
 }
 
 /* Dark mode overrides */
+[data-theme="dark"] body,
+[data-theme="dark"] {
+  background: #0d0221 !important;
+}
+
+[data-theme="dark"] .ant-layout {
+  background: #0d0221 !important;
+}
+
+[data-theme="dark"] .ant-layout-content {
+  background: #0d0221 !important;
+}
+
+[data-theme="dark"] .glass-panel {
+  background: rgba(30, 15, 60, 0.82) !important;
+  border: 1px solid rgba(100, 60, 160, 0.3) !important;
+}
+
 [data-theme="dark"] .ant-card {
-  background: var(--bg-card) !important;
-  color: var(--text-primary) !important;
+  background: rgba(30, 15, 60, 0.85) !important;
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .ant-card-head {
+  color: #e0e0e0 !important;
+  border-bottom-color: rgba(100, 60, 160, 0.3) !important;
+}
+
+[data-theme="dark"] .ant-card-head-title {
+  color: #e0e0e0 !important;
 }
 
 [data-theme="dark"] .ant-typography,
 [data-theme="dark"] p,
-[data-theme="dark"] span {
-  color: var(--text-primary) !important;
+[data-theme="dark"] span,
+[data-theme="dark"] li {
+  color: #d0d0d0 !important;
 }
 
-[data-theme="dark"] .ant-card-head-title {
-  color: var(--text-primary) !important;
+[data-theme="dark"] h1, [data-theme="dark"] h2,
+[data-theme="dark"] h3, [data-theme="dark"] h4,
+[data-theme="dark"] .ant-typography h1,
+[data-theme="dark"] .ant-typography h2,
+[data-theme="dark"] .ant-typography h3,
+[data-theme="dark"] .ant-typography h4 {
+  color: #E0AAFF !important;
+}
+
+[data-theme="dark"] a {
+  color: #b07dff !important;
+}
+
+[data-theme="dark"] .site-layout-content a {
+  color: #b07dff !important;
+}
+
+[data-theme="dark"] .site-layout-content a:hover {
+  color: #d4b3ff !important;
+}
+
+[data-theme="dark"] .content-wrap {
+  color: #d0d0d0;
+}
+
+[data-theme="dark"] .ant-layout-footer {
+  background: #080114 !important;
+  color: #ccc !important;
+}
+
+[data-theme="dark"] .ant-progress-text {
+  color: #d0d0d0 !important;
+}
+
+[data-theme="dark"] .ant-timeline-item-content {
+  color: #d0d0d0 !important;
+}
+
+[data-theme="dark"] .ant-modal-content {
+  background: #1a0a30 !important;
+  color: #d0d0d0 !important;
+}
+
+[data-theme="dark"] .ant-modal-header {
+  background: #1a0a30 !important;
+}
+
+[data-theme="dark"] .ant-modal-title {
+  color: #E0AAFF !important;
+}
+
+[data-theme="dark"] .ant-drawer-content {
+  background: #0d0221 !important;
+}
+
+[data-theme="dark"] .ant-drawer-header {
+  background: #0d0221 !important;
+  border-bottom-color: rgba(100, 60, 160, 0.3) !important;
+}
+
+[data-theme="dark"] .ant-drawer-title {
+  color: #E0AAFF !important;
+}
+
+[data-theme="dark"] .ant-btn {
+  background-color: rgba(100, 60, 160, 0.3) !important;
+  color: #d0b3ff !important;
+  border-color: rgba(100, 60, 160, 0.4) !important;
+}
+
+[data-theme="dark"] .ant-btn:hover {
+  background-color: rgba(100, 60, 160, 0.5) !important;
+}
+
+/* Keep spotify/apple button colors in dark mode */
+[data-theme="dark"] .spotify-btn {
+  background-color: #1DB954 !important;
+  color: white !important;
+  border-color: #1DB954 !important;
+}
+
+[data-theme="dark"] .apple-btn {
+  background-color: #FA243C !important;
+  color: white !important;
+  border-color: #FA243C !important;
 }
 
 /* Respect reduced motion preferences */
