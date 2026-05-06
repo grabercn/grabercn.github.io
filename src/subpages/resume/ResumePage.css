@@ -2,6 +2,53 @@
    ResumePage.css - Interactive Resume Styles
    ============================================ */
 
+/*
+ * The resume page is ALWAYS a dark page (dark purple bg, light text).
+ * Global App.css rules can override colors via .ant-card, .ant-typography, etc.
+ * We fight back with high-specificity selectors scoped to .resume-page.
+ */
+
+/* Force dark background on the resume layout regardless of theme */
+.resume-page,
+.resume-page .ant-layout,
+.resume-page .ant-layout-content {
+  background: #120338 !important;
+}
+
+/* Override global card/typography rules for resume page */
+.resume-page .ant-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.resume-page .ant-typography,
+.resume-page p,
+.resume-page span,
+.resume-page li {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.resume-page h1.ant-typography,
+.resume-page h2.ant-typography,
+.resume-page h3.ant-typography,
+.resume-page h4.ant-typography,
+.resume-page .ant-typography h1,
+.resume-page .ant-typography h2,
+.resume-page .ant-typography h3,
+.resume-page .ant-typography h4 {
+  color: #fff !important;
+}
+
+.resume-page .ant-btn {
+  background-color: rgba(77, 4, 160, 0.85) !important;
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.resume-page .ant-btn:hover {
+  background-color: rgba(100, 20, 180, 0.9) !important;
+}
+
 .resume-container {
   max-width: 900px;
   margin: 0 auto;

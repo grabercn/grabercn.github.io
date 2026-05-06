@@ -160,13 +160,13 @@ const ResumePage = () => {
 
   const menuItems = [
     { key: 'home', icon: <HomeOutlined />, label: <a href="/">Home</a> },
-    { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a> },
+    { key: 'resume', icon: <FileTextOutlined />, label: <a href="/#/resume">Resume</a> },
+    { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a>, style: { marginLeft: 'auto' } },
     { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
-    { key: 'resume', icon: <FileTextOutlined />, label: <a href="/#/resume">Resume</a>, style: { marginLeft: 'auto' } },
   ];
 
   return (
-    <Layout style={{ minHeight: '100vh', background: '#120338' }}>
+    <Layout className="resume-page" style={{ minHeight: '100vh', background: '#120338' }}>
       {/* Navigation */}
       <Header style={{ padding: 0, position: 'sticky', top: 0, zIndex: 1000, width: '100%' }}>
         <Menu

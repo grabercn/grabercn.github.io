@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Layout, Menu, Typography, Row, Col, Card, Spin } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
-import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined } from '@ant-design/icons';
+import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined, FileTextOutlined } from '@ant-design/icons';
 import Banner from './other/Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
@@ -477,7 +477,8 @@ function App() {
                 label: section.title,
                 onClick: () => handleMenuClick(section.id),
               })),
-              { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a>, style: { marginLeft: 'auto' } },
+              { key: 'resume', icon: <FileTextOutlined />, label: <a href="/#/resume">Resume</a>, style: { marginLeft: 'auto' } },
+              { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a> },
               { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
             ]}
           />
