@@ -1,0 +1,211 @@
+name: Auto-Update README Documentation
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'README.md'
+      - '.github/workflows/update-docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Generate docs data
+        id: stats
+        run: |
+          # Count source files
+          SRC_FILES=$(find src -name '*.js' -o -name '*.jsx' -o -name '*.css' | wc -l)
+          echo "src_files=$SRC_FILES" >> $GITHUB_OUTPUT
+
+          # Count photos
+          PHOTO_COUNT=$(ls public/photography/photo*.jpg 2>/dev/null | wc -l)
+          echo "photo_count=$PHOTO_COUNT" >> $GITHUB_OUTPUT
+
+          # Count components
+          COMPONENTS=$(grep -rl 'export default' src --include='*.js' | wc -l)
+          echo "components=$COMPONENTS" >> $GITHUB_OUTPUT
+
+          # Get routes
+          ROUTES=$(grep -oP "path=['\"]([^'\"]+)" src/other/PageRoutes.js | sed "s/path=['\"]//g" | tr '\n' ', ' | sed 's/,$//')
+          echo "routes=$ROUTES" >> $GITHUB_OUTPUT
+
+          # Last deploy date
+          LAST_COMMIT=$(git log -1 --format='%ci' | cut -d' ' -f1)
+          echo "last_updated=$LAST_COMMIT" >> $GITHUB_OUTPUT
+
+          # Get recent features from last 10 commits
+          RECENT=$(git log -10 --pretty=format:'- %s' | head -10)
+          echo "RECENT_COMMITS<<EOF" >> $GITHUB_ENV
+          echo "$RECENT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Update README
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const stats = {
+              src_files: '${{ steps.stats.outputs.src_files }}',
+              photo_count: '${{ steps.stats.outputs.photo_count }}',
+              components: '${{ steps.stats.outputs.components }}',
+              routes: '${{ steps.stats.outputs.routes }}',
+              last_updated: '${{ steps.stats.outputs.last_updated }}',
+            };
+            const recentCommits = process.env.RECENT_COMMITS || '';
+
+            const readme = `# Christian Graber - Personal Portfolio
+
+            > **Live site:** [grabercn.github.io](https://grabercn.github.io)
+
+            A modern, full-featured portfolio website built with React, featuring travel photography, music, an interactive resume, and more.
+
+            ![Built with React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
+            ![Ant Design](https://img.shields.io/badge/Ant%20Design-5-0170FE?logo=antdesign)
+            ![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite)
+            ![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-222?logo=github)
+            ![Last Updated](https://img.shields.io/badge/Updated-${stats.last_updated}-green)
+
+            ## Features
+
+            ### Portfolio Home
+            - Glass morphism UI with purple gradient theme
+            - Scroll-synced navigation with IntersectionObserver
+            - About, Experience, Projects, Skills, Testimonials, Contact sections
+            - Photo of the Day showcase
+            - Dark mode toggle (system preference + manual)
+            - Skip-to-content & focus-visible accessibility
+            - Responsive hamburger menu on mobile
+
+            ### Photography Gallery (\`/#/photo\`)
+            - **${stats.photo_count} photos** across 8 countries (Prague, London, Switzerland, Italy, Barcelona, Ireland, Japan, and more)
+            - Masonry grid layout with virtualized lazy-loading (IntersectionObserver)
+            - **Location filter pills** + debounced search
+            - **World map view** with interactive pins (pigeon-maps)
+            - Grid/Map view toggle
+            - Photo stats dashboard with animated counters
+            - Swipe gestures, arrow keys, and arrow buttons for modal navigation
+            - ScrollPreview sidebar (desktop) with thumbnail strip
+            - WebP images with JPEG fallback (\`<picture>\` tags)
+            - Back-to-top floating button
+            - Anti-AI metadata (XMP rights, PLUS DataMining prohibition)
+
+            ### Music Page (\`/#/music\`)
+            - Deezer API integration for full discography
+            - Album/single modals with tracklists
+            - **30-second audio previews** with progress bars
+            - Spotify & Apple Music deep links
+            - Parallax hero section
+
+            ### Interactive Resume (\`/#/resume\`)
+            - Timeline-based experience section
+            - Skill proficiency bars
+            - Print-friendly styles (\`@media print\`)
+            - PDF download option
+
+            ### Other Pages
+            - \`/#/desktop\` - Desktop simulator mini-app
+            - \`/#/datavis\` - Data visualization playground
+            - \`/#/cookie\` - Cookie clicker game
+
+            ## Tech Stack
+
+            | Category | Technologies |
+            |----------|-------------|
+            | **Framework** | React 18, Vite 5 |
+            | **UI** | Ant Design 5, Styled Components |
+            | **Animation** | Framer Motion, CSS transitions |
+            | **Routing** | React Router (HashRouter) |
+            | **Maps** | pigeon-maps |
+            | **Image Processing** | sharp (WebP, thumbnails, metadata) |
+            | **Deployment** | GitHub Pages (auto-deploy on push) |
+            | **PWA** | Service worker with network-first caching |
+
+            ## Project Stats
+
+            | Metric | Count |
+            |--------|-------|
+            | Source files | ${stats.src_files} |
+            | Components | ${stats.components} |
+            | Photos | ${stats.photo_count} |
+            | Routes | \`${stats.routes}\` |
+
+            ## Getting Started
+
+            \`\`\`bash
+            # Install dependencies
+            npm install
+
+            # Start dev server
+            npm run dev
+
+            # Build for production
+            npx vite build
+
+            # Process photos (metadata strip + WebP + thumbnails + location tagging)
+            node scripts/process-photos.js
+
+            # Run individual pipeline steps
+            node scripts/process-photos.js --step 1  # Strip EXIF + anti-AI XMP
+            node scripts/process-photos.js --step 2  # Generate WebP + thumbnails
+            node scripts/process-photos.js --step 3  # Update JSON paths
+            node scripts/process-photos.js --step 4  # Tag locations
+            \`\`\`
+
+            ## Deployment
+
+            Deployment is **fully automatic** via GitHub Actions. Every push to \`main\` triggers:
+            1. \`npm ci\` + \`vite build\`
+            2. Deploy to GitHub Pages
+
+            No manual \`npm run deploy\` needed.
+
+            ## Anti-AI Protection
+
+            All photos include multi-layer protection against AI training:
+            - \`robots.txt\` blocking 15+ AI crawlers
+            - \`<meta name="robots" content="noai, noimageai">\`
+            - XMP metadata with PLUS DataMining prohibition
+            - HTTP headers via \`_headers\` file
+
+            ## Recent Changes
+
+            ${recentCommits}
+
+            ## Easter Eggs
+
+            Try the Konami code on any page.
+
+            ## License
+
+            This project is open source and available under the [MIT License](LICENSE).
+
+            ---
+            *This README is auto-generated on each push to main via GitHub Actions.*
+            `.replace(/^            /gm, '');
+
+            fs.writeFileSync('README.md', readme);
+            console.log('README.md updated');
+
+      - name: Commit updated README
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          # Only commit if there are changes
+          git diff --staged --quiet || git commit -m "docs: auto-update README [skip ci]"
+          git push
