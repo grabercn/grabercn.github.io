@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { Spin, Modal, Layout, Menu, Typography, Skeleton, Button, Drawer, Row, Col } from 'antd';
-import { FullscreenOutlined, HomeOutlined, CameraOutlined, LoadingOutlined, CustomerServiceOutlined, InfoCircleOutlined, ArrowUpOutlined, MenuOutlined, LeftOutlined, RightOutlined, AppstoreOutlined, GlobalOutlined, SearchOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { FullscreenOutlined, HomeOutlined, CameraOutlined, LoadingOutlined, CustomerServiceOutlined, InfoCircleOutlined, ArrowUpOutlined, MenuOutlined, LeftOutlined, RightOutlined, AppstoreOutlined, GlobalOutlined } from '@ant-design/icons';
 import PhotoBanner from './PhotoBanner';
 import FooterComponent from '../../other/Footer';
 import Masonry from 'react-masonry-css';
@@ -108,12 +108,9 @@ const GalleryItem = ({ photo, openModal }) => {
         />
       </picture>
 
-      {/* Show overlay only when loaded */}
+      {/* Click overlay - fullscreen icon on desktop hover, tap anywhere on mobile */}
       <div className="overlay" onClick={handleClick} style={{ visibility: isLoaded ? 'visible' : 'hidden' }}>
         <FullscreenOutlined className="overlay-icon" />
-        <div className="overlay-description">
-          {photo.description}
-        </div>
       </div>
     </motion.div>
   );
@@ -129,9 +126,6 @@ const PhotoHome = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'map'
   const [activeLocation, setActiveLocation] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
-  const searchTimeoutRef = useRef(null);
 
   useEffect(() => {
     fetch('/photography/PhotoObject.json')
@@ -160,41 +154,11 @@ const PhotoHome = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Debounce search input
-  useEffect(() => {
-    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
-    searchTimeoutRef.current = setTimeout(() => {
-      setDebouncedSearch(searchQuery);
-    }, 300);
-    return () => {
-      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
-    };
-  }, [searchQuery]);
-
-  // Filter photos by location and search query
+  // Filter photos by location
   const filteredPhotos = useMemo(() => {
-    let result = photoObjects;
-    if (activeLocation !== 'All') {
-      result = result.filter(p => p.location === activeLocation);
-    }
-    if (debouncedSearch.trim()) {
-      const q = debouncedSearch.trim().toLowerCase();
-      result = result.filter(p =>
-        (p.title && p.title.toLowerCase().includes(q)) ||
-        (p.description && p.description.toLowerCase().includes(q))
-      );
-    }
-    return result;
-  }, [photoObjects, activeLocation, debouncedSearch]);
-
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const clearSearch = () => {
-    setSearchQuery('');
-    setDebouncedSearch('');
-  };
+    if (activeLocation === 'All') return photoObjects;
+    return photoObjects.filter(p => p.location === activeLocation);
+  }, [photoObjects, activeLocation]);
 
   const handleLocationClick = (loc) => {
     setActiveLocation(loc);
@@ -355,9 +319,16 @@ const PhotoHome = () => {
 
             {/* Photo Stats Dashboard */}
             {photoObjects.length > 0 && (() => {
-              const uniqueCountries = new Set(photoObjects.map(p => p.location));
+              const uniqueCountries = new Set(photoObjects.map(p => p.location).filter(l => l && l !== 'Other'));
               const countryCount = uniqueCountries.size;
-              const locationCount = photoObjects.filter(p => p.location).length;
+              // Most photographed country
+              const countryCounts = {};
+              photoObjects.forEach(p => {
+                if (p.location && p.location !== 'Other') {
+                  countryCounts[p.location] = (countryCounts[p.location] || 0) + 1;
+                }
+              });
+              const topCountry = Object.entries(countryCounts).sort((a, b) => b[1] - a[1])[0];
               return (
                 <Row gutter={16} style={{ padding: '20px', maxWidth: 800, margin: '0 auto' }}>
                   <Col span={8}>
@@ -367,13 +338,13 @@ const PhotoHome = () => {
                     <AnimatedStat value={countryCount} label="Countries" />
                   </Col>
                   <Col span={8}>
-                    <AnimatedStat value={locationCount} label="Locations" />
+                    <AnimatedStat value={topCountry ? topCountry[1] : 0} label={topCountry ? `in ${topCountry[0]}` : 'Top Location'} />
                   </Col>
                 </Row>
               );
             })()}
 
-            {/* Filter bar */}
+            {/* Filter bar - country tags only */}
             <div className="filter-bar">
               <div className="filter-bar-inner">
                 <div className="filter-tags-row">
@@ -386,26 +357,8 @@ const PhotoHome = () => {
                       {loc}
                     </button>
                   ))}
-                </div>
-                <div className="filter-search-row">
-                  <div className="filter-search">
-                    <SearchOutlined className="filter-search-icon" />
-                    <input
-                      type="text"
-                      className="filter-search-input"
-                      placeholder="Search photos..."
-                      value={searchQuery}
-                      onChange={handleSearchChange}
-                    />
-                    {searchQuery && (
-                      <CloseCircleOutlined
-                        className="filter-search-clear"
-                        onClick={clearSearch}
-                      />
-                    )}
-                  </div>
                   <span className="filter-count">
-                    Showing {filteredPhotos.length} of {photoObjects.length} photos
+                    {filteredPhotos.length} photo{filteredPhotos.length !== 1 ? 's' : ''}
                   </span>
                 </div>
               </div>
@@ -542,16 +495,30 @@ const PhotoHome = () => {
                 </picture>
                 <div style={{
                     color: '#eee',
-                    marginTop: '20px',
-                    fontSize: '16px',
+                    marginTop: '16px',
                     textAlign: 'center',
                     maxWidth: '800px',
                     textShadow: '0 2px 4px black',
-                    background: 'rgba(0,0,0,0.4)',
-                    padding: '10px 20px',
-                    borderRadius: '20px'
+                    background: 'rgba(0,0,0,0.5)',
+                    padding: '12px 24px',
+                    borderRadius: '16px',
+                    pointerEvents: 'none',
                 }}>
-                    {selectedPhoto.description}
+                    {selectedPhoto.title && (
+                      <div style={{ fontSize: '18px', fontWeight: 700, marginBottom: selectedPhoto.description ? '6px' : 0 }}>
+                        {selectedPhoto.title}
+                      </div>
+                    )}
+                    {selectedPhoto.description && (
+                      <div style={{ fontSize: '14px', opacity: 0.85, lineHeight: 1.5 }}>
+                        {selectedPhoto.description}
+                      </div>
+                    )}
+                    {selectedPhoto.location && selectedPhoto.location !== 'Other' && (
+                      <div style={{ fontSize: '12px', opacity: 0.6, marginTop: '6px' }}>
+                        {selectedPhoto.location}
+                      </div>
+                    )}
                 </div>
             </motion.div>
         )}

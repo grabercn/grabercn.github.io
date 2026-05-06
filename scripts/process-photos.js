@@ -159,14 +159,82 @@ function injectXmpIntoJpeg(jpegBuffer, xmpPayload) {
   ]);
 }
 
+// ─── GPS to country reverse lookup (offline, approximate) ────────────────────
+// Rough bounding boxes for countries the photographer has visited.
+// Used to infer country from GPS coords BEFORE stripping EXIF.
+const COUNTRY_BOUNDS = [
+  { country: 'Japan',        latMin: 24, latMax: 46, lonMin: 122, lonMax: 154 },
+  { country: 'Ireland',      latMin: 51, latMax: 56, lonMin: -11, lonMax: -5 },
+  { country: 'UK',           latMin: 49, latMax: 61, lonMin: -8,  lonMax: 2 },
+  { country: 'Czech Republic', latMin: 48.5, latMax: 51.1, lonMin: 12, lonMax: 19 },
+  { country: 'Switzerland',  latMin: 45.8, latMax: 48, lonMin: 5.9, lonMax: 10.5 },
+  { country: 'Italy',        latMin: 36, latMax: 47.1, lonMin: 6.6, lonMax: 18.5 },
+  { country: 'Spain',        latMin: 36, latMax: 43.8, lonMin: -9.3, lonMax: 4.3 },
+  { country: 'Germany',      latMin: 47.3, latMax: 55.1, lonMin: 5.9, lonMax: 15 },
+  { country: 'France',       latMin: 41.3, latMax: 51.1, lonMin: -5.1, lonMax: 9.6 },
+];
+
+function gpsToCountry(lat, lon) {
+  for (const b of COUNTRY_BOUNDS) {
+    if (lat >= b.latMin && lat <= b.latMax && lon >= b.lonMin && lon <= b.lonMax) {
+      return b.country;
+    }
+  }
+  return null;
+}
+
+function parseExifGps(metadata) {
+  // sharp returns EXIF as a raw buffer. Try to extract GPS via exif-reader if available.
+  if (!metadata.exif) return null;
+  try {
+    let exifReader;
+    try { exifReader = require('exif-reader'); } catch { return null; }
+    const exif = exifReader(metadata.exif);
+    const gps = exif.GPS || exif.gps;
+    if (!gps) return null;
+
+    const lat = gps.GPSLatitude;
+    const lon = gps.GPSLongitude;
+    if (!lat || !lon) return null;
+
+    // Convert DMS array [degrees, minutes, seconds] to decimal if needed
+    let latDec, lonDec;
+    if (Array.isArray(lat)) {
+      latDec = lat[0] + lat[1] / 60 + lat[2] / 3600;
+      lonDec = lon[0] + lon[1] / 60 + lon[2] / 3600;
+    } else {
+      latDec = lat;
+      lonDec = lon;
+    }
+
+    // Apply hemisphere
+    const latRef = gps.GPSLatitudeRef || 'N';
+    const lonRef = gps.GPSLongitudeRef || 'E';
+    if (latRef === 'S') latDec = -latDec;
+    if (lonRef === 'W') lonDec = -lonDec;
+
+    return { lat: latDec, lon: lonDec };
+  } catch {
+    return null;
+  }
+}
+
 async function step1_metadata() {
   console.log('');
-  console.log('STEP 1: Strip EXIF/GPS + inject anti-AI XMP metadata');
+  console.log('STEP 1: Extract GPS country → Strip EXIF → Inject anti-AI XMP');
   console.log('─'.repeat(55));
 
   const xmpPayload = buildXmpPayload();
   const files = getPhotoFiles();
   console.log(`  Found ${files.length} photos. XMP payload: ${xmpPayload.length} bytes`);
+
+  // Load PhotoObject.json to save inferred country data
+  let photoData = {};
+  try { photoData = JSON.parse(fs.readFileSync(JSON_PATH, 'utf8')); } catch {}
+
+  let gpsFound = 0;
+  let gpsCountryInferred = 0;
+  let noGps = [];
 
   const { done, errors } = await processBatched(
     files,
@@ -174,7 +242,24 @@ async function step1_metadata() {
       const filePath = path.join(PHOTO_DIR, file);
       const tempPath = filePath + '.tmp';
 
-      // Re-encode to strip all existing metadata
+      // BEFORE stripping: read GPS coords from EXIF
+      const metadata = await sharp(filePath).metadata();
+      const gps = parseExifGps(metadata);
+      const photoKey = file.replace('.jpg', '').replace('.jpeg', '');
+
+      if (gps) {
+        gpsFound++;
+        const country = gpsToCountry(gps.lat, gps.lon);
+        if (country && photoData[photoKey]) {
+          // Only set gpsCountry if we found it - don't overwrite existing location tag
+          photoData[photoKey].gpsCountry = country;
+          gpsCountryInferred++;
+        }
+      } else {
+        noGps.push(file);
+      }
+
+      // Re-encode to strip ALL existing metadata (including GPS)
       await sharp(filePath)
         .jpeg({ quality: JPEG_QUALITY_FULL, mozjpeg: true })
         .toFile(tempPath);
@@ -190,8 +275,24 @@ async function step1_metadata() {
     'Metadata'
   );
 
+  // Save updated JSON with gpsCountry data
+  fs.writeFileSync(JSON_PATH, JSON.stringify(photoData, null, 2) + '\n', 'utf8');
+
   console.log(`  Done: ${done} processed, ${errors} errors`);
-  console.log('  [x] EXIF/GPS stripped  [x] Anti-AI XMP injected  [x] Copyright embedded');
+  console.log(`  GPS found: ${gpsFound}, country inferred: ${gpsCountryInferred}`);
+  console.log('  [x] GPS read → country saved  [x] EXIF stripped  [x] Anti-AI XMP injected');
+
+  if (noGps.length > 0) {
+    console.log('');
+    console.log(`  ⚠ WARNING: ${noGps.length} photos had no GPS data.`);
+    console.log('    These photos need a "location" tag added manually in PhotoObject.json');
+    console.log('    or will be tagged via keyword matching in step 4.');
+    if (noGps.length <= 20) {
+      console.log('    Files: ' + noGps.join(', '));
+    } else {
+      console.log('    First 20: ' + noGps.slice(0, 20).join(', ') + '...');
+    }
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -434,8 +535,21 @@ function step4_tagLocations() {
     }
 
     if (!matched) {
-      photo.location = 'Other';
-      other++;
+      // Fallback: use gpsCountry from step 1 if available
+      if (photo.gpsCountry) {
+        // Map GPS country names to our location categories
+        const gpsMap = {
+          'Czech Republic': 'Prague',
+          'UK': 'London',
+          'Germany': 'Other',
+          'France': 'Other',
+        };
+        photo.location = gpsMap[photo.gpsCountry] || photo.gpsCountry;
+        tagged++;
+      } else {
+        photo.location = 'Other';
+        other++;
+      }
     }
   }
 
@@ -443,9 +557,13 @@ function step4_tagLocations() {
 
   // Print summary
   const summary = {};
+  const noLocation = [];
   for (const key of Object.keys(data)) {
     const loc = data[key].location;
     summary[loc] = (summary[loc] || 0) + 1;
+    if (loc === 'Other' && !data[key].gpsCountry) {
+      noLocation.push(key);
+    }
   }
 
   console.log(`  Tagged: ${tagged}, Other: ${other}`);
@@ -454,6 +572,17 @@ function step4_tagLocations() {
   for (const [loc, count] of Object.entries(summary).sort((a, b) => b[1] - a[1])) {
     const bar = '█'.repeat(Math.ceil(count / 10));
     console.log(`    ${loc.padEnd(14)} ${String(count).padStart(4)}  ${bar}`);
+  }
+
+  if (noLocation.length > 0) {
+    console.log('');
+    console.log(`  ⚠ ${noLocation.length} photos tagged "Other" with no GPS fallback.`);
+    console.log('    Add "location" manually in PhotoObject.json for these:');
+    if (noLocation.length <= 15) {
+      console.log('    ' + noLocation.join(', '));
+    } else {
+      console.log('    ' + noLocation.slice(0, 15).join(', ') + '...');
+    }
   }
 }
 
