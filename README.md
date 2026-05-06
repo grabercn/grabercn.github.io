@@ -115,15 +115,15 @@ All photos include multi-layer protection against AI training:
 ## Recent Changes
 
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
+- Add theme-aware styles and photo UI enhancements
+- docs: auto-update README [skip ci]
+- Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 - Add resume nav and enforce dark resume styles
 - docs: auto-update README [skip ci]
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 - Update resume PDF to 2026
 - docs: auto-update README [skip ci]
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
-- Add resume auto-update workflow and UI tweaks
-- docs: auto-update README [skip ci]
-- Dark theme styles, backgrounds & coursework UI
 
 ## Easter Eggs
 
