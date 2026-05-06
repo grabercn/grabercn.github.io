@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDownOutlined, DownloadOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, DownloadOutlined, FileTextOutlined } from '@ant-design/icons';
 import { Row, Col, Button, Typography } from 'antd';
 import NinetiesPatternBackground from '../animations/NinetiesPatternBackground';
 
@@ -173,22 +173,39 @@ const Banner = () => {
                   Get in Touch
                 </Button>
                 <div style={{ marginTop: '20px' }}/>
-                <Button
-                  style={{
-                    color: '#fff', 
-                    backgroundColor: 'rgba(45, 0, 77, 0.8)',
-                    borderColor: 'rgba(255, 255, 255, 0.3)',
-                    backdropFilter: 'blur(10px)',
-                    fontWeight: '600',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)'
-                  }}
-                  type="default"
-                  size="large"
-                  onClick={() => window.open('/docs/Graber_Christian_Resume_2025.pdf', '_blank')}
-                >
-                  <DownloadOutlined style={{ marginRight: '8px' }} />
-                  View Resume
-                </Button>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                  <Button
+                    style={{
+                      color: '#fff',
+                      backgroundColor: 'rgba(45, 0, 77, 0.8)',
+                      borderColor: 'rgba(255, 255, 255, 0.3)',
+                      backdropFilter: 'blur(10px)',
+                      fontWeight: '600',
+                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)'
+                    }}
+                    type="default"
+                    size="large"
+                    onClick={() => window.open('/docs/Graber_Christian_Resume_2025.pdf', '_blank')}
+                  >
+                    <DownloadOutlined style={{ marginRight: '8px' }} />
+                    Download Resume
+                  </Button>
+                  <Button
+                    ghost
+                    size="large"
+                    style={{
+                      color: '#fff',
+                      borderColor: 'rgba(255, 255, 255, 0.4)',
+                      backdropFilter: 'blur(10px)',
+                      fontWeight: '600',
+                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
+                    }}
+                    onClick={() => { window.location.href = '/#/resume'; }}
+                  >
+                    <FileTextOutlined style={{ marginRight: '8px' }} />
+                    Interactive Resume
+                  </Button>
+                </div>
                 <div style={{
                   marginTop: '20px',
                   opacity: arrowVisible ? 1 : 0,

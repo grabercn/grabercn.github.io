@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Layout, Menu, Typography, Row, Col, Card, Spin } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
-import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined } from '@ant-design/icons';
+import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined, BulbOutlined, BulbFilled } from '@ant-design/icons';
+import { useTheme } from './other/ThemeContext';
 import Banner from './other/Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
@@ -12,6 +13,7 @@ import Projects from './content/ProjectsContent';
 import FooterComponent from './other/Footer';
 import ModernPurpleBackground from './animations/ModernPurpleBackground';
 import GlowingHeaderAnimation from './animations/GlowingHeaderAnimation';
+import PhotoOfTheDay from './content/PhotoOfTheDay';
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 
@@ -68,6 +70,11 @@ const sections = [
               Aside from coding, I enjoy staying active and exploring new hobbies. Whether that's travelling, <a href='/#/photo/'>photography</a>, <a href='/#/music/'>creating music</a>, or hiking mountains, I'm always looking to grow.
               I also love to share knowledge and collaborate with others in tech communities. I believe in the power of continuous learning and sharing knowledge to help drive innovation.
             </Paragraph>
+          </Col>
+        </Row>
+        <Row gutter={[16, 16]} style={{ marginTop: '24px' }}>
+          <Col span={24}>
+            <PhotoOfTheDay />
           </Col>
         </Row>
       </>
@@ -347,6 +354,7 @@ const sections = [
 ];
 
 function App() {
+  const { isDark, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState('home'); // Track the active section
   const [loading, setLoading] = useState(true); // Loading state
   const observerRef = useRef(null);
@@ -429,7 +437,8 @@ function App() {
                 label: section.title,
                 onClick: () => handleMenuClick(section.id),
               })),
-              { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a>, style: { marginLeft: 'auto' } },
+              { key: 'theme', icon: isDark ? <BulbFilled /> : <BulbOutlined />, label: '', onClick: toggleTheme, style: { marginLeft: 'auto' } },
+              { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a> },
               { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
             ]}
           />

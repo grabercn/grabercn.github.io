@@ -1,21 +1,79 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Spin, Modal, Layout, Menu, Typography, Skeleton, Button, Drawer } from 'antd';
-import { FullscreenOutlined, HomeOutlined, CameraOutlined, LoadingOutlined, CustomerServiceOutlined, InfoCircleOutlined, ArrowUpOutlined, MenuOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
+import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
+import { Spin, Modal, Layout, Menu, Typography, Skeleton, Button, Drawer, Row, Col } from 'antd';
+import { FullscreenOutlined, HomeOutlined, CameraOutlined, LoadingOutlined, CustomerServiceOutlined, InfoCircleOutlined, ArrowUpOutlined, MenuOutlined, LeftOutlined, RightOutlined, AppstoreOutlined, GlobalOutlined, SearchOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import PhotoBanner from './PhotoBanner';
 import FooterComponent from '../../other/Footer';
 import Masonry from 'react-masonry-css';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import ModernPurpleBackground from '../../animations/ModernPurpleBackground';
 import GlowingHeaderAnimation from '../../animations/GlowingHeaderAnimation';
 import ScrollPreview from './ScrollPreview';
+import PhotoMap from './PhotoMap';
 import './PhotoHome.css';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 
+const LOCATION_CATEGORIES = ['All', 'Prague', 'London', 'Switzerland', 'Italy', 'Barcelona', 'Ireland', 'Japan', 'Other'];
+
+// Animated counting stat card
+const AnimatedStat = ({ value, label }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+    let start = 0;
+    const duration = 1200;
+    const startTime = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      // ease-out quad
+      const eased = 1 - (1 - progress) * (1 - progress);
+      setDisplay(Math.round(eased * value));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [isInView, value]);
+
+  return (
+    <div ref={ref} className="stat-card">
+      <div className="stat-number">{display}</div>
+      <div className="stat-label">{label}</div>
+    </div>
+  );
+};
+
 // Separate component for individual gallery items to handle image loading state independently
+// Uses IntersectionObserver for virtualized lazy mounting - only mounts content when near viewport
 const GalleryItem = ({ photo, openModal }) => {
+  const [isVisible, setIsVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const itemRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // Once visible, stop observing
+        }
+      },
+      { rootMargin: '500px' } // Start loading 500px before viewport
+    );
+
+    if (itemRef.current) observer.observe(itemRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Lightweight placeholder until the item is near the viewport
+  if (!isVisible) {
+    return (
+      <div ref={itemRef} className="gallery-item gallery-placeholder-virtual"
+           style={{ minHeight: '250px' }} />
+    );
+  }
 
   const handleClick = () => {
     // On mobile, tap goes straight to fullscreen modal (no hover overlay)
@@ -24,6 +82,7 @@ const GalleryItem = ({ photo, openModal }) => {
 
   return (
     <motion.div
+      ref={itemRef}
       layout
       className="gallery-item"
       initial={{ opacity: 0, scale: 0.9 }}
@@ -38,13 +97,16 @@ const GalleryItem = ({ photo, openModal }) => {
         </div>
       )}
 
-      <img
-        src={photo.path}
-        alt={photo.name}
-        loading="lazy"
-        onLoad={() => setIsLoaded(true)}
-        className={isLoaded ? "gallery-image-loaded" : "gallery-image-loading"}
-      />
+      <picture>
+        <source srcSet={photo.webpPath} type="image/webp" />
+        <img
+          src={photo.path}
+          alt={photo.name}
+          loading="lazy"
+          onLoad={() => setIsLoaded(true)}
+          className={isLoaded ? "gallery-image-loaded" : "gallery-image-loading"}
+        />
+      </picture>
 
       {/* Show overlay only when loaded */}
       <div className="overlay" onClick={handleClick} style={{ visibility: isLoaded ? 'visible' : 'hidden' }}>
@@ -65,6 +127,11 @@ const PhotoHome = () => {
   const [showAbout, setShowAbout] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'map'
+  const [activeLocation, setActiveLocation] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const searchTimeoutRef = useRef(null);
 
   useEffect(() => {
     fetch('/photography/PhotoObject.json')
@@ -93,6 +160,51 @@ const PhotoHome = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Debounce search input
+  useEffect(() => {
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    searchTimeoutRef.current = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 300);
+    return () => {
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    };
+  }, [searchQuery]);
+
+  // Filter photos by location and search query
+  const filteredPhotos = useMemo(() => {
+    let result = photoObjects;
+    if (activeLocation !== 'All') {
+      result = result.filter(p => p.location === activeLocation);
+    }
+    if (debouncedSearch.trim()) {
+      const q = debouncedSearch.trim().toLowerCase();
+      result = result.filter(p =>
+        (p.title && p.title.toLowerCase().includes(q)) ||
+        (p.description && p.description.toLowerCase().includes(q))
+      );
+    }
+    return result;
+  }, [photoObjects, activeLocation, debouncedSearch]);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setDebouncedSearch('');
+  };
+
+  const handleLocationClick = (loc) => {
+    setActiveLocation(loc);
+    // Scroll gallery into view when changing filter
+    const gallery = document.querySelector('.photo-gallery');
+    if (gallery) {
+      gallery.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   // Tighter breakpoints for "iPhone gallery" feel
   const breakpointColumnsObj = {
     default: 5,
@@ -103,10 +215,10 @@ const PhotoHome = () => {
   };
 
   const openModal = useCallback((photo) => {
-    const idx = photoObjects.indexOf(photo);
+    const idx = filteredPhotos.indexOf(photo);
     setSelectedPhoto(photo);
     setSelectedIndex(idx);
-  }, [photoObjects]);
+  }, [filteredPhotos]);
 
   const closeModal = useCallback(() => {
     setSelectedPhoto(null);
@@ -114,17 +226,17 @@ const PhotoHome = () => {
   }, []);
 
   const goToPhoto = useCallback((newIndex) => {
-    if (newIndex >= 0 && newIndex < photoObjects.length) {
-      setSelectedPhoto(photoObjects[newIndex]);
+    if (newIndex >= 0 && newIndex < filteredPhotos.length) {
+      setSelectedPhoto(filteredPhotos[newIndex]);
       setSelectedIndex(newIndex);
     }
-  }, [photoObjects]);
+  }, [filteredPhotos]);
 
   const goNext = useCallback(() => {
-    if (selectedIndex < photoObjects.length - 1) {
+    if (selectedIndex < filteredPhotos.length - 1) {
       goToPhoto(selectedIndex + 1);
     }
-  }, [selectedIndex, photoObjects.length, goToPhoto]);
+  }, [selectedIndex, filteredPhotos.length, goToPhoto]);
 
   const goPrev = useCallback(() => {
     if (selectedIndex > 0) {
@@ -241,19 +353,100 @@ const PhotoHome = () => {
 
             {photoObjects.length > 0 && <PhotoBanner photoObjects={photoObjects} />}
 
-            <div className="photo-gallery" style={{ padding: '10px', maxWidth: '100%', margin: '0 auto' }}>
-                <Masonry
-                    breakpointCols={breakpointColumnsObj}
-                    className="gallery-grid"
-                    columnClassName="gallery-column"
-                >
-                    {photoObjects.map((photo) => (
-                        <GalleryItem key={photo.id} photo={photo} openModal={openModal} />
-                    ))}
-                </Masonry>
+            {/* Photo Stats Dashboard */}
+            {photoObjects.length > 0 && (() => {
+              const uniqueCountries = new Set(photoObjects.map(p => p.location));
+              const countryCount = uniqueCountries.size;
+              const locationCount = photoObjects.filter(p => p.location).length;
+              return (
+                <Row gutter={16} style={{ padding: '20px', maxWidth: 800, margin: '0 auto' }}>
+                  <Col span={8}>
+                    <AnimatedStat value={photoObjects.length} label="Photos" />
+                  </Col>
+                  <Col span={8}>
+                    <AnimatedStat value={countryCount} label="Countries" />
+                  </Col>
+                  <Col span={8}>
+                    <AnimatedStat value={locationCount} label="Locations" />
+                  </Col>
+                </Row>
+              );
+            })()}
+
+            {/* Filter bar */}
+            <div className="filter-bar">
+              <div className="filter-bar-inner">
+                <div className="filter-tags-row">
+                  {LOCATION_CATEGORIES.map(loc => (
+                    <button
+                      key={loc}
+                      className={`filter-tag${activeLocation === loc ? ' filter-tag-active' : ''}`}
+                      onClick={() => handleLocationClick(loc)}
+                    >
+                      {loc}
+                    </button>
+                  ))}
+                </div>
+                <div className="filter-search-row">
+                  <div className="filter-search">
+                    <SearchOutlined className="filter-search-icon" />
+                    <input
+                      type="text"
+                      className="filter-search-input"
+                      placeholder="Search photos..."
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                    />
+                    {searchQuery && (
+                      <CloseCircleOutlined
+                        className="filter-search-clear"
+                        onClick={clearSearch}
+                      />
+                    )}
+                  </div>
+                  <span className="filter-count">
+                    Showing {filteredPhotos.length} of {photoObjects.length} photos
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <ScrollPreview photoObjects={photoObjects} />
+            {/* View toggle */}
+            <div className="view-toggle-bar">
+              <button
+                className={`view-toggle-btn${viewMode === 'grid' ? ' active' : ''}`}
+                onClick={() => setViewMode('grid')}
+              >
+                <AppstoreOutlined /> Grid View
+              </button>
+              <button
+                className={`view-toggle-btn${viewMode === 'map' ? ' active' : ''}`}
+                onClick={() => setViewMode('map')}
+              >
+                <GlobalOutlined /> Map View
+              </button>
+            </div>
+
+            {viewMode === 'grid' ? (
+              <>
+                <div className="photo-gallery" style={{ padding: '10px', maxWidth: '100%', margin: '0 auto' }}>
+                    <Masonry
+                        breakpointCols={breakpointColumnsObj}
+                        className="gallery-grid"
+                        columnClassName="gallery-column"
+                    >
+                        {filteredPhotos.map((photo) => (
+                            <GalleryItem key={photo.id} photo={photo} openModal={openModal} />
+                        ))}
+                    </Masonry>
+                </div>
+                <ScrollPreview photoObjects={filteredPhotos} />
+              </>
+            ) : (
+              <div className="photo-gallery" style={{ padding: '20px', maxWidth: '100%', margin: '0 auto' }}>
+                <PhotoMap photoObjects={filteredPhotos} openModal={openModal} />
+              </div>
+            )}
           </motion.div>
         )}
       </Content>
@@ -325,25 +518,28 @@ const PhotoHome = () => {
                 )}
 
                 {/* Next arrow */}
-                {selectedIndex < photoObjects.length - 1 && (
+                {selectedIndex < filteredPhotos.length - 1 && (
                   <button className="modal-nav-btn modal-nav-next" onClick={(e) => { e.stopPropagation(); goNext(); }}>
                     <RightOutlined />
                   </button>
                 )}
 
-                <img
-                    src={selectedPhoto.path}
-                    alt={selectedPhoto.name}
-                    style={{
-                        maxWidth: '100%',
-                        maxHeight: '85vh',
-                        objectFit: 'contain',
-                        borderRadius: '4px',
-                        boxShadow: '0 0 20px rgba(0,0,0,0.5)',
-                        pointerEvents: 'none',
-                        userSelect: 'none',
-                    }}
-                />
+                <picture>
+                    <source srcSet={selectedPhoto.webpPath} type="image/webp" />
+                    <img
+                        src={selectedPhoto.path}
+                        alt={selectedPhoto.name}
+                        style={{
+                            maxWidth: '100%',
+                            maxHeight: '85vh',
+                            objectFit: 'contain',
+                            borderRadius: '4px',
+                            boxShadow: '0 0 20px rgba(0,0,0,0.5)',
+                            pointerEvents: 'none',
+                            userSelect: 'none',
+                        }}
+                    />
+                </picture>
                 <div style={{
                     color: '#eee',
                     marginTop: '20px',

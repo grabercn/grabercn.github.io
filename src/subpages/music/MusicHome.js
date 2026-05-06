@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Typography, Divider, Spin, Button, Layout, Menu, Modal, Drawer, Result, List, Avatar } from 'antd';
-import { HomeOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined, InfoCircleOutlined, PlayCircleOutlined, WarningOutlined, AppleFilled, SpotifyFilled, RightOutlined, MenuOutlined } from '@ant-design/icons';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Card, Row, Col, Typography, Divider, Spin, Button, Layout, Menu, Modal, Drawer, Result, List, Avatar, Tooltip } from 'antd';
+import { HomeOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined, InfoCircleOutlined, PlayCircleOutlined, PauseCircleOutlined, WarningOutlined, AppleFilled, SpotifyFilled, RightOutlined, MenuOutlined } from '@ant-design/icons';
 import MusicBanner from './MusicBanner';
 import FooterComponent from '../../other/Footer';
 import ModernPurpleBackground from '../../animations/ModernPurpleBackground';
@@ -23,6 +23,11 @@ const MusicHome = () => {
   const [albumModalOpen, setAlbumModalOpen] = useState(false);
   const [tracklist, setTracklist] = useState([]);
   const [loadingTracks, setLoadingTracks] = useState(false);
+
+  // Audio preview state
+  const [playingTrack, setPlayingTrack] = useState(null);
+  const [audioProgress, setAudioProgress] = useState(0);
+  const audioRef = useRef(new Audio());
 
   // Mobile drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -98,7 +103,27 @@ const MusicHome = () => {
     }
   };
 
+  const stopPlayback = useCallback(() => {
+    audioRef.current.pause();
+    audioRef.current.src = '';
+    setPlayingTrack(null);
+    setAudioProgress(0);
+  }, []);
+
+  const togglePlay = useCallback((track) => {
+    if (playingTrack === track.id) {
+      audioRef.current.pause();
+      setPlayingTrack(null);
+    } else {
+      audioRef.current.src = track.preview;
+      audioRef.current.play();
+      setPlayingTrack(track.id);
+      setAudioProgress(0);
+    }
+  }, [playingTrack]);
+
   const handleAlbumClick = (album) => {
+      stopPlayback();
       setSelectedAlbum(album);
       setAlbumModalOpen(true);
       setTracklist([]); // Reset tracks
@@ -110,6 +135,28 @@ const MusicHome = () => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Audio event listeners
+  useEffect(() => {
+    const audio = audioRef.current;
+    const onTimeUpdate = () => {
+      if (audio.duration) {
+        setAudioProgress((audio.currentTime / audio.duration) * 100);
+      }
+    };
+    const onEnded = () => {
+      setPlayingTrack(null);
+      setAudioProgress(0);
+    };
+    audio.addEventListener('timeupdate', onTimeUpdate);
+    audio.addEventListener('ended', onEnded);
+    return () => {
+      audio.removeEventListener('timeupdate', onTimeUpdate);
+      audio.removeEventListener('ended', onEnded);
+      audio.pause();
+      audio.src = '';
+    };
   }, []);
 
   // Use the latest release (album or single) for the banner
@@ -338,7 +385,7 @@ const MusicHome = () => {
       <Modal
           title={selectedAlbum?.title}
           open={albumModalOpen}
-          onCancel={() => setAlbumModalOpen(false)}
+          onCancel={() => { stopPlayback(); setAlbumModalOpen(false); }}
           footer={null}
           centered
           width="90%"
@@ -374,22 +421,41 @@ const MusicHome = () => {
                           size="small"
                           dataSource={tracklist}
                           renderItem={(item, index) => (
-                              <List.Item
-                                actions={[
-                                    <a href={`https://open.spotify.com/search/${encodeURIComponent('Chrismslist ' + item.title)}`} target="_blank" rel="noreferrer" style={{ fontSize: '20px', color: '#1DB954', marginLeft: '10px' }} title="Play on Spotify">
-                                        <SpotifyFilled />
-                                    </a>,
-                                    <a href={`https://music.apple.com/us/search?term=${encodeURIComponent('Chrismslist ' + item.title)}`} target="_blank" rel="noreferrer" style={{ fontSize: '20px', color: '#FA243C', marginLeft: '10px' }} title="Play on Apple Music">
-                                        <AppleFilled />
-                                    </a>
-                                ]}
-                              >
-                                  <List.Item.Meta
-                                      avatar={<Avatar size="small" style={{ backgroundColor: '#A020F0' }}>{index + 1}</Avatar>}
-                                      title={item.title}
-                                      description={`${Math.floor(item.duration / 60)}:${(item.duration % 60).toString().padStart(2, '0')}`}
-                                  />
-                              </List.Item>
+                              <div key={item.id}>
+                                <List.Item
+                                  actions={[
+                                      <a href={`https://open.spotify.com/search/${encodeURIComponent('Chrismslist ' + item.title)}`} target="_blank" rel="noreferrer" style={{ fontSize: '20px', color: '#1DB954', marginLeft: '10px' }} title="Play on Spotify">
+                                          <SpotifyFilled />
+                                      </a>,
+                                      <a href={`https://music.apple.com/us/search?term=${encodeURIComponent('Chrismslist ' + item.title)}`} target="_blank" rel="noreferrer" style={{ fontSize: '20px', color: '#FA243C', marginLeft: '10px' }} title="Play on Apple Music">
+                                          <AppleFilled />
+                                      </a>
+                                  ]}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
+                                        {item.preview ? (
+                                            <Tooltip title="30s preview">
+                                                <span
+                                                    className={`track-play-btn${playingTrack === item.id ? ' playing' : ''}`}
+                                                    onClick={() => togglePlay(item)}
+                                                >
+                                                    {playingTrack === item.id ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+                                                </span>
+                                            </Tooltip>
+                                        ) : (
+                                            <span style={{ width: 24 }} />
+                                        )}
+                                        <List.Item.Meta
+                                            avatar={<Avatar size="small" style={{ backgroundColor: '#A020F0' }}>{index + 1}</Avatar>}
+                                            title={item.title}
+                                            description={`${Math.floor(item.duration / 60)}:${(item.duration % 60).toString().padStart(2, '0')}`}
+                                        />
+                                    </div>
+                                </List.Item>
+                                {playingTrack === item.id && (
+                                    <div className="track-progress" style={{ width: `${audioProgress}%` }} />
+                                )}
+                              </div>
                           )}
                       />
                   )}

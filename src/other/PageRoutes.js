@@ -4,7 +4,9 @@ import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { AnimatePresence, motion } from 'framer-motion';
 import GlobalCursorGlow from '../animations/GlobalCursorGlow';
+import KonamiCode from '../animations/KonamiCode';
 import ErrorBoundary from './ErrorBoundary';
+import { ThemeProvider } from './ThemeContext';
 
 const App = lazy(() => import('../App'));
 const PhotoHome = lazy(() => import('../subpages/photography/PhotoHome'));
@@ -12,6 +14,7 @@ const MusicHome = lazy(() => import('../subpages/music/MusicHome'));
 const DesktopLauncher = lazy(() => import('../subpages/desktop/DesktopLauncher'));
 const DataVisHome = lazy(() => import('../subpages/data-vis/DataVisHome'));
 const CookieClicker = lazy(() => import('../subpages/cookie/Cookie'));
+const ResumePage = lazy(() => import('../subpages/resume/ResumePage'));
 const NotFound = lazy(() => import('./NotFound'));
 
 const fade = {
@@ -23,9 +26,11 @@ const fade = {
 
 const PageRoutes = () => {
   return (
+    <ThemeProvider>
     <ErrorBoundary>
       <Router>
         <GlobalCursorGlow />
+        <KonamiCode />
         <Suspense
           fallback={
             <div
@@ -52,12 +57,14 @@ const PageRoutes = () => {
               <Route path="/desktop" element={<motion.div {...fade}><DesktopLauncher /></motion.div>} />
               <Route path="/datavis" element={<motion.div {...fade}><DataVisHome /></motion.div>} />
               <Route path="/cookie" element={<motion.div {...fade}><CookieClicker /></motion.div>} />
+              <Route path="/resume" element={<motion.div {...fade}><ResumePage /></motion.div>} />
               <Route path="/*" element={<motion.div {...fade}><NotFound /></motion.div>} />
             </Routes>
           </AnimatePresence>
         </Suspense>
       </Router>
     </ErrorBoundary>
+    </ThemeProvider>
   );
 };
 

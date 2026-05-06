@@ -113,4 +113,36 @@
       display: none !important;
     }
   }
+
+  /* Audio preview play button */
+  .track-play-btn {
+    cursor: pointer;
+    color: #4D04A0;
+    font-size: 24px;
+    transition: all 0.2s;
+  }
+
+  .track-play-btn:hover {
+    color: #8b2cff;
+    transform: scale(1.15);
+  }
+
+  .track-play-btn.playing {
+    color: #4D04A0;
+    animation: pulse 1.5s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  /* Audio preview progress bar */
+  .track-progress {
+    height: 3px;
+    background: linear-gradient(90deg, #4D04A0, #8b2cff);
+    border-radius: 2px;
+    transition: width 0.3s linear;
+    margin-top: 4px;
+  }
   

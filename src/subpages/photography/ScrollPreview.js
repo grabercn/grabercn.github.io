@@ -94,7 +94,7 @@ const ScrollPreview = ({ photoObjects }) => {
       >
         <div className="scroll-track">
             {sampledPhotos.map((photo, i) => (
-                <div key={i} className="scroll-thumb" style={{ backgroundImage: `url(${photo.path})` }} />
+                <div key={i} className="scroll-thumb" style={{ backgroundImage: `url(${photo.thumbPath || photo.path})` }} />
             ))}
         </div>
       </div>
@@ -108,7 +108,10 @@ const ScrollPreview = ({ photoObjects }) => {
             }}
         >
           <div className="preview-image-container">
-             <img src={previewPhoto.path} alt="preview" />
+             <picture>
+               <source srcSet={previewPhoto.webpPath} type="image/webp" />
+               <img src={previewPhoto.path} alt="preview" />
+             </picture>
              <div className="preview-date">
                 {/* If we had date, we'd show it. For now, show index/total or just the image */}
                 {/* {previewPhoto.date} */}
