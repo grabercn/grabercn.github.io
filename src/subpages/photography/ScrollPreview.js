@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import './ScrollPreview.css';
 
-const ScrollPreview = ({ photoObjects }) => {
+const ScrollPreview = ({ photoObjects, openModal }) => {
   const [hoverY, setHoverY] = useState(null);
   const [previewPhoto, setPreviewPhoto] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -60,21 +60,22 @@ const ScrollPreview = ({ photoObjects }) => {
   };
 
   const handleClick = (e) => {
-    if (!barRef.current) return;
+    if (!barRef.current || !photoObjects.length) return;
     const rect = barRef.current.getBoundingClientRect();
     const relativeY = e.clientY - rect.top;
     const height = rect.height;
     const percentage = Math.max(0, Math.min(1, relativeY / height));
 
-    // Calculate scroll position
-    // We want to map the percentage of the bar to the percentage of the page height
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const targetScroll = percentage * docHeight;
-
-    window.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth'
-    });
+    // Map click position to a photo and open it
+    const index = Math.floor(percentage * (photoObjects.length - 1));
+    const photo = photoObjects[index];
+    if (photo && openModal) {
+      openModal(photo);
+    } else {
+      // Fallback: scroll to position if no openModal
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      window.scrollTo({ top: percentage * docHeight, behavior: 'smooth' });
+    }
   };
 
   // Use Portal to render outside of any overflow:hidden containers if necessary, 

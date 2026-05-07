@@ -25,12 +25,10 @@ const AnimatedStat = ({ value, label }) => {
 
   useEffect(() => {
     if (!isInView) return;
-    let start = 0;
     const duration = 1200;
     const startTime = performance.now();
     const step = (now) => {
       const progress = Math.min((now - startTime) / duration, 1);
-      // ease-out quad
       const eased = 1 - (1 - progress) * (1 - progress);
       setDisplay(Math.round(eased * value));
       if (progress < 1) requestAnimationFrame(step);
@@ -42,6 +40,44 @@ const AnimatedStat = ({ value, label }) => {
     <div ref={ref} className="stat-card">
       <div className="stat-number">{display}</div>
       <div className="stat-label">{label}</div>
+    </div>
+  );
+};
+
+// Cycling stat card - rotates through country stats with animation
+const CyclingStat = ({ countryCounts }) => {
+  const [index, setIndex] = useState(0);
+  const entries = useMemo(() =>
+    Object.entries(countryCounts).sort((a, b) => b[1] - a[1]),
+    [countryCounts]
+  );
+
+  useEffect(() => {
+    if (entries.length <= 1) return;
+    const interval = setInterval(() => {
+      setIndex(prev => (prev + 1) % entries.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [entries.length]);
+
+  if (entries.length === 0) return null;
+  const [country, count] = entries[index];
+
+  return (
+    <div className="stat-card stat-card-cycling">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={country}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -12 }}
+          transition={{ duration: 0.35, ease: 'easeInOut' }}
+          style={{ textAlign: 'center' }}
+        >
+          <div className="stat-number">{count}</div>
+          <div className="stat-label">in {country}</div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
@@ -109,12 +145,13 @@ const GalleryItem = ({ photo, openModal }) => {
         />
       </picture>
 
-      {/* Click overlay - icon + description on desktop hover, tap on mobile */}
+      {/* Click overlay - title + description on desktop hover, tap on mobile */}
       <div className="overlay" onClick={handleClick} style={{ visibility: isLoaded ? 'visible' : 'hidden' }}>
         <FullscreenOutlined className="overlay-icon" />
-        {photo.description && (
-          <div className="overlay-description">{photo.description}</div>
-        )}
+        <div className="overlay-text">
+          {photo.title && <div className="overlay-title">{photo.title}</div>}
+          {photo.description && <div className="overlay-description">{photo.description}</div>}
+        </div>
       </div>
     </motion.div>
   );
@@ -268,12 +305,11 @@ const PhotoHome = () => {
                     countryCounts[p.location] = (countryCounts[p.location] || 0) + 1;
                   }
                 });
-                const topCountry = Object.entries(countryCounts).sort((a, b) => b[1] - a[1])[0];
                 return (
                   <div className="gallery-stats-row">
                     <AnimatedStat value={photoObjects.length} label="Photos" />
                     <AnimatedStat value={countryCount} label="Countries" />
-                    <AnimatedStat value={topCountry ? topCountry[1] : 0} label={topCountry ? `in ${topCountry[0]}` : 'Top'} />
+                    <CyclingStat countryCounts={countryCounts} />
                   </div>
                 );
               })()}
@@ -328,7 +364,7 @@ const PhotoHome = () => {
                         ))}
                     </Masonry>
                 </div>
-                <ScrollPreview photoObjects={filteredPhotos} />
+                <ScrollPreview photoObjects={filteredPhotos} openModal={openModal} />
               </>
             ) : (
               <div className="photo-gallery" style={{ padding: '20px', maxWidth: '100%', margin: '0 auto' }}>

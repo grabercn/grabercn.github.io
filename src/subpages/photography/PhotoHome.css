@@ -127,24 +127,46 @@
     transform: scale(1);
 }
 
-/* Photo description on hover - white text with shadow for readability over any background */
-.overlay-description {
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
+/* Overlay text container - title + description, always fits in frame */
+.overlay-text {
+  max-width: 90%;
+  max-height: 45%;
+  overflow: hidden;
   text-align: center;
-  padding: 0 12px;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.7), 0 0 8px rgba(0,0,0,0.3);
+  padding: 0 10px;
   transform: translateY(10px);
   opacity: 0;
   transition: transform 0.4s ease, opacity 0.4s ease;
-  max-width: 90%;
-  line-height: 1.4;
 }
 
-.gallery-item:hover .overlay-description {
+.gallery-item:hover .overlay-text {
   transform: translateY(0);
   opacity: 1;
+}
+
+.overlay-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.4);
+  line-height: 1.3;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.overlay-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  font-weight: 400;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7), 0 0 8px rgba(0,0,0,0.3);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* === Desktop: add right padding so gallery doesn't render behind ScrollPreview === */
@@ -168,6 +190,9 @@
         cursor: pointer;
     }
     .overlay-icon {
+        display: none;
+    }
+    .overlay-text {
         display: none;
     }
 
@@ -261,6 +286,13 @@
     padding: 14px 20px 10px;
 }
 
+/* Prevent toolbar controls from hiding behind ScrollPreview sidebar on desktop */
+@media (min-width: 768px) {
+    .gallery-toolbar {
+        padding-right: 80px;
+    }
+}
+
 .gallery-stats-row {
     display: flex;
     justify-content: center;
@@ -276,6 +308,14 @@
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   min-width: 90px;
+}
+
+.stat-card-cycling {
+  overflow: hidden;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stat-number {
