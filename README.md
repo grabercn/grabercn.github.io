@@ -69,8 +69,8 @@ A modern, full-featured portfolio website built with React, featuring travel pho
 
 | Metric | Count |
 |--------|-------|
-| Source files | 55 |
-| Components | 39 |
+| Source files | 56 |
+| Components | 40 |
 | Photos | 1062 |
 | Routes | `/,/photo,/music,/desktop,/datavis,/cookie,/resume,/*` |
 
@@ -115,13 +115,13 @@ All photos include multi-layer protection against AI training:
 ## Recent Changes
 
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
+- Add LoadingSpinner and replace inline loaders
+- docs: auto-update README [skip ci]
+- Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 - Add dark-mode styles and animated page routing
 - docs: auto-update README [skip ci]
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 - Improve dark-mode, loading UI, and photo modal
-- docs: auto-update README [skip ci]
-- Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
-- Add cycling stats, overlay text, and modal hook
 - docs: auto-update README [skip ci]
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 
