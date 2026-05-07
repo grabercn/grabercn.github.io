@@ -37,6 +37,86 @@
   color: #E0AAFF !important;
 }
 
+/* Photo of the Day card */
+.potd-card {
+  max-width: 420px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(77, 4, 160, 0.12);
+}
+
+.potd-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.potd-desc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.potd-link {
+  display: inline-block;
+  margin-top: 16px;
+  color: #4D04A0;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+[data-theme="dark"] .potd-card {
+  background: rgba(20, 10, 40, 0.85) !important;
+  border-color: rgba(120, 70, 200, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .potd-title {
+  color: #E0AAFF !important;
+}
+
+[data-theme="dark"] .potd-desc {
+  color: #b0a8bc !important;
+}
+
+[data-theme="dark"] .potd-link {
+  color: #b07dff !important;
+}
+
+/* Coursework tab buttons + cards dark mode */
+[data-theme="dark"] .coursework-tab-btn {
+  border-color: rgba(120, 70, 200, 0.3) !important;
+  background: rgba(25, 12, 50, 0.7) !important;
+  color: #d4b3ff !important;
+}
+
+[data-theme="dark"] .coursework-tab-btn.active {
+  background: #4D04A0 !important;
+  color: #fff !important;
+  border-color: #4D04A0 !important;
+}
+
+[data-theme="dark"] .coursework-item {
+  background: rgba(25, 12, 50, 0.8) !important;
+  border-left-color: rgba(120, 70, 200, 0.4) !important;
+}
+
+[data-theme="dark"] .coursework-item-name {
+  color: #d4d0dc !important;
+}
+
+[data-theme="dark"] .coursework-item-code {
+  color: #9a93a8 !important;
+}
+
 /* Global Glass Theme */
 .glass-panel {
   background: var(--bg-glass) !important;
@@ -53,6 +133,14 @@
 }
 
 /* Banner section */
+.banner-wrapper {
+  background-color: #2c1e7d;
+}
+
+[data-theme="dark"] .banner-wrapper {
+  background-color: #05010d;
+}
+
 .banner {
   position: relative;
   overflow: hidden;

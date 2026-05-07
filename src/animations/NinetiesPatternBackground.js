@@ -43,7 +43,10 @@ const NinetiesPatternBackground = () => {
   useEffect(() => {
     const generateShapes = () => {
       const newShapes = [];
-      const colors = ['#e432ffd6', '#b374ffff']; // Purple and Dark Turquoise
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const colors = isDark
+        ? ['rgba(120, 50, 200, 0.4)', 'rgba(80, 30, 160, 0.35)'] // Muted for dark mode
+        : ['#e432ffd6', '#b374ffff']; // Bright for light mode
 
       for (let i = 0; i < numShapes; i++) {
         const pathData = svgPaths[Math.floor(Math.random() * svgPaths.length)];

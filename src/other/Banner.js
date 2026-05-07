@@ -47,7 +47,7 @@ const Banner = () => {
   };
 
   return (
-    <div style={{ backgroundColor: '#2c1e7d', overflow: 'hidden' }}>
+    <div className="banner-wrapper" style={{ overflow: 'hidden' }}>
       {/* Full-Page Parallax Banner */}
       <div id="hero-banner" className="banner" style={{ position: 'relative', height: 'auto', minHeight: '100svh' }}>
         {/* Animated Background Image with Parallax and Blur Effect */}

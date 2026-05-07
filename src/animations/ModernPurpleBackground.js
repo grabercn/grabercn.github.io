@@ -93,37 +93,61 @@ const ModernPurpleBackground = () => {
       background: radial-gradient(circle, rgba(147, 112, 219, 0.3) 0%, rgba(147, 112, 219, 0) 70%);
     }
 
-    /* ─── Dark mode circle overrides: deeper, more vivid purples on black ─── */
+    /* ─── Dark mode: vivid, animated purple glows on black ─── */
+    [data-theme="dark"] .circle {
+      opacity: 0.5;
+      animation: floatCircle 12s ease-in-out infinite alternate;
+    }
+
+    [data-theme="dark"] .circle:nth-child(even) {
+      animation-direction: alternate-reverse;
+    }
+
+    @keyframes floatCircle {
+      0% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(15px, -10px) scale(1.03); }
+      66% { transform: translate(-10px, 8px) scale(0.97); }
+      100% { transform: translate(5px, -5px) scale(1.01); }
+    }
+
     [data-theme="dark"] .circle-1 {
-      background: radial-gradient(circle, rgba(120, 0, 255, 0.35) 0%, rgba(80, 0, 200, 0) 70%);
+      background: radial-gradient(circle, rgba(120, 0, 255, 0.25) 0%, transparent 70%);
+      animation-duration: 14s;
     }
 
     [data-theme="dark"] .circle-2 {
-      background: radial-gradient(circle, rgba(100, 40, 200, 0.3) 0%, rgba(60, 20, 140, 0) 70%);
+      background: radial-gradient(circle, rgba(90, 30, 200, 0.2) 0%, transparent 70%);
+      animation-duration: 16s;
     }
 
     [data-theme="dark"] .circle-3 {
-      background: radial-gradient(circle, rgba(140, 60, 255, 0.25) 0%, rgba(100, 40, 200, 0) 70%);
+      background: radial-gradient(circle, rgba(140, 50, 255, 0.18) 0%, transparent 70%);
+      animation-duration: 11s;
     }
 
     [data-theme="dark"] .circle-4 {
-      background: radial-gradient(circle, rgba(100, 50, 220, 0.28) 0%, rgba(70, 20, 180, 0) 70%);
+      background: radial-gradient(circle, rgba(100, 40, 220, 0.2) 0%, transparent 70%);
+      animation-duration: 13s;
     }
 
     [data-theme="dark"] .circle-5 {
-      background: radial-gradient(circle, rgba(80, 20, 180, 0.22) 0%, rgba(60, 10, 140, 0) 70%);
+      background: radial-gradient(circle, rgba(80, 15, 180, 0.17) 0%, transparent 70%);
+      animation-duration: 15s;
     }
 
     [data-theme="dark"] .circle-6 {
-      background: radial-gradient(circle, rgba(160, 80, 255, 0.2) 0%, rgba(120, 50, 220, 0) 70%);
+      background: radial-gradient(circle, rgba(150, 60, 255, 0.15) 0%, transparent 70%);
+      animation-duration: 10s;
     }
 
     [data-theme="dark"] .circle-7 {
-      background: radial-gradient(circle, rgba(130, 0, 255, 0.25) 0%, rgba(90, 0, 200, 0) 70%);
+      background: radial-gradient(circle, rgba(130, 0, 255, 0.2) 0%, transparent 70%);
+      animation-duration: 17s;
     }
 
     [data-theme="dark"] .circle-8 {
-      background: radial-gradient(circle, rgba(90, 30, 200, 0.25) 0%, rgba(60, 10, 150, 0) 70%);
+      background: radial-gradient(circle, rgba(90, 20, 200, 0.18) 0%, transparent 70%);
+      animation-duration: 12s;
     }
   `;
 

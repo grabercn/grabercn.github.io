@@ -156,6 +156,7 @@ const sections = [
               {courseworkData.map(group => (
                 <button
                   key={group.year}
+                  className={`coursework-tab-btn${activeYear === group.year ? ' active' : ''}`}
                   onClick={() => setActiveYear(group.year)}
                   style={{
                     padding: '8px 16px',
@@ -185,6 +186,7 @@ const sections = [
                 {activeGroup.courses.map((course, idx) => (
                   <Col key={idx} xs={24} sm={12} md={8}>
                     <div
+                      className="coursework-item"
                       style={{
                         background: 'rgba(255,255,255,0.6)',
                         backdropFilter: 'blur(6px)',
@@ -205,10 +207,10 @@ const sections = [
                         e.currentTarget.style.boxShadow = 'none';
                       }}
                     >
-                      <div style={{ fontWeight: 600, color: '#1a1a1a', fontSize: '14px' }}>
+                      <div className="coursework-item-name" style={{ fontWeight: 600, color: '#1a1a1a', fontSize: '14px' }}>
                         {course.name}
                       </div>
-                      <div style={{ fontSize: '11px', color: '#888', marginTop: '4px' }}>
+                      <div className="coursework-item-code" style={{ fontSize: '11px', color: '#888', marginTop: '4px' }}>
                         {course.code}
                       </div>
                     </div>
