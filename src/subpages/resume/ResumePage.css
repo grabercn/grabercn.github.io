@@ -418,16 +418,6 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* ---------- Nav ---------- */
-.resume-desktop-menu {
-  background: rgba(18, 3, 56, 0.95) !important;
-  backdrop-filter: blur(10px);
-}
-
-.resume-hamburger-btn {
-  display: none !important;
-}
-
 /* ---------- Responsive ---------- */
 @media (max-width: 767px) {
   .resume-container {
@@ -485,13 +475,6 @@
     font-size: 13px;
   }
 
-  .resume-desktop-menu {
-    display: none !important;
-  }
-
-  .resume-hamburger-btn {
-    display: flex !important;
-  }
 }
 
 /* ---------- Dark Mode Overrides ---------- */
@@ -588,7 +571,6 @@
   .ant-layout-header,
   .ant-layout-footer,
   .resume-header-buttons,
-  .resume-hamburger-btn,
   .ant-drawer,
   .modern-purple-bg,
   .cursor-glow {

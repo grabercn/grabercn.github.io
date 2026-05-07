@@ -98,22 +98,6 @@
       font-size: clamp(1rem, 4vw, 1.3rem) !important;
     }
 
-    /* Hide desktop menu on mobile */
-    .music-desktop-menu {
-      display: none !important;
-    }
-
-    /* Show hamburger on mobile */
-    .music-hamburger-btn {
-      display: flex !important;
-    }
-  }
-
-  @media (min-width: 769px) {
-    /* Hide hamburger on desktop */
-    .music-hamburger-btn {
-      display: none !important;
-    }
   }
 
   /* Audio preview play button */

@@ -8,12 +8,12 @@
 }
 
 [data-theme="dark"] {
-  --bg-primary: #0d0221;
-  --bg-card: rgba(30, 15, 60, 0.85);
-  --bg-glass: rgba(30, 15, 60, 0.82);
-  --text-primary: #e0e0e0;
-  --text-secondary: #aaa;
-  --border-glass: rgba(100, 60, 160, 0.3);
+  --bg-primary: #0a0118;
+  --bg-card: rgba(25, 12, 50, 0.9);
+  --bg-glass: rgba(25, 12, 50, 0.85);
+  --text-primary: #d4d0dc;
+  --text-secondary: #9a93a8;
+  --border-glass: rgba(120, 70, 200, 0.2);
 }
 
 /* FloatingCard theme-aware styles */
@@ -28,9 +28,9 @@
 }
 
 [data-theme="dark"] .floating-card {
-  background-color: rgba(22, 10, 48, 0.92) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
-  border: 1px solid rgba(100, 60, 160, 0.25) !important;
+  background-color: rgba(25, 12, 50, 0.9) !important;
+  box-shadow: 0 8px 32px rgba(80, 30, 160, 0.1) !important;
+  border: 1px solid rgba(120, 70, 200, 0.15) !important;
 }
 
 [data-theme="dark"] .floating-card-title {
@@ -331,44 +331,54 @@ button:focus-visible,
   color: white;
 }
 
-/* Dark mode overrides */
+/* === Dark Theme - Comprehensive Overhaul === */
+
+/* Base backgrounds */
 [data-theme="dark"] body,
 [data-theme="dark"] {
-  background: #0d0221 !important;
+  background: #0a0118 !important;
 }
 
 [data-theme="dark"] .ant-layout {
-  background: #0d0221 !important;
+  background: #0a0118 !important;
 }
 
 [data-theme="dark"] .ant-layout-content {
-  background: #0d0221 !important;
+  background: #0a0118 !important;
 }
 
+/* Glass panels */
 [data-theme="dark"] .glass-panel {
-  background: rgba(30, 15, 60, 0.82) !important;
-  border: 1px solid rgba(100, 60, 160, 0.3) !important;
+  background: rgba(25, 12, 50, 0.85) !important;
+  border: 1px solid rgba(120, 70, 200, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(80, 30, 160, 0.08) !important;
 }
 
+/* Cards */
 [data-theme="dark"] .ant-card {
-  background: rgba(30, 15, 60, 0.85) !important;
-  color: #e0e0e0 !important;
+  background: rgba(25, 12, 50, 0.9) !important;
+  color: #d4d0dc !important;
+  border-color: rgba(120, 70, 200, 0.15) !important;
 }
 
 [data-theme="dark"] .ant-card-head {
-  color: #e0e0e0 !important;
-  border-bottom-color: rgba(100, 60, 160, 0.3) !important;
+  color: #E0AAFF !important;
+  border-bottom-color: rgba(120, 70, 200, 0.15) !important;
 }
 
 [data-theme="dark"] .ant-card-head-title {
-  color: #e0e0e0 !important;
+  color: #E0AAFF !important;
 }
 
+/* Typography */
 [data-theme="dark"] .ant-typography,
 [data-theme="dark"] p,
-[data-theme="dark"] span,
+[data-theme="dark"] span {
+  color: #d4d0dc !important;
+}
+
 [data-theme="dark"] li {
-  color: #d0d0d0 !important;
+  color: #c4c0cc !important;
 }
 
 [data-theme="dark"] h1, [data-theme="dark"] h2,
@@ -380,69 +390,35 @@ button:focus-visible,
   color: #E0AAFF !important;
 }
 
-[data-theme="dark"] a {
-  color: #b07dff !important;
-}
-
+/* Links */
+[data-theme="dark"] a,
 [data-theme="dark"] .site-layout-content a {
   color: #b07dff !important;
 }
 
-[data-theme="dark"] .site-layout-content a:hover {
+[data-theme="dark"] .site-layout-content a:hover,
+[data-theme="dark"] a:hover {
   color: #d4b3ff !important;
 }
 
+[data-theme="dark"] .site-layout-content a::after {
+  background: linear-gradient(90deg, #b07dff, #d4b3ff) !important;
+}
+
 [data-theme="dark"] .content-wrap {
-  color: #d0d0d0;
+  color: #d4d0dc;
 }
 
-[data-theme="dark"] .ant-layout-footer {
-  background: #080114 !important;
-  color: #ccc !important;
-}
-
-[data-theme="dark"] .ant-progress-text {
-  color: #d0d0d0 !important;
-}
-
-[data-theme="dark"] .ant-timeline-item-content {
-  color: #d0d0d0 !important;
-}
-
-[data-theme="dark"] .ant-modal-content {
-  background: #1a0a30 !important;
-  color: #d0d0d0 !important;
-}
-
-[data-theme="dark"] .ant-modal-header {
-  background: #1a0a30 !important;
-}
-
-[data-theme="dark"] .ant-modal-title {
-  color: #E0AAFF !important;
-}
-
-[data-theme="dark"] .ant-drawer-content {
-  background: #0d0221 !important;
-}
-
-[data-theme="dark"] .ant-drawer-header {
-  background: #0d0221 !important;
-  border-bottom-color: rgba(100, 60, 160, 0.3) !important;
-}
-
-[data-theme="dark"] .ant-drawer-title {
-  color: #E0AAFF !important;
-}
-
+/* Buttons */
 [data-theme="dark"] .ant-btn {
-  background-color: rgba(100, 60, 160, 0.3) !important;
-  color: #d0b3ff !important;
-  border-color: rgba(100, 60, 160, 0.4) !important;
+  background-color: rgba(80, 40, 160, 0.3) !important;
+  color: #d4b3ff !important;
+  border-color: rgba(120, 70, 200, 0.3) !important;
 }
 
 [data-theme="dark"] .ant-btn:hover {
-  background-color: rgba(100, 60, 160, 0.5) !important;
+  background-color: rgba(80, 40, 160, 0.5) !important;
+  color: #fff !important;
 }
 
 /* Keep spotify/apple button colors in dark mode */
@@ -458,31 +434,83 @@ button:focus-visible,
   border-color: #FA243C !important;
 }
 
+/* Footer */
+[data-theme="dark"] .ant-layout-footer {
+  background: #06010f !important;
+  color: #9a93a8 !important;
+  border-top-color: rgba(120, 70, 200, 0.15) !important;
+}
+
+/* Modals */
+[data-theme="dark"] .ant-modal-content {
+  background: #150a2e !important;
+  color: #d4d0dc !important;
+}
+
+[data-theme="dark"] .ant-modal-header {
+  background: #150a2e !important;
+}
+
+[data-theme="dark"] .ant-modal-title {
+  color: #E0AAFF !important;
+}
+
+[data-theme="dark"] .ant-modal-close-icon {
+  color: #d4d0dc !important;
+}
+
+/* Drawer */
+[data-theme="dark"] .ant-drawer-content {
+  background: #0d0520 !important;
+}
+
+[data-theme="dark"] .ant-drawer-header {
+  background: #0d0520 !important;
+  border-bottom-color: rgba(120, 70, 200, 0.2) !important;
+}
+
+[data-theme="dark"] .ant-drawer-title {
+  color: #E0AAFF !important;
+}
+
+/* Dividers and lists */
 [data-theme="dark"] .ant-divider {
-  border-color: rgba(100, 60, 160, 0.3) !important;
+  border-color: rgba(120, 70, 200, 0.2) !important;
 }
 
 [data-theme="dark"] .ant-list-item {
-  border-bottom-color: rgba(100, 60, 160, 0.2) !important;
-  color: #d0d0d0 !important;
+  border-bottom-color: rgba(120, 70, 200, 0.15) !important;
+  color: #d4d0dc !important;
 }
 
 [data-theme="dark"] .ant-list-item-meta-title {
-  color: #e0e0e0 !important;
+  color: #d4d0dc !important;
 }
 
 [data-theme="dark"] .ant-list-item-meta-description {
-  color: #aaa !important;
+  color: #9a93a8 !important;
 }
 
+/* Tags */
 [data-theme="dark"] .ant-tag {
-  background: rgba(100, 60, 160, 0.3) !important;
-  color: #d0b3ff !important;
-  border-color: rgba(100, 60, 160, 0.4) !important;
+  background: rgba(80, 40, 160, 0.25) !important;
+  color: #d4b3ff !important;
+  border-color: rgba(120, 70, 200, 0.3) !important;
 }
 
+/* Progress */
+[data-theme="dark"] .ant-progress-text {
+  color: #d4d0dc !important;
+}
+
+/* Timeline */
+[data-theme="dark"] .ant-timeline-item-content {
+  color: #d4d0dc !important;
+}
+
+/* Tabs */
 [data-theme="dark"] .ant-tabs-tab {
-  color: #aaa !important;
+  color: #9a93a8 !important;
 }
 
 [data-theme="dark"] .ant-tabs-tab-active {
@@ -491,6 +519,39 @@ button:focus-visible,
 
 [data-theme="dark"] .ant-tabs-ink-bar {
   background: #E0AAFF !important;
+}
+
+/* Contact section specific - override blue link colors */
+[data-theme="dark"] li a[href^="mailto"],
+[data-theme="dark"] li a[href*="linkedin"],
+[data-theme="dark"] li a[href*="github"] {
+  color: #b07dff !important;
+}
+
+/* Contact icons */
+[data-theme="dark"] .anticon-mail,
+[data-theme="dark"] .anticon-linkedin,
+[data-theme="dark"] .anticon-github {
+  color: #b07dff !important;
+}
+
+/* Contact list items - purple-tinted box shadow */
+[data-theme="dark"] ul li[style] {
+  box-shadow: 0 4px 10px rgba(80, 30, 160, 0.15) !important;
+}
+
+/* Scrollbar dark mode */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #0a0118;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(120, 70, 200, 0.3);
+  border-radius: 4px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 70, 200, 0.5);
 }
 
 /* Dark mode cards on mobile - prevent excessive padding */

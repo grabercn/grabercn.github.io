@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Layout, Menu, Typography, Row, Col, Card, Spin } from 'antd';
+import { Layout, Typography, Row, Col, Card, Spin } from 'antd';
 import { motion } from 'framer-motion'; // Importing framer-motion
 import './App.css';
-import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined, FileTextOutlined } from '@ant-design/icons';
-import { useTheme } from './other/ThemeContext';
+import { UserOutlined, RocketOutlined, MailOutlined, LinkedinOutlined, LikeOutlined, LaptopOutlined, GithubOutlined, LoadingOutlined } from '@ant-design/icons';
+import Navbar from './other/Navbar';
 import Banner from './other/Banner';
 import FloatingText from './animations/FloatingText'; // Import the FloatingText Component
 import FloatingCard from "./animations/FloatingCard"
@@ -15,7 +15,7 @@ import FooterComponent from './other/Footer';
 import ModernPurpleBackground from './animations/ModernPurpleBackground';
 import GlowingHeaderAnimation from './animations/GlowingHeaderAnimation';
 import PhotoOfTheDay from './content/PhotoOfTheDay';
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 
 const sections = [
@@ -237,6 +237,26 @@ const sections = [
     ),
   },
   {
+    id: 'resume',
+    title: "Resume",
+    cardTitle: "Resume",
+    content: (
+      <div style={{ textAlign: 'center', padding: '20px 0' }}>
+        <Paragraph style={{ fontSize: '16px', maxWidth: '600px', margin: '0 auto 24px' }}>
+          View my complete professional profile with detailed experience, skills, and education — or download the PDF.
+        </Paragraph>
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <a href="/#/resume" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '12px 28px', background: '#4D04A0', color: '#fff', borderRadius: '12px', fontWeight: 600, fontSize: '15px', textDecoration: 'none', transition: 'background 0.2s' }}>
+            Interactive Resume
+          </a>
+          <button onClick={() => window.open('/docs/Graber_Christian_Resume_2025.pdf', '_blank')} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '12px 28px', background: 'rgba(77,4,160,0.1)', color: '#4D04A0', borderRadius: '12px', fontWeight: 600, fontSize: '15px', border: '2px solid rgba(77,4,160,0.2)', cursor: 'pointer', transition: 'background 0.2s' }}>
+            Download PDF
+          </button>
+        </div>
+      </div>
+    ),
+  },
+  {
     id: 'testimonials',
     title: "Testimonials",
     content: (
@@ -399,8 +419,6 @@ function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [loading, setLoading] = useState(true);
   const observerRef = useRef(null);
-  const { isDark } = useTheme();
-
   useEffect(() => {
     // Simulate loading
     const timer = setTimeout(() => {
@@ -428,7 +446,7 @@ function App() {
     }, options);
 
     // Observe all sections
-    const sectionIds = ['about', 'experience', 'projects', 'coursework', 'skills', 'testimonials', 'contact'];
+    const sectionIds = ['about', 'experience', 'projects', 'coursework', 'skills', 'resume', 'testimonials', 'contact'];
     sectionIds.forEach(id => {
       const element = document.getElementById(id);
       if (element) observerRef.current.observe(element);
@@ -461,31 +479,14 @@ function App() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
       <a href="#about" className="skip-to-main">Skip to main content</a>
       <Layout>
-        <Header style={{ background: 'transparent', padding: 0 }}>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            selectedKeys={[activeSection]}
-            style={{
-              lineHeight: '64px',
-              backgroundColor: 'transparent', // Let header gradient show through
-              borderBottom: 'none', // Optional: remove border to blend with the header
-              display: 'flex',
-              width: '100%'
-            }}
-            items={[
-              ...sections.map((section) => ({
-                key: section.id,
-                label: section.title,
-                onClick: () => handleMenuClick(section.id),
-              })),
-              { key: 'resume', icon: <FileTextOutlined />, label: <a href="/#/resume">Resume</a>, style: { marginLeft: 'auto' } },
-              { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a> },
-              { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
-              { key: 'theme-indicator', className: 'theme-indicator', disabled: true, label: isDark ? '☾' : '☀', style: { minWidth: 'auto', padding: '0 8px', cursor: 'default' } },
-            ]}
-          />
-        </Header>
+        <Navbar
+          activeKey={activeSection}
+          extraItems={sections.map((section) => ({
+            key: section.id,
+            label: section.title,
+            onClick: () => handleMenuClick(section.id),
+          }))}
+        />
 
         {/* Use the Banner Component */}
         <Banner />

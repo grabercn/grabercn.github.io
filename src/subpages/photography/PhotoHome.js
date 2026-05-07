@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
-import { Spin, Modal, Layout, Menu, Typography, Skeleton, Button, Drawer, Row, Col } from 'antd';
-import { FullscreenOutlined, HomeOutlined, CameraOutlined, LoadingOutlined, CustomerServiceOutlined, InfoCircleOutlined, ArrowUpOutlined, MenuOutlined, LeftOutlined, RightOutlined, AppstoreOutlined, GlobalOutlined } from '@ant-design/icons';
+import { Spin, Modal, Layout, Typography, Skeleton, Button, Row, Col } from 'antd';
+import { FullscreenOutlined, LoadingOutlined, InfoCircleOutlined, ArrowUpOutlined, LeftOutlined, RightOutlined, AppstoreOutlined, GlobalOutlined } from '@ant-design/icons';
+import Navbar from '../../other/Navbar';
 import PhotoBanner from './PhotoBanner';
 import FooterComponent from '../../other/Footer';
 import Masonry from 'react-masonry-css';
@@ -11,7 +12,7 @@ import ScrollPreview from './ScrollPreview';
 import PhotoMap from './PhotoMap';
 import './PhotoHome.css';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 
 const LOCATION_CATEGORIES = ['All', 'Prague', 'London', 'Switzerland', 'Italy', 'Barcelona', 'Ireland', 'Japan', 'Other'];
@@ -126,7 +127,6 @@ const PhotoHome = () => {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [showAbout, setShowAbout] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'map'
   const [activeLocation, setActiveLocation] = useState('All');
 
@@ -237,76 +237,12 @@ const PhotoHome = () => {
     }
   };
 
-  // Menu items for both desktop and drawer
-  const menuItems = [
-    { key: 'home', icon: <HomeOutlined />, label: <a href="/">Home</a> },
-    { key: 'about', icon: <InfoCircleOutlined />, label: 'About Gallery', onClick: () => { setShowAbout(true); setDrawerOpen(false); } },
-    { key: 'photography', icon: <CameraOutlined />, label: 'Photography', style: {} },
-    { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
-  ];
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ background: 'transparent', padding: 0, position: 'sticky', top: 0, zIndex: 1000, width: '100%' }}>
-        {/* Desktop menu */}
-        <Menu
-          className="desktop-menu"
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={['photography']}
-          style={{
-            lineHeight: '64px',
-            backgroundColor: 'transparent',
-            borderBottom: 'none',
-            display: 'flex',
-            width: '100%'
-          }}
-          items={[
-            { key: 'home', icon: <HomeOutlined />, label: <a href="/">Home</a> },
-            { key: 'about', icon: <InfoCircleOutlined />, label: 'About Gallery', onClick: () => setShowAbout(true) },
-            { key: 'photography', icon: <CameraOutlined />, label: 'Photography', style: { marginLeft: 'auto' } },
-            { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
-          ]}
-        />
-
-        {/* Mobile hamburger button */}
-        <Button
-          className="mobile-menu-btn"
-          type="text"
-          icon={<MenuOutlined style={{ color: '#fff', fontSize: '22px' }} />}
-          onClick={() => setDrawerOpen(true)}
-          style={{
-            position: 'absolute',
-            top: 12,
-            right: 16,
-            zIndex: 1001,
-            background: 'rgba(0,0,0,0.3)',
-            border: 'none',
-            borderRadius: '8px',
-            width: 40,
-            height: 40,
-            display: 'none', /* shown via CSS on mobile */
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        />
-      </Header>
-
-      {/* Mobile drawer menu */}
-      <Drawer
-        title="Menu"
-        placement="right"
-        onClose={() => setDrawerOpen(false)}
-        open={drawerOpen}
-        styles={{ body: { padding: 0 } }}
-      >
-        <Menu
-          mode="vertical"
-          selectedKeys={['photography']}
-          style={{ borderRight: 'none' }}
-          items={menuItems}
-        />
-      </Drawer>
+      <Navbar
+        activeKey="photography"
+        extraItems={[{ key: 'about', icon: <InfoCircleOutlined />, label: 'About Gallery', onClick: () => setShowAbout(true) }]}
+      />
 
       <ModernPurpleBackground />
 

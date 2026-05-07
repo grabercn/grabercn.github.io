@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Card, Row, Col, Typography, Divider, Spin, Button, Layout, Menu, Modal, Drawer, Result, List, Avatar, Tooltip } from 'antd';
-import { HomeOutlined, CameraOutlined, CustomerServiceOutlined, LoadingOutlined, InfoCircleOutlined, PlayCircleOutlined, PauseCircleOutlined, WarningOutlined, AppleFilled, SpotifyFilled, RightOutlined, MenuOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Typography, Divider, Spin, Button, Layout, Modal, Result, List, Avatar, Tooltip } from 'antd';
+import { LoadingOutlined, InfoCircleOutlined, PlayCircleOutlined, PauseCircleOutlined, WarningOutlined, AppleFilled, SpotifyFilled, RightOutlined } from '@ant-design/icons';
+import Navbar from '../../other/Navbar';
 import MusicBanner from './MusicBanner';
 import FooterComponent from '../../other/Footer';
 import ModernPurpleBackground from '../../animations/ModernPurpleBackground';
@@ -8,7 +9,7 @@ import GlowingHeaderAnimation from '../../animations/GlowingHeaderAnimation';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const { Title, Text, Paragraph } = Typography;
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 const MusicHome = () => {
   const [albums, setAlbums] = useState([]);
@@ -29,8 +30,6 @@ const MusicHome = () => {
   const [audioProgress, setAudioProgress] = useState(0);
   const audioRef = useRef(new Audio());
 
-  // Mobile drawer state
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const artistId = '111349822'; 
@@ -179,53 +178,10 @@ const MusicHome = () => {
 
   return (
     <Layout style={{ minHeight: '100vh', background: '#120338' }}>
-      <Header style={{ padding: 0, position: 'sticky', top: 0, zIndex: 1000, width: '100%' }}>
-        {/* Desktop Menu */}
-        <Menu
-          className="music-desktop-menu"
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={['music']}
-          style={{
-            lineHeight: '64px',
-            backgroundColor: 'transparent',
-            borderBottom: 'none',
-            display: 'flex',
-            width: '100%'
-          }}
-          items={[
-            { key: 'home', icon: <HomeOutlined />, label: <a href="/">Home</a> },
-            { key: 'about', icon: <InfoCircleOutlined />, label: 'About Music', onClick: () => setShowAbout(true) },
-            { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a>, style: { marginLeft: 'auto' } },
-            { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
-          ]}
-        />
-
-        {/* Mobile Hamburger */}
-        <div className="music-hamburger-btn" style={{ display: 'none', alignItems: 'center', height: '64px', padding: '0 16px' }}>
-          <MenuOutlined style={{ fontSize: '22px', color: '#E0AAFF', cursor: 'pointer' }} onClick={() => setDrawerOpen(true)} />
-        </div>
-      </Header>
-
-      {/* Mobile Drawer */}
-      <Drawer
-        title="Navigation"
-        placement="right"
-        onClose={() => setDrawerOpen(false)}
-        open={drawerOpen}
-      >
-        <Menu
-          mode="vertical"
-          selectedKeys={['music']}
-          style={{ border: 'none' }}
-          items={[
-            { key: 'home', icon: <HomeOutlined />, label: <a href="/">Home</a>, onClick: () => setDrawerOpen(false) },
-            { key: 'about', icon: <InfoCircleOutlined />, label: 'About Music', onClick: () => { setShowAbout(true); setDrawerOpen(false); } },
-            { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a>, onClick: () => setDrawerOpen(false) },
-            { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a>, onClick: () => setDrawerOpen(false) },
-          ]}
-        />
-      </Drawer>
+      <Navbar
+        activeKey="music"
+        extraItems={[{ key: 'about', icon: <InfoCircleOutlined />, label: 'About Music', onClick: () => setShowAbout(true) }]}
+      />
 
       <ModernPurpleBackground />
 
