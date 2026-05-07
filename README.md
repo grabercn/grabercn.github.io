@@ -115,13 +115,13 @@ All photos include multi-layer protection against AI training:
 ## Recent Changes
 
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
+- Improve dark-mode, loading UI, and photo modal
+- docs: auto-update README [skip ci]
+- Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 - Add cycling stats, overlay text, and modal hook
 - docs: auto-update README [skip ci]
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 - Enhance purple backgrounds; remove theme indicator
-- docs: auto-update README [skip ci]
-- Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
-- Introduce Navbar, add resume data, refactor pages
 - docs: auto-update README [skip ci]
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 
