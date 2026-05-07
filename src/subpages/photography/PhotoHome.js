@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
-import { Spin, Modal, Layout, Typography, Skeleton, Button, Row, Col } from 'antd';
-import { FullscreenOutlined, LoadingOutlined, InfoCircleOutlined, ArrowUpOutlined, LeftOutlined, RightOutlined, AppstoreOutlined, GlobalOutlined } from '@ant-design/icons';
+import { Modal, Layout, Typography, Skeleton, Button, Row, Col } from 'antd';
+import { FullscreenOutlined, InfoCircleOutlined, ArrowUpOutlined, LeftOutlined, RightOutlined, AppstoreOutlined, GlobalOutlined } from '@ant-design/icons';
+import LoadingSpinner from '../../animations/LoadingSpinner';
 import Navbar from '../../other/Navbar';
 import PhotoBanner from './PhotoBanner';
 import FooterComponent from '../../other/Footer';
@@ -285,9 +286,7 @@ const PhotoHome = () => {
 
       <Content style={{ padding: 0, position: 'relative' }} className="photo-content">
         {loading ? (
-          <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Spin indicator={<LoadingOutlined style={{ fontSize: 48, color: '#4D04A0' }} spin />} tip="Loading Gallery..." />
-          </div>
+          <LoadingSpinner message="Loading Gallery" />
         ) : (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
 

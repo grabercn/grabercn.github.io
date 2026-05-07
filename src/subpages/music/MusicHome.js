@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Card, Row, Col, Typography, Divider, Spin, Button, Layout, Modal, Result, List, Avatar, Tooltip } from 'antd';
-import { LoadingOutlined, InfoCircleOutlined, PlayCircleOutlined, PauseCircleOutlined, WarningOutlined, AppleFilled, SpotifyFilled, RightOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, PlayCircleOutlined, PauseCircleOutlined, WarningOutlined, AppleFilled, SpotifyFilled, RightOutlined } from '@ant-design/icons';
+import LoadingSpinner from '../../animations/LoadingSpinner';
 import Navbar from '../../other/Navbar';
 import MusicBanner from './MusicBanner';
 import FooterComponent from '../../other/Footer';
@@ -187,9 +188,7 @@ const MusicHome = () => {
 
       <Content style={{ padding: 0, position: 'relative' }}>
         {loading ? (
-            <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Spin indicator={<LoadingOutlined style={{ fontSize: 48, color: '#A020F0' }} spin />} tip="Loading Beats..." />
-            </div>
+            <LoadingSpinner message="Loading Beats" />
         ) : error ? (
             <div style={{ 
                 minHeight: '80vh',

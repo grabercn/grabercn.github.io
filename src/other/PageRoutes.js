@@ -39,56 +39,7 @@ const PageWrapper = ({ children }) => (
   </motion.div>
 );
 
-// Loading fallback - dark/light aware
-const LoadingFallback = () => {
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      background: isDark
-        ? 'linear-gradient(135deg, #05010d 0%, #0a0118 50%, #0d0520 100%)'
-        : 'linear-gradient(135deg, #f3e8f9 0%, #e8d5f5 100%)',
-    }}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4 }}
-        style={{ textAlign: 'center' }}
-      >
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-          style={{
-            width: 48,
-            height: 48,
-            borderRadius: '50%',
-            border: `3px solid ${isDark ? 'rgba(120, 70, 200, 0.2)' : 'rgba(77, 4, 160, 0.15)'}`,
-            borderTopColor: isDark ? '#b07dff' : '#4D04A0',
-            margin: '0 auto 16px',
-          }}
-        />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          style={{
-            color: isDark ? '#9a93a8' : '#4D04A0',
-            fontSize: '12px',
-            fontWeight: 500,
-            letterSpacing: '2px',
-            textTransform: 'uppercase',
-          }}
-        >
-          Loading
-        </motion.div>
-      </motion.div>
-    </div>
-  );
-};
+import LoadingSpinner from '../animations/LoadingSpinner';
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -116,7 +67,7 @@ const PageRoutes = () => {
       <Router>
         <GlobalCursorGlow />
         <KonamiCode />
-        <Suspense fallback={<LoadingFallback />}>
+        <Suspense fallback={<LoadingSpinner message="Loading" />}>
           <AnimatedRoutes />
         </Suspense>
       </Router>
