@@ -8,7 +8,7 @@ A modern, full-featured portfolio website built with React, featuring travel pho
 ![Ant Design](https://img.shields.io/badge/Ant%20Design-5-0170FE?logo=antdesign)
 ![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite)
 ![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-222?logo=github)
-![Last Updated](https://img.shields.io/badge/Updated-2026-05-06-green)
+![Last Updated](https://img.shields.io/badge/Updated-2026-05-07-green)
 
 ## Features
 
@@ -69,8 +69,8 @@ A modern, full-featured portfolio website built with React, featuring travel pho
 
 | Metric | Count |
 |--------|-------|
-| Source files | 53 |
-| Components | 38 |
+| Source files | 55 |
+| Components | 39 |
 | Photos | 1062 |
 | Routes | `/,/photo,/music,/desktop,/datavis,/cookie,/resume,/*` |
 
@@ -115,13 +115,13 @@ All photos include multi-layer protection against AI training:
 ## Recent Changes
 
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
+- Introduce Navbar, add resume data, refactor pages
+- docs: auto-update README [skip ci]
+- Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 - Refactor gallery toolbar and controls CSS
 - docs: auto-update README [skip ci]
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 - Add theme-aware styles and photo UI enhancements
-- docs: auto-update README [skip ci]
-- Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
-- Add resume nav and enforce dark resume styles
 - docs: auto-update README [skip ci]
 - Merge branch 'main' of https://github.com/grabercn/grabercn.github.io
 
