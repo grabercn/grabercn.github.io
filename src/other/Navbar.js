@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Button, Drawer } from 'antd';
 import { HomeOutlined, CameraOutlined, CustomerServiceOutlined, FileTextOutlined, MenuOutlined } from '@ant-design/icons';
-import { useTheme } from './ThemeContext';
 
 const { Header } = Layout;
 
 const Navbar = ({ activeKey = 'home', extraItems = [] }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const { isDark } = useTheme();
 
   useEffect(() => {
     const handler = () => setIsMobile(window.innerWidth < 768);
@@ -22,12 +20,9 @@ const Navbar = ({ activeKey = 'home', extraItems = [] }) => {
     { key: 'resume', icon: <FileTextOutlined />, label: <a href="/#/resume">Resume</a>, style: { marginLeft: 'auto' } },
     { key: 'photography', icon: <CameraOutlined />, label: <a href="/#/photo">Photography</a> },
     { key: 'music', icon: <CustomerServiceOutlined />, label: <a href="/#/music">Music</a> },
-    { key: 'theme-indicator', className: 'theme-indicator', disabled: true, label: isDark ? '☾' : '☀', style: { minWidth: 'auto', padding: '0 8px', cursor: 'default' } },
   ];
 
-  // For the drawer, remove marginLeft auto and theme indicator
   const drawerItems = navItems
-    .filter(item => item.key !== 'theme-indicator')
     .map(({ style, ...rest }) => ({ ...rest, onClick: rest.onClick ? () => { rest.onClick(); setDrawerOpen(false); } : () => setDrawerOpen(false) }));
 
   return (

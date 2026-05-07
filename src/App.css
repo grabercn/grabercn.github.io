@@ -37,18 +37,6 @@
   color: #E0AAFF !important;
 }
 
-/* Theme indicator icon in nav */
-.theme-indicator {
-  opacity: 0.35;
-  font-size: 12px !important;
-  cursor: default !important;
-  pointer-events: none;
-}
-
-.theme-indicator .ant-menu-item-icon {
-  font-size: 12px !important;
-}
-
 /* Global Glass Theme */
 .glass-panel {
   background: var(--bg-glass) !important;
