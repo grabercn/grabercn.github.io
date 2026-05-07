@@ -41,6 +41,21 @@
       ]
     }
     </script>
+
+    <!-- Set dark theme + background BEFORE React loads to avoid flash -->
+    <script>
+      (function() {
+        var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+        if (d) document.documentElement.style.background = '#05010d';
+      })();
+    </script>
+    <style>
+      /* Instant dark background before CSS loads */
+      @media (prefers-color-scheme: dark) {
+        html, body { background: #05010d !important; }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

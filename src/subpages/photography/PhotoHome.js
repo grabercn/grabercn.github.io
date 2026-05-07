@@ -414,24 +414,24 @@ const PhotoHome = () => {
         {selectedPhoto && (
             <motion.div
                 key={selectedPhoto.id}
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.4}
+                dragElastic={0.3}
                 onDragEnd={handleDragEnd}
                 style={{
                     width: '100%',
-                    minHeight: '100vh',
-                    height: '100%',
+                    height: '100vh',
                     display: 'flex',
-                    flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
                     padding: '20px',
                     cursor: 'grab',
                     overflow: 'hidden',
+                    position: 'relative',
                 }}
                 onClick={closeModal}
             >
@@ -449,49 +449,105 @@ const PhotoHome = () => {
                   </button>
                 )}
 
-                <picture>
-                    <source srcSet={selectedPhoto.webpPath} type="image/webp" />
-                    <img
+                {/* Main content: image + side panel */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px', maxWidth: '95vw', maxHeight: '90vh', pointerEvents: 'none' }}>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1, duration: 0.3 }}
+                    style={{ flexShrink: 0, maxWidth: '70vw' }}
+                  >
+                    <picture>
+                      <source srcSet={selectedPhoto.webpPath} type="image/webp" />
+                      <img
                         src={selectedPhoto.path}
                         alt={selectedPhoto.name}
                         style={{
-                            maxWidth: '100%',
-                            maxHeight: '85vh',
-                            objectFit: 'contain',
-                            borderRadius: '4px',
-                            boxShadow: '0 0 20px rgba(0,0,0,0.5)',
-                            pointerEvents: 'none',
-                            userSelect: 'none',
+                          maxWidth: '100%',
+                          maxHeight: '85vh',
+                          objectFit: 'contain',
+                          borderRadius: '8px',
+                          boxShadow: '0 4px 40px rgba(0,0,0,0.6)',
+                          userSelect: 'none',
                         }}
-                    />
-                </picture>
-                <div style={{
-                    color: '#eee',
-                    marginTop: '16px',
-                    textAlign: 'center',
-                    maxWidth: '800px',
-                    textShadow: '0 2px 4px black',
-                    background: 'rgba(0,0,0,0.5)',
-                    padding: '12px 24px',
-                    borderRadius: '16px',
-                    pointerEvents: 'none',
-                }}>
+                      />
+                    </picture>
+                  </motion.div>
+
+                  {/* Side metadata panel - desktop only */}
+                  <motion.div
+                    className="modal-info-panel"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2, duration: 0.3 }}
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                      pointerEvents: 'auto',
+                      width: '260px',
+                      flexShrink: 0,
+                      background: 'rgba(0,0,0,0.6)',
+                      backdropFilter: 'blur(12px)',
+                      borderRadius: '16px',
+                      padding: '20px',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      maxHeight: '85vh',
+                      overflow: 'hidden',
+                    }}
+                  >
                     {selectedPhoto.title && (
-                      <div style={{ fontSize: '18px', fontWeight: 700, marginBottom: selectedPhoto.description ? '6px' : 0 }}>
+                      <div style={{ color: '#fff', fontSize: '17px', fontWeight: 700, marginBottom: '8px', lineHeight: 1.3 }}>
                         {selectedPhoto.title}
                       </div>
                     )}
                     {selectedPhoto.description && (
-                      <div style={{ fontSize: '14px', opacity: 0.85, lineHeight: 1.5 }}>
+                      <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '13px', lineHeight: 1.5, marginBottom: '16px' }}>
                         {selectedPhoto.description}
                       </div>
                     )}
+                    {/* Location badge */}
                     {selectedPhoto.location && selectedPhoto.location !== 'Other' && (
-                      <div style={{ fontSize: '12px', opacity: 0.6, marginTop: '6px' }}>
-                        {selectedPhoto.location}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                        <GlobalOutlined style={{ color: '#b07dff', fontSize: '14px' }} />
+                        <span style={{ color: '#d4b3ff', fontSize: '13px', fontWeight: 500 }}>{selectedPhoto.location}</span>
                       </div>
                     )}
+                    {/* Photo counter */}
+                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '12px', marginTop: '8px' }}>
+                      {selectedIndex + 1} / {filteredPhotos.length}
+                    </div>
+                  </motion.div>
                 </div>
+
+                {/* Mobile-only bottom info bar */}
+                <motion.div
+                  className="modal-bottom-info"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  style={{
+                    position: 'absolute',
+                    bottom: '16px',
+                    left: '16px',
+                    right: '16px',
+                    background: 'rgba(0,0,0,0.6)',
+                    backdropFilter: 'blur(10px)',
+                    borderRadius: '12px',
+                    padding: '12px 16px',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  {selectedPhoto.title && (
+                    <div style={{ color: '#fff', fontSize: '14px', fontWeight: 600 }}>{selectedPhoto.title}</div>
+                  )}
+                  {selectedPhoto.description && (
+                    <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '12px', marginTop: '4px', lineHeight: 1.4, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                      {selectedPhoto.description}
+                    </div>
+                  )}
+                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px', marginTop: '6px' }}>
+                    {selectedPhoto.location && selectedPhoto.location !== 'Other' ? `${selectedPhoto.location} · ` : ''}{selectedIndex + 1}/{filteredPhotos.length}
+                  </div>
+                </motion.div>
             </motion.div>
         )}
       </Modal>

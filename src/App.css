@@ -321,6 +321,12 @@ button:focus-visible,
 
 /* === Dark Theme - Comprehensive Overhaul === */
 
+/* Dark header - truly dark, not just tinted */
+[data-theme="dark"] .ant-layout-header {
+  background: linear-gradient(90deg, #08011a 0%, #0d0322 100%) !important;
+  border-bottom: 1px solid rgba(120, 70, 200, 0.15) !important;
+}
+
 /* Base backgrounds */
 [data-theme="dark"] body,
 [data-theme="dark"] {
@@ -397,16 +403,28 @@ button:focus-visible,
   color: #d4d0dc;
 }
 
-/* Buttons */
+/* Buttons - ensure readability */
 [data-theme="dark"] .ant-btn {
-  background-color: rgba(80, 40, 160, 0.3) !important;
-  color: #d4b3ff !important;
-  border-color: rgba(120, 70, 200, 0.3) !important;
+  background-color: rgba(80, 40, 160, 0.35) !important;
+  color: #e0d0ff !important;
+  border-color: rgba(120, 70, 200, 0.35) !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 [data-theme="dark"] .ant-btn:hover {
-  background-color: rgba(80, 40, 160, 0.5) !important;
+  background-color: rgba(100, 50, 200, 0.55) !important;
   color: #fff !important;
+}
+
+/* Primary buttons in dark mode */
+[data-theme="dark"] .ant-btn-primary {
+  background-color: #4D04A0 !important;
+  color: #fff !important;
+  border-color: #5a10b8 !important;
+}
+
+[data-theme="dark"] .ant-btn-primary:hover {
+  background-color: #6a1fd0 !important;
 }
 
 /* Keep spotify/apple button colors in dark mode */

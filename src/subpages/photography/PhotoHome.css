@@ -272,6 +272,25 @@
     .modal-nav-next {
         right: 8px;
     }
+
+    /* On mobile, stack image + info vertically, hide side panel */
+    .modal-info-panel {
+        display: none !important;
+    }
+}
+
+/* Mobile: show compact bottom info bar instead of side panel */
+@media (max-width: 767px) {
+    .modal-bottom-info {
+        display: block;
+    }
+}
+
+/* Desktop: hide bottom info (side panel is shown) */
+@media (min-width: 768px) {
+    .modal-bottom-info {
+        display: none;
+    }
 }
 
 /* === Unified Gallery Toolbar === */
@@ -313,9 +332,15 @@
 .stat-card-cycling {
   overflow: hidden;
   min-height: 50px;
+  min-width: 110px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.stat-card-cycling > div {
+  width: 100%;
 }
 
 .stat-number {

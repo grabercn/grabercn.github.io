@@ -468,9 +468,51 @@ function App() {
   };
 
   if (loading) {
+    const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f3e8f9' }}>
-         <Spin indicator={<LoadingOutlined style={{ fontSize: 48, color: '#4D04A0' }} spin />} tip="Loading..." />
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: isDarkSystem
+          ? 'linear-gradient(135deg, #05010d 0%, #0a0118 50%, #0d0520 100%)'
+          : 'linear-gradient(135deg, #f3e8f9 0%, #e8d5f5 100%)',
+      }}>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          style={{ textAlign: 'center' }}
+        >
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: '50%',
+              border: `3px solid ${isDarkSystem ? 'rgba(120, 70, 200, 0.2)' : 'rgba(77, 4, 160, 0.15)'}`,
+              borderTopColor: isDarkSystem ? '#b07dff' : '#4D04A0',
+              margin: '0 auto 20px',
+            }}
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+            style={{
+              color: isDarkSystem ? '#9a93a8' : '#4D04A0',
+              fontSize: '14px',
+              fontWeight: 500,
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+            }}
+          >
+            Loading
+          </motion.div>
+        </motion.div>
       </div>
     );
   }
